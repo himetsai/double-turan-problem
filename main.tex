@@ -1,0 +1,66 @@
+\documentclass[12pt]{report}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{setspace}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
+
+% Page layout
+\geometry{a4paper, margin=1in}
+
+% Theorem Environments
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+% Title Page
+\title{Double Turán Problem}
+\author{Ray Tsai}
+\date{November 2024}
+
+\begin{document}
+
+\maketitle
+
+% \begin{abstract}
+% Your abstract here. Provide a concise summary of your thesis, including the problem statement, methodology, main results, and conclusions.
+% \end{abstract}
+
+% \chapter*{Acknowledgments}
+% Thank your advisor, collaborators, and anyone who supported your research.
+
+\tableofcontents
+
+\chapter{Introduction}
+
+\section{Definitions and Notation}
+Provide any necessary definitions, notation, and preliminary material.
+
+\section{Problem Statement}
+Clearly define the specific question or problem addressed.
+
+\chapter{Induced Case}
+Provide detailed proofs, explanations, or derivations of the results.
+
+\chapter{General Case}
+\section{Triangle-free case}
+Explain how your results apply in practice or other areas of mathematics.
+
+\section{$K_r$ Case}
+Provide concrete examples to illustrate your results.
+
+\section{Bipartite Case}
+Summarize your contributions and findings.
+
+\begin{thebibliography}{99}
+\bibitem{example1} Author Name, \textit{Book Title}, Publisher, Year.
+\bibitem{example2} Author Name, "Article Title," \textit{Journal Name}, Volume (Year), Pages.
+\end{thebibliography}
+
+\end{document}
