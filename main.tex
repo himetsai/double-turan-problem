@@ -79,7 +79,7 @@ general case. At the end, we will discuss the case where $F$ is bipartite.
 In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G$. Given graph $H$,
 let $\mathcal{T}(H)$ be the graph with an additional vertex connecting to all vertices in $H$.
 
-We first show a simplier case where $F$ is a triangle.
+We first show a simpler case where $F$ is a triangle.
 
 \section{Triangle $F$}
 
@@ -247,28 +247,27 @@ number of $G_i$'s:
 	Suppose that $E(G_i) \cap E(G_j)$ does not include $r$-vertex graph $F$ for distinct $i, j$. Then
 	for large enough $n$,
 	\[
-		\sum_{i = 1}^m e(G_i) \leq m(1 + o_m(1))\textnormal{ex}(n, F),
+		\sum_{i = 1}^m e(G_i) \leq m(1 + o(1))\textnormal{ex}(n, F),
 	\]
 	as $m \to \infty$.
 \end{theorem}
 
 \begin{proof}
-  Fix $\epsilon > 0$. Reorder the $G_i$'s such that $G_1, \ldots, G_{m'}$ are all the $G_i$'s
-  containing at least $(\pi_n(F) + \epsilon)\binom{n}{2}$ edges. A theorem of Simonovits states that
-  $G$ contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since there
-  can be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, we have 
+  Pick $\epsilon > 0$. Reorder $G_1, \ldots, G_m$ such that $G_1, \ldots, G_{m'}$ are all the
+  $G_i$'s containing at least $(1 + \epsilon)\text{ex}(n, F)$ edges. A theorem of Simonovits states
+  that $G$ contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since
+  there can be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, we have 
   \[
     m'\delta n^{r} \leq \binom{n}{r} \leq n^r \implies m' \leq \frac{1}{\delta}.
   \]
   It now follows that
   \begin{align*}
     \sum_{i = 1}^m e(G_i) 
-    &\leq \sum_{i = 1}^{m'} e(G_i) + \sum_{i = m' + 1}^m e(G_i) \\
-    &\leq m'\binom{n}{2} + (m - m')(\pi_n(F) + \epsilon)\binom{n}{2} \\
-    &\leq m\left[\pi_n(F) + \epsilon - \frac{m'}{m}(1 - \pi_n(F) - \epsilon)\right]\binom{n}{2}\\
-    &= m(1 + o_m(1))\textnormal{ex}(n, F),
+    &= \sum_{i = 1}^{m'} e(G_i) + \sum_{i = m' + 1}^m e(G_i) \\
+    &\leq \frac{1}{\delta}\binom{n}{2} + \left(m - \frac{1}{\delta}\right)(1 + \epsilon)\text{ex}(n, F) \\
+    &= m\left[1 + \epsilon + \frac{1}{m\delta}\left(\frac{\binom{n}{2}}{\textnormal{ex}(n, F)} - (1 + \epsilon)\right)\right]\textnormal{ex}(n, F).
   \end{align*}
-  as $m \to \infty$.
+  Since $\epsilon$ is arbitrary, the result follows.
 \end{proof}
 
 
