@@ -7,8 +7,11 @@
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{tikz}
 \usepackage[colorinlistoftodos]{todonotes}
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
+\usetikzlibrary{automata,positioning}
 
 % Page layout
 \geometry{a4paper, margin=1in}
@@ -54,7 +57,11 @@ with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{\alpha})$.
 
 In this thesis, we reserve $n$ to denote the number of vertices in a graph. Given a graph $F$, we
 denote $\text{ex}(n, F)$ to be the extremal number for $F$ on a graph with $n$ vertices, i.e. the
-maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph.
+maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph. We define the
+Turán density of $F$ as
+\[
+  \pi(F) \coloneqq \lim_{n \to \infty} \frac{\text{ex}(n, F)}{\binom{n}{2}}.
+\]
 
 \section{Problem Statement}
 
@@ -138,7 +145,7 @@ We first show a simplier case where $F$ is a triangle.
 
 We now prove Theorem 2.1.
 
-\begin{proof}[Proof of Theorem 3.1]
+\begin{proof}[Proof of Theorem 2.1]
   We may assume that $n > 1$. Put $G_{n + i} = G_i$. By Lemma 3.2,
   \[
     \sum_{i = 1}^n e(G_i) = \frac{1}{2}\sum_{i = 1}^n (e(G_i) + e(G_{i + 1})) \leq \frac{1}{2}\sum_{i = 1}^n 2\left\lfloor\frac{n^2}{4}\right\rfloor = n\left\lfloor\frac{n^2}{4}\right\rfloor.
@@ -148,10 +155,11 @@ We now prove Theorem 2.1.
    1}{2}\right\rfloor})$ for some $i$. By Lemma 3.2, one of $G_i$ and $G_{i + 1}$ is
    $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and the
    other is $\mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n -
-   1}{2}\right\rfloor})$, for all $i$. Hence, $G_{i + 1} = K_{\left\lceil\frac{n -
-   1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}, G_{i + 2} =
-   \mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n -
-   1}{2}\right\rfloor}), \ldots$ and the alternation proceeds. But then $G_{n + i} = G_i =
+   1}{2}\right\rfloor})$, for all $i$. Hence,
+   \[
+    G_{i + 1} = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}, G_{i + 2} = \mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}), \ldots
+   \]
+   and the alternation proceeds. But then $G_{n + i} = G_i =
    K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ as $n$ is
    odd, and this contradiction completes the proof.
 \end{proof}
@@ -230,14 +238,14 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
 We now relax the assumption that $G_1, \dots, G_m$ are induced subgraphs. The trivial construction
 of putting $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound
 \begin{gather}
-	\sum_{i = 1}^m e(G_i) = \binom{n}{2} + (m - 1) \cdot \text{ex}(n, F).
+	\sum_{i = 1}^m e(G_i) = \binom{n}{2} + (m - 1)\text{ex}(n, F).
 \end{gather}
-Thus in this section we examine whether this bound is tight. An asymptotic result on $m$ is the
-following:
+In this section we examine whether this bound is tight. The following is an asymptotic result on the
+number of $G_i$'s:
 
 \begin{theorem}
-	Suppose that $E(G_i) \cap E(G_j)$ does not include $F$ for distinct $i, j$. Then for large enough
-	$n$,
+	Suppose that $E(G_i) \cap E(G_j)$ does not include $r$-vertex graph $F$ for distinct $i, j$. Then
+	for large enough $n$,
 	\[
 		\sum_{i = 1}^m e(G_i) \leq m(1 + o_m(1))\textnormal{ex}(n, F),
 	\]
@@ -245,7 +253,22 @@ following:
 \end{theorem}
 
 \begin{proof}
-	
+  Fix $\epsilon > 0$. Reorder the $G_i$'s such that $G_1, \ldots, G_{m'}$ are all the $G_i$'s
+  containing at least $(\pi_n(F) + \epsilon)\binom{n}{2}$ edges. A theorem of Simonovits states that
+  $G$ contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since there
+  can be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, we have 
+  \[
+    m'\delta n^{r} \leq \binom{n}{r} \leq n^r \implies m' \leq \frac{1}{\delta}.
+  \]
+  It now follows that
+  \begin{align*}
+    \sum_{i = 1}^m e(G_i) 
+    &\leq \sum_{i = 1}^{m'} e(G_i) + \sum_{i = m' + 1}^m e(G_i) \\
+    &\leq m'\binom{n}{2} + (m - m')(\pi_n(F) + \epsilon)\binom{n}{2} \\
+    &\leq m\left[\pi_n(F) + \epsilon - \frac{m'}{m}(1 - \pi_n(F) - \epsilon)\right]\binom{n}{2}\\
+    &= m(1 + o_m(1))\textnormal{ex}(n, F),
+  \end{align*}
+  as $m \to \infty$.
 \end{proof}
 
 
@@ -257,7 +280,7 @@ following:
 \begin{theorem}
 	For any $\epsilon > 0$, if $E(G_i) \cap E(G_j)$ does not include $K_3$ for distinct $i, j$, then
 	\[
-		\sum_{i = 1}^m  e(G_i) < m(1 + \epsilon)\frac{n^2}{4} + O(n^2)
+		\sum_{i = 1}^m  e(G_i) < m(1 + \epsilon)\frac{n^2}{4} + (1 - \epsilon)\frac{n^2}{2\epsilon}.
 	\]
 \end{theorem}
 
@@ -279,29 +302,82 @@ following:
 	Rearranging yields $k < \frac{2}{\epsilon}$.
 \end{proof}
 
-\begin{proof}[Proof of Theorem 3.2]
-	By the claim, 
-	\[
-		\sum_{i = 1}^m e(G_i) < \frac{2}{\epsilon}\binom{n}{2} + \left(m - \frac{2}{\epsilon}\right)(1 + \epsilon)\frac{n^2}{4} \leq m(1 + \epsilon)\frac{n^2}{4} + O(n^2).
-	\]
-\end{proof}
+By the claim, 
+\[
+  \sum_{i = 1}^m e(G_i) < \frac{2}{\epsilon}\binom{n}{2} + \left(m - \frac{2}{\epsilon}\right)(1 + \epsilon)\frac{n^2}{4} \leq m(1 + \epsilon)\frac{n^2}{4} + (1 - \epsilon)\frac{n^2}{2\epsilon},
+\]
+which proves Theorem 3.2.
 
 It can be easily shown that the bound in Theorem 3.2 is tight when $m = 2$, as
 \[
 	e(G_1) + e(G_2) \leq \binom{n}{2} + e(G_{1, 2}) \leq \binom{n}{2} + \left\lfloor \frac{n^2}{4} \right\rfloor.
 \]
-This is also true for $m = 3$:
+This result is also true for $m = 3$:
 
 \begin{proposition}
-	For any $\epsilon > 0$, if $E(G_i) \cap E(G_j)$ does not include $K_3$ for distinct $i, j$, then
+	Let $G_1, G_2, G_3$ be subgraphs of some $G$ such that no triangle is contained in any two graphs,
+	then
 	\[
-		\sum_{i = 1}^3 e(G_i) \leq \binom{n}{2} + \frac{n^2}{2}.
+		e(G_1) + e(G_2) + e(G_3) \leq \binom{n}{2} + \frac{n^2}{2}.
 	\]
 \end{proposition}
 
 \begin{proof}
-	
+  Define $H_k \subseteq G$ be the graph with edges contained in at least $k$ number of $G_i$'s and
+  note that $e(G_1) + e(G_2) + e(G_3) = e(H_1) + e(H_2) + e(H_3)$. Thus it suffices to show that
+  $e(H_2) + e(H_3) \leq \frac{n^2}{2}$. Notice $H_2$ must not contain any triangles with two edges
+  in $H_3$, so
+  \[
+    e(H_2) + e(H_3) \leq \binom{n}{2} + e(H_3) - |\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}|.
+  \]
+  Let $H'_3$ be the graph with the same vertex set as $H_3$ and edge set $\{\{u, v\} : u \neq v,
+  N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}$. It suffices to show that $\frac{n}{2} \geq e(H_3) -
+  e(H'_3)$. 
+
+  Let $d_1 \geq d_2 \geq \cdots \geq d_n$ and $f_1 \geq f_2 \geq \cdots \geq f_n$ each be the degree
+  sequence of $H_3$ and $H_3'$, respectively. We show that $f_i \geq d_i - 1$ for all $i$. Let $v_i$
+  denote the vertex in $H$ with degree $d_i$ and $u_i$ be the vertex in $H$ with degree $f_i$. Let
+  $S_i = |N_{H_3}(v_1) \cup \cdots \cup N_{H_3}(v_i)|$. Since 
+  \[
+    \sum_{u \in S_i} d_{H_3}(u) \geq d_1 + \cdots + d_i,
+  \]
+  we have that $|S_i| \geq i$. But then $S_i \backslash \{u_1, \ldots, u_{i - 1}\}$ is non-empty,
+  and every $u \in S_i$ has degree $d_{H_3'}(u) \geq d_i - 1$. Hence, $f_i \geq d_i - 1$ for all
+  $i$, which yields
+  \[
+    e(H_3') = \frac{1}{2}\sum_{i = 1}^n f_i \geq \frac{1}{2}\sum_{i = 1}^n (d_i - 1) = e(H_3) - \frac{n}{2}.
+  \]
 \end{proof}
+
+However, the bound in Proposition 3.1 is not tight for $m \geq 4$, as shown in the following graph:
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (4, 2) to node[midway, above] {$123$} (-4, 2);
+    \draw (-4, 2) to node[midway, left] {$124$} (-1, -1);
+    \draw (-1, -1) to node[midway, above] {$34$} (1, -1);
+    \draw (1, -1) to node[midway, right] {$124$} (4, 2);
+    \draw (0, 1) to node[midway, below] {$234$} (4, 2);
+    \draw (0, 1) to node[midway, below] {$134$} (-4, 2);
+    \draw (0, 1) to node[midway, left] {$123$} (-1, -1);
+    \draw (0, 1) to node[midway, right] {$123$} (1, -1);
+    \draw[bend left=80] (4, 2) to node[midway, right] {$134$} (-1, -1);
+    \draw[bend right=80] (-4, 2) to node[midway, left] {$234$} (1, -1);
+
+    \foreach \x/\y in {0/1, 4/2, 1/-1, -1/-1, -4/2} {
+        \fill (\x, \y) circle (2pt);
+    }
+  \end{tikzpicture}
+  \\
+  \small{The number on each edge denotes the set of $G_i$'s that contain the edge.}
+\end{center}
+The above graph contains $29$ edges, which exceeds the bound $\binom{5}{2} + 3 \lfloor \frac{5^2}{4}
+\rfloor = 28$ by $1$. By blowing up the above graph, we can construct a graph with $n \in
+10\mathbb{Z}$ vertices that contains
+\[
+  5\binom{n/5}{2} + 29 \cdot \frac{(n/5)^2}{4}
+\]
+edges, which exceeds the bound $\binom{n}{2} + 3\lfloor\frac{n^2}{4}\rfloor$ by $\frac{n^2}{100}$. 
 
 \section{Bipartite $F$}
 
