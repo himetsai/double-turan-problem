@@ -9,6 +9,7 @@
 \usepackage{setspace}
 \usepackage{mathtools}
 \usepackage{tikz}
+\usepackage{tikz-cd}
 \usepackage[colorinlistoftodos]{todonotes}
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
 \usetikzlibrary{automata,positioning}
@@ -57,11 +58,14 @@ with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{\alpha})$.
 
 In this thesis, we reserve $n$ to denote the number of vertices in a graph. Given a graph $F$, we
 denote $\text{ex}(n, F)$ to be the extremal number for $F$ on a graph with $n$ vertices, i.e. the
-maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph. We define the
-Turán density of $F$ as
-\[
-  \pi(F) \coloneqq \lim_{n \to \infty} \frac{\text{ex}(n, F)}{\binom{n}{2}}.
-\]
+maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph.
+
+We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$
+are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with
+$n$ edges.
+
+We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set
+$X$, we denote $2^X$ as the power set of $X$.
 
 \section{Problem Statement}
 
@@ -253,10 +257,10 @@ number of $G_i$'s:
 \end{theorem}
 
 \begin{proof}
-  Pick $\epsilon > 0$. Reorder $G_1, \ldots, G_m$ such that $G_1, \ldots, G_{m'}$ are all the
-  $G_i$'s containing at least $(1 + \epsilon)\text{ex}(n, F)$ edges. A theorem of Simonovits states
-  that $G$ contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since
-  there can be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, we have 
+  Pick $\epsilon > 0$. Reorder $G_1, \ldots, G_m$ so that $G_1, \ldots, G_{m'}$ are all the $G_i$'s
+  containing at least $(1 + \epsilon)\text{ex}(n, F)$ edges. A theorem of Simonovits states that $G$
+  contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since there can
+  be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, 
   \[
     m'\delta n^{r} \leq \binom{n}{r} \leq n^r \implies m' \leq \frac{1}{\delta}.
   \]
@@ -376,12 +380,157 @@ The above graph contains $29$ edges, which exceeds the bound $\binom{5}{2} + 3 \
 \[
   5\binom{n/5}{2} + 29 \cdot \frac{(n/5)^2}{4}
 \]
-edges, which exceeds the bound $\binom{n}{2} + 3\lfloor\frac{n^2}{4}\rfloor$ by $\frac{n^2}{100}$. 
+edges, which exceeds the bound $\binom{n}{2} + 3\lfloor\frac{n^2}{4}\rfloor$ by $n^2/100$. 
 
 \section{Bipartite $F$}
 
+In this section, we discuss the case where $F$ is bipartite. In particular, we focus on the cases
+where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matching with two edges.
+
+\begin{theorem}
+  Given graph $G$ and $G_1, \cdots, G_n$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
+  $P_2$ for distinct $i, j$. Then
+  \[
+    \sum_{i = 1}^m e(G_i) \leq \frac{n^{5/2}}{2}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  Since there are no overlapping $P_2$'s in different $G_i$'s, 
+  \[
+    \sum_{i = 1}^n \#\{P_2 \subseteq G_i\} \leq \#\{P_2 \subseteq G\}
+  \]
+  For each $G_i$, each vertex $v$ in $G_i$ and two of its neighbors form one unique $P_2$, so
+  \[
+    \#\{P_2 \subseteq G_i\} = \sum_{v \in V(G_i)} \binom{d_{G_i}(v)}{2}.
+  \]
+  And by Jensen's inequality,
+  \[
+    \sum_{v \in V(G_i)} \binom{d_{G_i}(v)}{2} \geq n\binom{d_{G_i}(v)/n}{2} = n\binom{2e(G_i)/n}{2} \geq \frac{2(e(G_i))^2}{n}.
+  \]
+  On the other hand, since each three vertices in $G$ can form at most three $P_2$'s, 
+  \[
+    \#\{P_2 \subseteq G\} \leq 3\binom{n}{3} = \frac{n^3}{2}.
+  \]
+  Combining the above inequalities yields
+  \[
+    \sum_{i = 1}^n \frac{2(e(G_i))^2}{n} \leq \frac{n^3}{2} \overset{Jensen's}{\implies} \sum_{i = 1}^n e(G_i) \leq \frac{n^{5/2}}{2}.
+  \]
+\end{proof}
 
 
+
+\begin{theorem}
+  Given graph $G$ and $G_1, \cdots, G_n$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
+  $M_2$ for distinct $i, j$. Then
+  \[
+    \sum_{i = 1}^n e(G_i) \leq n^{5/2}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  Notice that $\#\{M_2 \subseteq G\} = \binom{e(G_i)}{2}$. On the other hand, each four vertices in
+  $G$ can form at most three $M_2$'s, so $\#\{M_2 \subseteq G\} \leq 3\binom{n}{4} \leq
+  \frac{n^4}{8}$. By the same argument as in Theorem 3.4, we have 
+  \[
+    \sum_{i = 1}^n \binom{e(G_i)}{2} = \sum_{i = 1}^n \#\{M_2 \subseteq G_i\} \leq \#\{M_2 \subseteq G\} \leq \frac{n^4}{8}.
+  \]
+  By Jensen's inequality,
+  \[
+    \sum_{i = 1}^n \binom{e(G_i)}{2} \geq n\binom{\sum_{i = 1}^n e(G_i)/n}{2} = \frac{1}{2n}\left[\left(\sum_{i = 1}^n e(G_i)\right)^2 - n\sum_{i = 1}^n e(G_i)\right].
+  \]
+  Combining the above inequalities yields
+  \[
+    \left(\sum_{i = 1}^n e(G_i)\right)^2 - n\sum_{i = 1}^n e(G_i) \leq \frac{n^5}{4},
+  \]
+  and solving the quadratic inequality gives
+  \[
+    \sum_{i = 1}^n e(G_i) \leq n^{5/2}.
+  \]
+\end{proof}
+
+We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
+
+\begin{theorem}
+  Given graphs $G_1, \ldots, G_n \subseteq K_n$ with $E(G_i) \cap E(G_j)$ not containing $P_2$ or
+  $M_2$ for distinct $i, j$. Then
+  \[
+    \sum_{i = 1}^n e(G_i) \leq n^2 - n,
+  \]
+  and this bound is tight.
+\end{theorem}
+
+\begin{proof}
+  Denote the set of $G_i$'s as $\{G_i\} = \{G_1, \ldots, G_n\}$, and the set of distinct pairs of
+  $G_i$'s as $\{G_i\}^2 = \{\{G_j, G_k\} : j \neq k\}$. Consider the bipartite graph $H$ with
+  vertex set $V(H) = \{G_i\} \sqcup E(K_n)$ and edge set $E(H) = \{\{G_j, e\} \in \{G_i\} \times
+  E(K_n) : e \in G_j\}$. Define $\phi: \{G_i\}^2 \to 2^{E(K_n)}$ by sending each $\{G_j, G_k\}$ to
+  their common edge set $E(G_j) \cap E(G_k)$. Notice that each distinct $G_j, G_k$ have at most
+  one edge in common, so $|\phi(G_j, G_k)| \leq 1$. On the other hand, each edge $e \in E(G)$ can
+  be obtained via $\phi$ by $\binom{d_H(e)}{2}$ possible distinct pairs $(G_j, G_k)$, and thus
+  $|\phi^{-1}(e)| = \binom{d_H(e)}{2}$. But then
+  \[
+    \binom{n}{2} \geq \sum_{(G_j, G_k) \in \{G_i\}^2} |\phi(G_j, G_k)| = \sum_{e \in E(K_n)} |\phi^{-1}(e)| = \sum_{e \in E(K_n)} \binom{d_H(e)}{2}.
+  \]
+  By Jensen's inequality,
+  \[
+    \sum_{e \in E(K_n)} \binom{d_H(e)}{2} \geq \binom{n}{2}\binom{\sum_{e \in E(K_n)} d_H(e)/\binom{n}{2}}{2} = \binom{n}{2}\binom{\sum_{i = 1}^n e(G_i)/\binom{n}{2}}{2}.
+  \]
+  Combining the above inequalities yields
+  \[
+    2\binom{n}{2}^2 \geq \left(\sum_{i = 1}^n e(G_i)\right)^2 - \binom{n}{2}\sum_{i = 1}^n e(G_i),
+  \]
+  and the result now follows from solving the quadratic inequality.
+
+  To see that this bound is tight, consider the construction such that for each distinct $i, j \in
+  [n]$, $E(G_i) \cap E(G_j)$ contains exactly one unique edge $e \in K_n$. The number of edges in
+  this construction is $2\binom{n}{2} = n^2 - n$.
+\end{proof}
+
+ 
+
+\begin{theorem}
+  Let $F$ be a graph such that there exists extremal $F$-free subgraph $H$ on $n$ vertices that have
+  maximum degree $\Delta(H) = o(n^{1/2})$. For large enough $n$, if $G_1, \ldots, G_m$ are graphs on
+  common vertex set $[n]$ such that no copy of $F$ is contained in any $k$ of the $G_i$'s, then
+  \[
+    \sum_{i = 1}^m e(G_i) = (k - 1)\binom{n}{2} + \textnormal{ex}(n, F)\binom{m}{k},
+  \]
+  and the bound is tight.
+\end{theorem}
+
+\begin{proof}
+  For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i
+  \in S}$. Then 
+  \[
+    \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq (k - 1)\binom{n}{2} + \sum_{S \subseteq [m], |S| \geq k} (|S| - k + 1)|E_S|.
+  \]
+  Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e. the set of edges that are contained in all $G_i$
+  with $i \in S$. When $|S| \geq k$, the edge set $A_S$ is $F$-free and thus 
+  \[
+    \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
+  \]
+  Hence,
+  \[
+    \sum_{\substack{S \subseteq [m] \\ |S| \geq k}} (|S| - k + 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = k}} \sum_{T \subseteq S} \frac{(|T| - k + 1)|E_T|}{\binom{|T|}{k}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = k}} \sum_{T \subseteq S} |E_T| \leq \binom{m}{k}\text{ex}(n, F),
+  \]
+  as each $T \in [m]$ with $|T| \geq k$ is counted $\binom{|T|}{k}$ times in total and $|T| - k + 1
+  \leq \binom{|T|}{k}$. This proves the upper bound.
+
+  Now we show the bound is tight. In particular, we need to show there exists a construction such
+  that the graph with edge set $E_S$ is an extremal $F$-free graph, for all $S \subseteq [m]$ of
+  size $k$. Let $M = \binom{m}{k}$ and $H_1, \ldots, H_M$ be copies of an extremal $F$-free graph on
+  $n$ vertices. It suffices to show that we can embed each $H_i$ onto $[n]$ such that their edge
+  sets are pairwise disjoint. We begin by an arbitrary embedding of each $H_i$ and iteratively
+  decrease the number of intersecting edges. Define a $(u, v, i)$-swap by swapping the embedding of
+  vertex $u$ and $v$ of $H_i$, i.e. replacing each edge $\{u, w\} \in E(H_i)$ with the edge $\{u,
+  w\}$ and each edge $\{v, w\} \in E(H_i)$ with the edge $\{v, w\}$. This perserves the type of
+  isomorphism of $H_i$. Given a vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_M}(v)$.
+  Suppose there exists an intersecting edge $\{u, w\} \in E(H_i) \cap E(H_j)$. Since the maximum
+  degree of each $H_i$ is $o(n^{1/2})$, $|N(u) \cup N(N(u))| = o(n)$ so there exists a vertex $v
+  \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$, performing a $(u, v, i)$-swap
+  reduces the number of intersecting edges. The result now follows by iterating this process.
+\end{proof}
 
 
 \end{document}
