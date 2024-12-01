@@ -21,7 +21,7 @@
 % Theorem Environments
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}{Lemma}[theorem]
-\newtheorem{claim}{Claim}[theorem]
+\newtheorem{claim}{Claim}
 \newtheorem{conjecture}{Conjecture}[chapter]
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -208,25 +208,24 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
     \[
       \textnormal{ex}(n, F) - \textnormal{ex}(c, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
     \]
-    for all $k \in [0, 1/2]$. By a theorem of Simonovits, for large enough $n$, $\text{ex}(n, F) =
-    \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is the family of residue
-    subgraphs of $F$ after $F$ is embedded into $T_r(n)$. Hence, we may write
+    for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\textnormal{ex}(n, F) = \left(1 -
+    \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
     \[
-      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq e(T_r(n)) - e(T_r(n/2))
+      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2)
     \]
-    Put $s = n \mod r$. Since $e(T_r(n)) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} - o(n^2)$, we
-    have
-    \[
-      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) = \left(1 - \frac{1}{r}\right)\frac{3n^2}{8} - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
-    \]
-    On the other hand, 
+    On the right-hand-side, 
     \[
       \binom{(1 - k)n/2}{2} - \binom{kn}{2} = (1 - 2k - 3k^2)\frac{n^2}{8} + o(n^2) \leq \frac{n^2}{8} + o(n^2).
     \]
-    Combining the above inequalities yields the claim.
+    Combining the above inequalities now yields the claim, as $n$ is large.
   \end{proof}
-  By the claim, we may assume that $c > \frac{n}{2}$. Again by the theorem of Simonovits, we may
-  write
+  Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough
+  $n$, $\text{ex}(n, F) = \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is
+  the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(n)$. This implies 
+  \[
+    \text{ex}(n + 1, F) - \text{ex}(n, F) \geq \text{ex}(n, K_{r + 1}) - \text{ex}(n + 1, K_{r + 1}),
+  \]
+  and so
   \[
     f(a, b - 2, c + 2) - f(a, b, c) \geq 2a - 2c - 1 + 2[\textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1})].
   \]
