@@ -62,7 +62,8 @@ maximum number of edges in a $n$-vertex graph that does not contain $F$ as a sub
 
 We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$
 are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with
-$n$ edges.
+$n$ edges. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) =
+V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
 
 We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set
 $X$, we denote $2^X$ as the power set of $X$.
@@ -74,16 +75,13 @@ with at least one edge. Our goal is to determine the maximum sum of the number o
 $G_i$'s, i.e. $\sum_{i = 1}^m e(G_i)$, with the constraint of $E(G_i) \cap E(G_j)$ not including
 some graph $F$ for all distinct $i, j$. 
 
-In this thesis, we mainly put our attention on the case where $F$ is non-bipartite. We will first
-consider the case where $G_1, \ldots, G_m$ are induced subgraphs, and then shift our focus to the
-general case. At the end, we will discuss the case where $F$ is bipartite.
+In this thesis, we first consider the case where $G_1, \ldots, G_m$ are induced subgraphs, and then
+shift our focus to the general case. At the end, we will discuss the case where $F$ is bipartite.
 
 \chapter{Induced Case}
 
-In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G$. Given graph $H$,
-let $\mathcal{T}(H)$ be the graph with an additional vertex connecting to all vertices in $H$.
-
-We first show a simpler case where $F$ is a triangle.
+In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G$. We first show a
+simpler case where $F$ is a triangle.
 
 \section{Triangle $F$}
 
@@ -96,6 +94,8 @@ We first show a simpler case where $F$ is a triangle.
   \left\lfloor\frac{n}{2}\right\rfloor}$.
 \end{theorem}
 
+First we prove the case for two graphs:
+
 \begin{lemma}
   Suppose $E(G_1) \cap E(G_2)$ does not include $K_3$. Then
   \[
@@ -103,30 +103,25 @@ We first show a simpler case where $F$ is a triangle.
   \]
   with equality if and only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil,
   \left\lfloor\frac{n}{2}\right\rfloor}$, unless $n$ is odd and $G_1 = K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 =
-  \mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n -
-  1}{2}\right\rfloor})$.
+  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n -
+  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$.
 \end{lemma}
 
 \begin{proof}
-  Let $C = V(G_1) \cap V(G_2)$, the set of vertices in both $G_1$ and $G_2$. Let $A = V(G_1)
-  \backslash C$, and let $B = V(G_2) \backslash C$. For simplicity, put $a = |A|$, $b = |B|$, and $c
-  = |C|$. We may assume that $a + b + c = n$.
+  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a =
+  |A|$, $b = |B|$, and $c = |C|$. We may assume that $a + b + c = n$.
 
-  We now find an upper bound of $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are
-  induced graphs, we have $\{u, v\} \in E(G_1)$ if and only if $\{u, v\} \in E(G_2)$, for $u, v \in
-  C$. This implies the subgraph of $G_1$ induced by $C$ is identical to the subgraph of $G_2$
-  induced by $C$. In other words, $E(G_1[C]) = E(G_2[C]) = E(G_i) \cap E(G_j)$, which is
-  triangle-free. By Mantel's Theorem, $e(G_1[C]) \leq \left\lfloor\frac{c^2}{4}\right\rfloor$, with
-  equality if and only if $G_1[C] = K_{\left\lceil\frac{c}{2}\right\rceil,
-  \left\lfloor\frac{c}{2}\right\rfloor}$. Hence, we may write
-  \begin{align}
-    e(G_1) + e(G_2) 
-    &\leq \binom{|V(G_1)|}{2} + \binom{|V(G_2)|}{2} - 2\left[\binom{c}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor\right] \nonumber \\
-    &= \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor\right].
-  \end{align}
-  Define $f(a, b, c)$ as the function on the right-hand-side of (1). We show that $f(a, b, c)$
-  attains its maximum at $a = b = 0$ and $c = n$. Note that
+  We find an upper bound for $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are
+  induced graphs, $\{u, v\} \in E(G_1)$ if and only if $\{u, v\} \in E(G_2)$, for $u, v \in C$, and
+  thus $E(G_1[C]) = E(G_2[C]) = E(G_i) \cap E(G_j)$. But then $E(G_i) \cap E(G_j)$ is triangle-free,
+  so $e(G_1[C]) \leq \left\lfloor\frac{c^2}{4}\right\rfloor$, with equality if and only if $G_1[C] =
+  K_{\left\lceil\frac{c}{2}\right\rceil, \left\lfloor\frac{c}{2}\right\rfloor}$. Hence, 
+  \begin{gather}
+    e(G_1) + e(G_2) \leq \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor\right].
+  \end{gather}
+  Define $f(a, b, c)$ as the function on the right-hand-side of (2.1). We show that $f(a, b, c)$
+  attains its maximum $2\left\lfloor\frac{n^2}{4}\right\rfloor$ at $a = b = 0$ and $c = n$. For $b
+  \geq 2$,
   \begin{align*}
     f(a, b - 2, c + 2) - f(a, b, c)
     &= \binom{a + c + 2}{2} - \binom{a + c}{2} \\
@@ -135,34 +130,33 @@ We first show a simpler case where $F$ is a triangle.
     &= 2a + 1 > 0.
   \end{align*}
   By symmetry, $f(a - 2, b, c + 2) > f(a, b, c)$, and thus $f$ attains its maximum when $c$ is $n -
-  1$ or $n$, that is, $a + b \leq 1$. Equation (1) now yields, 
+  1$ or $n$, that is, $a + b \leq 1$. Equation (2.1) now yields, 
   \[
-    e(G_1) + e(G_2) \leq f(a, b, c) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor.
+    e(G_1) + e(G_2) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor.
   \]
   Assume that $a = 0$. When $c = n$, the equality holds only if $G_1 = G_2 =
   K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$. If $c = n - 1$,
-  then the equality holds only if $n$ is odd and $G_1 = G[C] = K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2$ is $G_1$ with all vertices
-  connected with the only remaining vertex, that is, $G_2 = \mathcal{T}(K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor})$.
+  then the equality holds only if $n$ is odd, $G_1 = G[C] = K_{\left\lceil\frac{n -
+  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2$ is a copy of $G_1$ with
+  all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
 \end{proof}
 
 We now prove Theorem 2.1.
 
 \begin{proof}[Proof of Theorem 2.1]
-  We may assume that $n > 1$. Put $G_{n + i} = G_i$. By Lemma 3.2,
+  Assume that $n > 1$. Put $G_{n + i} = G_i$. By Lemma 3.2,
   \[
     \sum_{i = 1}^n e(G_i) = \frac{1}{2}\sum_{i = 1}^n (e(G_i) + e(G_{i + 1})) \leq \frac{1}{2}\sum_{i = 1}^n 2\left\lfloor\frac{n^2}{4}\right\rfloor = n\left\lfloor\frac{n^2}{4}\right\rfloor.
   \]
   Suppose the equality holds. By Lemma 3.2, we are done if $n$ is even. Suppose $n$ is odd and $G_i
-   = \mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n -
-   1}{2}\right\rfloor})$ for some $i$. By Lemma 3.2, one of $G_i$ and $G_{i + 1}$ is
-   $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and the
-   other is $\mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n -
-   1}{2}\right\rfloor})$, for all $i$. Hence,
-   \[
-    G_{i + 1} = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}, G_{i + 2} = \mathcal{T}(K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}), \ldots
-   \]
+   = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for
+   some $i$. By applying Lemma 3.2 repeatedly, 
+   \begin{align*}
+    G_i &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
+    G_{i + 1} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} \\
+    G_{i + 2} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
+    &\qquad\quad \vdots
+   \end{align*}
    and the alternation proceeds. But then $G_{n + i} = G_i =
    K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ as $n$ is
    odd, and this contradiction completes the proof.
@@ -188,53 +182,85 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
     e(G_1) + e(G_2) \leq 2 \cdot \textnormal{ex}(n, F),
   \]
   with equality if and only if $G_1 = G_2$ are $n$-vertex extremal graphs for $F$, unless $n$ is
-  odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = \mathcal{T}(G_1)$. 
+  odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$. 
 \end{lemma}
 
 \begin{proof}
-	\textcolor{red}{TODO: fix this proof.}
-  Let $C = V(G_1) \cap V(G_2)$, the set of vertices in both $G_1$ and $G_2$. Let $A = V(G_1)
-  \backslash C$, and let $B = V(G_2) \backslash C$. For simplicity, put $a = |A|$, $b = |B|$, $c =
-  |C|$, and $r = \chi(F)$.
-
-  We now find an upper bound of $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are
-  induced graphs, we have $E(G_1[C]) = E(G_2[C]) = E(G[C]) = E(G_i) \cap E(G_j)$, which is $F$-free.
-  Hence, we may write
+  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a =
+  |A|$, $b = |B|$, $c = |C|$. Since $G_1, G_2$ are induced graphs, $E(G_1[C]) =
+  E(G_2[C]) = E(G[C]) = E(G_i) \cap E(G_j)$, which is $F$-free. Hence, 
   \begin{gather}
     e(G_1) + e(G_2) \leq \binom{a + c}{2} +  \binom{b + c}{2} - 2\left[\binom{c}{2} - \textnormal{ex}(c, F)\right].
   \end{gather}
-  Define $f(a, b, c)$ as the function on the right-hand-side. We show that $f(a, b, c)$ attains its
-  maximum at $a = b = 0$ and $c = n$. By a theorem of Simonovits, for large enough $c$,
-  $\text{ex}(c, F) = \text{ex}(c, K_{r + 1}) + \text{ex}(c, \tilde{F})$, where $\tilde{F}$ is the
-  family of residue subgraphs of $F$ after $F$ is embedded into $T_r(c)$. Hence, we may write
-  \begin{align*}
-    f(a, b - 2, c + 2) - f(a, b, c)
-    &= \binom{a + c + 2}{2} - \binom{a + c}{2} \\
-    &\;\; - 2\left[\binom{c + 2}{2} - \binom{c}{2} - \textnormal{ex}(c + 2, F) + \textnormal{ex}(c, F)\right] \\
-    &\geq 2a - 2c - 1 + 2[\textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1})] > 0,
-  \end{align*}
-  as shown in the proof of Lemma 3.4. By symmetry, we also have $f(a - 2, b, c + 2) > f(a, b, c)$.
-  Thus, $f$ attains its maximum when $c$ is $n - 1$ or $n$. Equation (5) now yields, 
+  Define $f(a, b, c)$ as the function on the right-hand-side of (2.2). We show that $f(a, b, c)$
+  attains its maximum at $a = b = 0$ and $c = n$. 
+
+  \begin{claim}
+    If $c \leq \frac{n}{2}$, then $f(a, b, c) < 2 \cdot \textnormal{ex}(n, F)$.
+  \end{claim}
+
+  \begin{proof}
+    Write $c = kn$ for some $k \in [0, 1/2]$. Since
+    \[
+      f(a, b, kn) \leq 2\binom{(1 - k)n/2}{2} - 2\left[\binom{kn}{2} - \textnormal{ex}(kn, F)\right],
+    \]
+    it suffices to show that
+    \[
+      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
+    \]
+    for all $k \in [0, 1/2]$. By a theorem of Simonovits, for large enough $n$, $\text{ex}(n, F) =
+    \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is the family of residue
+    subgraphs of $F$ after $F$ is embedded into $T_r(n)$. Hence, we may write
+    \[
+      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq e(T_r(n)) - e(T_r(n/2))
+    \]
+    Put $s = n \mod r$. Since $e(T_r(n)) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} - o(n^2)$, we
+    have
+    \[
+      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) = \left(1 - \frac{1}{r}\right)\frac{3n^2}{8} - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
+    \]
+    On the other hand, 
+    \[
+      \binom{(1 - k)n/2}{2} - \binom{kn}{2} = (1 - 2k - 3k^2)\frac{n^2}{8} + o(n^2) \leq \frac{n^2}{8} + o(n^2).
+    \]
+    Combining the above inequalities yields the claim.
+  \end{proof}
+  By the claim, we may assume that $c > \frac{n}{2}$. Again by the theorem of Simonovits, we may
+  write
+  \[
+    f(a, b - 2, c + 2) - f(a, b, c) \geq 2a - 2c - 1 + 2[\textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1})].
+  \]
+  Since $\textnormal{ex}(c + 1, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1}) \geq c - \left\lfloor
+  \frac{c}{r} \right\rfloor \geq c - \left\lfloor \frac{c}{2} \right\rfloor$, we have
+  \[
+    \textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1}) \geq c + 1 - \left\lfloor \frac{c + 1}{2} \right\rfloor + c - \left\lfloor \frac{c}{2} \right\rfloor = c + 1,
+  \]
+  and thus 
+  \[
+    f(a, b - 2, c + 2) - f(a, b, c) \geq 2a + 1 > 0.
+  \]
+
+  By symmetry, we also have $f(a - 2, b, c + 2) > f(a, b, c)$. Thus, $f$ attains its maximum when
+  $c$ is $n - 1$ or $n$. Equation (2.2) now yields, 
   \begin{align*}
     e(G_1) + e(G_2) \leq \max\left[2 \cdot \textnormal{ex}(n, F), 2 \cdot \textnormal{ex}(n - 1, F) + n - 1\right].
   \end{align*}
   Assume that $a = 0$. Since
   \begin{align}
-    2 \cdot \textnormal{ex}(n, F) - [2 \cdot \textnormal{ex}(n - 1, F) + n - 1]
-    &\geq 2[\textnormal{ex}(n, K_{r + 1}) - \textnormal{ex}(n - 1, K_{r + 1})] \\
-    &\qquad\qquad\qquad\qquad - n + 1 \\
-    &= 2\left(n - \left\lceil \frac{n}{r} \right\rceil\right) - n + 1 \\
-    &\geq n + 1 - 2\left\lceil \frac{n}{2} \right\rceil \geq 0, \nonumber
+    2 \cdot \textnormal{ex}(n, F) - 
+    [2 \cdot \textnormal{ex}(n - 1, F) &+ n - 1] \nonumber \\
+    &\geq 2[\textnormal{ex}(n, K_{r + 1}) - \textnormal{ex}(n - 1, K_{r + 1})] - n + 1 \\
+    &= 2\left(n - \left\lceil \frac{n}{r} \right\rceil\right) - n + 1 \nonumber  \\
+    &\geq n + 1 - 2\left\lceil \frac{n}{2} \right\rceil \geq 0,  \nonumber 
   \end{align}
   we have
-  \begin{gather}
+  \[
     e(G_1) + e(G_2) \leq 2 \cdot \textnormal{ex}(n, F).
-  \end{gather}
-  If $c = n$, the equality for (9) holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$.
-  Suppose $c = n - 1$ and the equality holds. Observe that equation (6) is equal to zero only when
-  $r = 2$ and $n$ is odd. Hence, if $c = n - 1$, the equality for (9) could only be achieved when $r
-  = 2$, $n$ is odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 =
-  \mathcal{T}(G_1)$.
+  \]
+  If $c = n$, the equality holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$. Suppose
+  $c = n - 1$ and the equality holds. Observe that equation (2.3) equals to zero only when $r = 2$
+  and $n$ is odd. Hence, if $c = n - 1$, equality could only be achieved when $r = 2$, $n$ is odd,
+  $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
 \end{proof}
 
 \chapter{General Case}
