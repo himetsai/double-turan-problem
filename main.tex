@@ -14,6 +14,11 @@
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
 \usetikzlibrary{automata,positioning}
 
+\usepackage[firstpageonly]{draftwatermark}
+
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{7}
+
 % Page layout
 \geometry{a4paper, margin=1in}
 \setlength{\parskip}{5pt}
@@ -26,6 +31,18 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
+
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\prob}{\mathds{P}}
+\newcommand*{\E}{\mathds{E}}
+\newcommand*{\F}{\mathds{F}}
 
 % Title Page
 \title{Double Turán Problem}
@@ -213,7 +230,7 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
     for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\textnormal{ex}(n, F) = \left(1 -
     \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
     \[
-      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2)
+      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
     \]
     On the right-hand-side, 
     \[
@@ -259,9 +276,9 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
     e(G_1) + e(G_2) \leq 2 \cdot \textnormal{ex}(n, F).
   \]
   If $c = n$, the equality holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$. Suppose
-  $c = n - 1$ and the equality holds. Observe that equation (2.3) equals to zero only when $r = 2$
-  and $n$ is odd. Hence, if $c = n - 1$, equality could only be achieved when $r = 2$, $n$ is odd,
-  $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
+  $c = n - 1$ and the equality holds. Observe that equation (2.3) is equal to zero only when $r = 2$
+  and $n$ is odd. Thus if $c = n - 1$, then the equality could only be achieved when $r = 2$, $n$ is
+  odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
 \end{proof}
 
 \chapter{General Case}
@@ -415,17 +432,18 @@ In this section, we discuss the case where $F$ is bipartite. In particular, we f
 where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matching with two edges.
 
 \begin{theorem}
-  Given graph $G$ and $G_1, \cdots, G_n$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
+  Given graph $G$ and $G_1, \cdots, G_m$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
   $P_2$ for distinct $i, j$. Then
   \[
-    \sum_{i = 1}^m e(G_i) \leq \frac{n^{5/2}}{2}.
+    \sum_{i = 1}^m e(G_i) \leq \left(\frac{1}{2} + o(1)\right)\frac{n^{2}\sqrt{m}}{2},
   \]
+  $n \to \infty$ or $m \to \infty$.
 \end{theorem}
 
 \begin{proof}
   Since there are no overlapping $P_2$'s in different $G_i$'s, 
   \[
-    \sum_{i = 1}^n \#\{P_2 \subseteq G_i\} \leq \#\{P_2 \subseteq G\}
+    \sum_{i = 1}^m \#\{P_2 \subseteq G_i\} \leq \#\{P_2 \subseteq G\}
   \]
   For each $G_i$, each vertex $v$ in $G_i$ and two of its neighbors form one unique $P_2$, so
   \[
@@ -433,19 +451,63 @@ where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matchin
   \]
   And by Jensen's inequality,
   \[
-    \sum_{v \in V(G_i)} \binom{d_{G_i}(v)}{2} \geq n\binom{d_{G_i}(v)/n}{2} = n\binom{2e(G_i)/n}{2} \geq \frac{2(e(G_i))^2}{n}.
+    \sum_{v \in V(G_i)} \binom{d_{G_i}(v)}{2} \geq n\binom{d_{G_i}(v)/n}{2} = n\binom{2e(G_i)/n}{2} \geq \frac{2(e(G_i))^2}{n} - e(G_i).
   \]
   On the other hand, since each three vertices in $G$ can form at most three $P_2$'s, 
   \[
-    \#\{P_2 \subseteq G\} \leq 3\binom{n}{3} = \frac{n^3}{2}.
+    \#\{P_2 \subseteq G\} \leq 3\binom{n}{3} \leq \frac{n^3}{2}.
   \]
   Combining the above inequalities yields
   \[
-    \sum_{i = 1}^n \frac{2(e(G_i))^2}{n} \leq \frac{n^3}{2} \overset{Jensen's}{\implies} \sum_{i = 1}^n e(G_i) \leq \frac{n^{5/2}}{2}.
+    \frac{2m}{n}\left(\frac{1}{m}\sum_{i = 1}^m e(G_i)\right)^2 - \sum_{i = 1}^m e(G_i) \overset{Jensen's}{\leq} \sum_{i = 1}^m \frac{2(e(G_i))^2}{n} - e(G_i) \leq \frac{n^3}{2},
   \]
+  and solving the quadratic equation gives
+  \[
+    \sum_{i = 1}^m e(G_i) \leq mn \cdot \frac{1 + \sqrt{4n^2/m + 1}}{4} =  \left(\frac{1}{2} + o(1)\right)\frac{n^{2}\sqrt{m}}{2},
+  \]
+  as $n \to \infty$ or $m \to \infty$.
 \end{proof}
 
-\textcolor{red}{TODO: add the projective plane construction.}
+When $n = m$, the above bound is tight asymptotically, as shown by the following construction using projective
+planes.
+
+\begin{theorem}
+  Given graph $G$ and $G_1, \cdots, G_m$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
+  $P_2$ for distinct $i, j$. Then
+  \[
+    \sum_{i = 1}^n e(G_i) \leq \left(\frac{1}{2} + o(1)\right)n^{5/2},
+  \]
+  as $n \to \infty$. This bound is tight asymptotically.
+\end{theorem}
+
+\begin{proof}
+  The upper bound is obtained by Theorem 3.4, so it suffices to give a construction to show the
+  tightness of the bound. Consider a finite projective plane of order $q$. The projective plane has
+  $n = q^2 + q + 1$ points and $n$ lines. Let $S_1, \ldots, S_n \subseteq [n]$ be the $n$ lines of
+  the projective plane. Note that each line $S_i$ contains $q + 1$ points, and the intersection of
+  any two distinct lines $S_i, S_j$ contains $|S_i \cap S_j| = 1$ point. Define $G_1, \ldots, G_n$
+  to be graphs on $[n]$, each with edge set $E(G_i) = \{\{j, k\} \subseteq [n] : j \neq k, \, j + k
+  \in S_i \mod n\}$. Note that the intersection of distinct $G_i$, $G_j$ is $P_2$ free: since $|S_i
+  \cap S_j| = 1$, if $\{a, b\}, \{a, c\} \in E(G_i) \cap E(G_j)$, then $a + b = a + c$ so $b = c$.
+  We now count the number of edges in $G_1, \ldots, G_n$. Since $|S_i| = q + 1$, for each point $j
+  \in [n]$, there are $q + 1$ choices for $k \in [n]$ such that $j + k \in S_i$. But then we have to
+  avoid counting the same edge twice and loops, so the number of edges in $G_i$ is
+  \[
+    e(G_i) = \frac{n(q + 1) - \#\text{loops counted for } G_i}{2}.
+  \]
+  If $j \in [n]$ is even, then $k = j/2$ is the unique number in $[n]$ such that $k + k = j \mod n$.
+  If $j \in [n]$ is odd, then $k = (n + j)/2$ is the unique number in $[n]$ such that $k + k = j
+  \mod n$, as $n$ is even. Hence, for each $j \in S_i$, there exists a unique $k \in [n]$ such that
+  $k + k = j \mod n$, and thus
+  \[
+    \#\text{loops counted for } G_i = |S_i| = q + 1.
+  \]
+  The number of edges in $G_1, \ldots, G_n$ is then
+  \[
+    \sum_{i = 1}^n e(G_i) = n \cdot \frac{n(q + 1) - (q + 1)}{2} = \left(\frac{1}{2} + o(1)\right)n^{5/2},
+  \]
+  as $n \to \infty$.
+\end{proof}
 
 \begin{theorem}
   Given graph $G$ and $G_1, \cdots, G_n$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
@@ -514,8 +576,6 @@ We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
   this construction is $2\binom{n}{2} = n^2 - n$.
 \end{proof}
 
- 
-
 \begin{theorem}
   Let $F$ be a graph such that there exists extremal $F$-free subgraph $H$ on $n$ vertices that have
   maximum degree $\Delta(H) = o(n^{1/2})$. For large enough $n$, if $G_1, \ldots, G_m$ are graphs on
@@ -525,6 +585,8 @@ We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
   \]
   and the bound is tight.
 \end{theorem}
+
+\textcolor{red}{TODO: add an explicit condition on how small $m$ relative to $n$}.
 
 \begin{proof}
   For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i
@@ -556,7 +618,7 @@ We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
   Suppose there exists an intersecting edge $\{u, w\} \in E(H_i) \cap E(H_j)$. Since the maximum
   degree of each $H_i$ is $o(n^{1/2})$, $|N(u) \cup N(N(u))| = o(n)$ so there exists a vertex $v
   \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$, performing a $(u, v, i)$-swap
-  reduces the number of intersecting edges. The result now follows by iterating this process.
+  reduces the number of intersecting edges. The result now follows from iterating this process.
 \end{proof}
 
 
