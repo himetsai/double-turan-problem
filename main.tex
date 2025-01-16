@@ -14,11 +14,6 @@
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
 \usetikzlibrary{automata,positioning}
 
-\usepackage[firstpageonly]{draftwatermark}
-
-\SetWatermarkText{DRAFT}
-\SetWatermarkScale{7}
-
 % Page layout
 \geometry{a4paper, margin=1in}
 \setlength{\parskip}{5pt}
@@ -32,85 +27,68 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
 
-\newcommand{\Var}{\mathrm{Var}}
-\newcommand{\Cov}{\mathrm{Cov}}
-\newcommand{\Bias}{\mathrm{Bias}}
-\newcommand*{\Z}{\mathbb{Z}}
-\newcommand*{\Q}{\mathbb{Q}}
-\newcommand*{\R}{\mathbb{R}}
-\newcommand*{\C}{\mathbb{C}}
-\newcommand*{\N}{\mathbb{N}}
-\newcommand*{\prob}{\mathds{P}}
-\newcommand*{\E}{\mathds{E}}
+\newcommand{\Var}{\mathrm{Var}} 
+\newcommand{\Cov}{\mathrm{Cov}} 
+\newcommand{\Bias}{\mathrm{Bias}} 
+\newcommand*{\Z}{\mathbb{Z}} 
+\newcommand*{\Q}{\mathbb{Q}} 
+\newcommand*{\R}{\mathbb{R}} 
+\newcommand*{\C}{\mathbb{C}} 
+\newcommand*{\N}{\mathbb{N}} 
+\newcommand*{\prob}{\mathds{P}} 
+\newcommand*{\E}{\mathds{E}} 
 \newcommand*{\F}{\mathds{F}}
+\newcommand*{\ex}{\textnormal{ex}}
+\newcommand*{\dex}{\textnormal{ex}_2}
+\newcommand*{\dexind}{\textnormal{ex}_2^*}
 
 % Title Page
 \title{Double Turán Problem}
-\author{Ray Tsai}
-\date{November 2024}
 
 \begin{document}
 
 \maketitle
 
-% \begin{abstract}
-% Your abstract here. Provide a concise summary of your thesis, including the problem statement, methodology, main results, and conclusions.
-% \end{abstract}
+% \begin{abstract} Your abstract here. Provide a concise summary of your thesis, including the problem statement, methodology, main results, and conclusions. \end{abstract}
 
-% \chapter*{Acknowledgments}
-% Thank your advisor, collaborators, and anyone who supported your research.
+% \chapter*{Acknowledgments} Thank your advisor, collaborators, and anyone who supported your research.
 
 \tableofcontents
 
 \chapter{Introduction}
 
-\textcolor{red}{TODO: add more introduction.}
+Let $\dex(n, m, F)$ be the maximum possible sum of the number of edges over $m$ subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$, with the constraint that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. Our goal is to determine $\dex(n, m, F)$ for different forbidden graphs $F$. A trivial construction with $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $\binom{n}{2} + (m - 1)\ex(n, F)$. In this work, we use this bound as a benchmark to either show the tightness of $\dex(n, m, F)$ or to provide a better bound.
+
+Additionally, we are also interested in a more restrictive version where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We denote $\dexind(n, m, F)$ as the maximum possible sum of the number of edges over $m$ induced subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$ such that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. The trivial construction by taking $G_1, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $m \cdot \ex(n, F)$. This is the benchmark we use to determine $\dexind(n, m, F)$.
+
+In this work, we will first discuss the induced case, and then shift our focus to the general case. At the end, we will discuss the case where $F$ is bipartite.
 
 \section{Definitions and Notation}
-Let $G = (V, E)$ be a graph. Let $V(G) = V$ denote the vertex set and $E(G) = E$ denote the edge set
-of $G$. We note by $v(G) = |V|$ the number of vertices and $e(G) = |E|$ the number of edges in $G$.
-For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood
-of $v$.
+Let $G = (V, E)$ be a graph. Let $V(G) = V$ denote the vertex set and $E(G) = E$ denote the edge set of $G$. We note by $v(G) = |V|$ the number of vertices and $e(G) = |E|$ the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$.
 
-Given $G_1, \ldots, G_m$ subgraphs of $G$, we denote $G_{i_1, \ldots, i_k}$ as the subgraph of $G$
-with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{\alpha})$. 
+Given $G_1, \ldots, G_m$ subgraphs of $G$, we denote $G_{i_1, \ldots, i_k}$ as the subgraph of $G$ with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{\alpha})$. 
 
-In this thesis, we reserve $n$ to denote the number of vertices in a graph. Given a graph $F$, we
-denote $\text{ex}(n, F)$ to be the extremal number for $F$ on a graph with $n$ vertices, i.e. the
-maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph.
+In this thesis, we reserve $n$ to denote the number of vertices in a graph. Given a graph $F$, we denote $\ex(n, F)$ to be the extremal number for $F$ on a graph with $n$ vertices, i.e. the maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph. 
 
-We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$
-are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with
-$n$ edges. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) =
-V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
+We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with $n$ edges. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
 
-We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set
-$X$, we denote $2^X$ as the power set of $X$.
-
-\section{Problem Statement}
-
-Given graph $G$ with $n$ vertices, let $G_1, \ldots, G_m$ be subgraphs of $G$. Let $F$ be a graph
-with at least one edge. Our goal is to determine the maximum sum of the number of edges over all
-$G_i$'s, i.e. $\sum_{i = 1}^m e(G_i)$, with the constraint of $E(G_i) \cap E(G_j)$ not including
-some graph $F$ for all distinct $i, j$. 
-
-In this thesis, we first consider the case where $G_1, \ldots, G_m$ are induced subgraphs, and then
-shift our focus to the general case. At the end, we will discuss the case where $F$ is bipartite.
+We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$.
 
 \chapter{Induced Case}
 
-In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G$. We first show a
-simpler case where $F$ is a triangle.
+In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We first show a simpler case where $F$ is a triangle.
+
+\textcolor{red}{TODO: add the ``suffice to show for $m = 2$'' lemma, the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
+
 
 \section{Triangle $F$}
 
 \begin{theorem}
-  Suppose that $E(G_i) \cap E(G_j)$ does not include $K_3$ for distinct $i, j$. Then
+  For all $n$,
   \[
-    \sum_{i = 1}^n e(G_i) \leq n\left\lfloor\frac{n^2}{4}\right\rfloor,
+    \dexind(n, n, F) = n \cdot \ex(n, F).
   \]
-  with equality if and only if $G_1 = G_2 = \cdots = G_n = K_{\left\lceil\frac{n}{2}\right\rceil,
-  \left\lfloor\frac{n}{2}\right\rfloor}$.
+  In particular, the extremal number is reached only if $G_1 = G_2 = \cdots = G_n = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}.$
 \end{theorem}
 
 First we prove the case for two graphs:
@@ -120,27 +98,17 @@ First we prove the case for two graphs:
   \[
     e(G_1) + e(G_2) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor,
   \]
-  with equality if and only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil,
-  \left\lfloor\frac{n}{2}\right\rfloor}$, unless $n$ is odd and $G_1 = K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$.
+  with equality if and only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$, unless $n$ is odd and $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$.
 \end{lemma}
 
 \begin{proof}
-  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a =
-  |A|$, $b = |B|$, and $c = |C|$. We may assume that $a + b + c = n$.
+  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a = |A|$, $b = |B|$, and $c = |C|$. We may assume that $a + b + c = n$.
 
-  We find an upper bound for $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are
-  induced graphs, $\{u, v\} \in E(G_1)$ if and only if $\{u, v\} \in E(G_2)$, for $u, v \in C$, and
-  thus $E(G_1[C]) = E(G_2[C]) = E(G_i) \cap E(G_j)$. But then $E(G_i) \cap E(G_j)$ is triangle-free,
-  so $e(G_1[C]) \leq \left\lfloor\frac{c^2}{4}\right\rfloor$, with equality if and only if $G_1[C] =
-  K_{\left\lceil\frac{c}{2}\right\rceil, \left\lfloor\frac{c}{2}\right\rfloor}$. Hence, 
+  We find an upper bound for $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are induced graphs, $\{u, v\} \in E(G_1)$ if and only if $\{u, v\} \in E(G_2)$, for $u, v \in C$, and thus $E(G_1[C]) = E(G_2[C]) = E(G_i) \cap E(G_j)$. But then $E(G_i) \cap E(G_j)$ is triangle-free, so $e(G_1[C]) \leq \left\lfloor\frac{c^2}{4}\right\rfloor$, with equality if and only if $G_1[C] = K_{\left\lceil\frac{c}{2}\right\rceil, \left\lfloor\frac{c}{2}\right\rfloor}$. Hence, 
   \begin{gather}
     e(G_1) + e(G_2) \leq \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor\right].
   \end{gather}
-  Define $f(a, b, c)$ as the function on the right-hand-side of (2.1). We show that $f(a, b, c)$
-  attains its maximum $2\left\lfloor\frac{n^2}{4}\right\rfloor$ at $a = b = 0$ and $c = n$. For $b
-  \geq 2$,
+  Define $f(a, b, c)$ as the function on the right-hand-side of (2.1). We show that $f(a, b, c)$ attains its maximum $2\left\lfloor\frac{n^2}{4}\right\rfloor$ at $a = b = 0$ and $c = n$. For $b \geq 2$,
   \begin{align*}
     f(a, b - 2, c + 2) - f(a, b, c)
     &= \binom{a + c + 2}{2} - \binom{a + c}{2} \\
@@ -148,16 +116,11 @@ First we prove the case for two graphs:
     &= 2(a + c) + 1 - 2[2c + 1 - (c + 1)] \\
     &= 2a + 1 > 0.
   \end{align*}
-  By symmetry, $f(a - 2, b, c + 2) > f(a, b, c)$, and thus $f$ attains its maximum when $c$ is $n -
-  1$ or $n$, that is, $a + b \leq 1$. Equation (2.1) now yields, 
+  By symmetry, $f(a - 2, b, c + 2) > f(a, b, c)$, and thus $f$ attains its maximum when $c$ is $n - 1$ or $n$, that is, $a + b \leq 1$. Equation (2.1) now yields, 
   \[
     e(G_1) + e(G_2) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor.
   \]
-  Assume that $a = 0$. When $c = n$, the equality holds only if $G_1 = G_2 =
-  K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$. If $c = n - 1$,
-  then the equality holds only if $n$ is odd, $G_1 = G[C] = K_{\left\lceil\frac{n -
-  1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2$ is a copy of $G_1$ with
-  all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
+  Assume that $a = 0$. When $c = n$, the equality holds only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$. If $c = n - 1$, then the equality holds only if $n$ is odd, $G_1 = G[C] = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2$ is a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
 \end{proof}
 
 We now prove Theorem 2.1.
@@ -167,70 +130,59 @@ We now prove Theorem 2.1.
   \[
     \sum_{i = 1}^n e(G_i) = \frac{1}{2}\sum_{i = 1}^n (e(G_i) + e(G_{i + 1})) \leq \frac{1}{2}\sum_{i = 1}^n 2\left\lfloor\frac{n^2}{4}\right\rfloor = n\left\lfloor\frac{n^2}{4}\right\rfloor.
   \]
-  Suppose the equality holds. By Lemma 3.2, we are done if $n$ is even. Suppose $n$ is odd and $G_i
-   = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for
-   some $i$. By applying Lemma 3.2 repeatedly, 
+  Suppose the equality holds. By Lemma 3.2, we are done if $n$ is even. Suppose $n$ is odd and $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. By applying Lemma 3.2 repeatedly, 
    \begin{align*}
     G_i &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
     G_{i + 1} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} \\
     G_{i + 2} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
     &\qquad\quad \vdots
    \end{align*}
-   and the alternation proceeds. But then $G_{n + i} = G_i =
-   K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ as $n$ is
-   odd, and this contradiction completes the proof.
+   and the alternation proceeds. But then $G_{n + i} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ as $n$ is odd, and this contradiction completes the proof.
 \end{proof}
 
 \section{Non-bipartite $F$}
 
 \begin{theorem}
-  Let $F$ be $(r + 1)$-colorable, with $r \geq 2$. Suppose that $E(G_i) \cap E(G_j)$ is $F$-free for
-  distinct $i, j$. For large enough $n$,
+  Suppose $F$ is $(r + 1)$-colorable, with $r \geq 2$. For large enough $n$,
   \[
-    \sum_{i = 1}^n e(G_i) \leq n \cdot \textnormal{ex}(n, F),
+    \dexind(n, n, F) = n \cdot \ex(n, F).
   \]
-  with equality if and only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$.
+  In particular, the extremal number is reached only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$.
 \end{theorem}
 
 By the same argument as in Theorem 2.1, it suffices to prove the following lemma:
 
 \begin{lemma}
-  Let $F$ be $(r + 1)$-colorable, with $r \geq 2$. Suppose $E(G_1) \cap E(G_2)$ does not include
-  $F$. For large enough $n$,
+  Let $F$ be $(r + 1)$-colorable, with $r \geq 2$. Suppose $E(G_1) \cap E(G_2)$ does not include $F$. For large enough $n$,
   \[
-    e(G_1) + e(G_2) \leq 2 \cdot \textnormal{ex}(n, F),
+    e(G_1) + e(G_2) \leq 2 \cdot \ex(n, F),
   \]
-  with equality if and only if $G_1 = G_2$ are $n$-vertex extremal graphs for $F$, unless $n$ is
-  odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$. 
+  with equality if and only if $G_1 = G_2$ are $n$-vertex extremal graphs for $F$, unless $n$ is odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$. 
 \end{lemma}
 
 \begin{proof}
-  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a =
-  |A|$, $b = |B|$, $c = |C|$. Since $G_1, G_2$ are induced graphs, $E(G_1[C]) =
-  E(G_2[C]) = E(G[C]) = E(G_i) \cap E(G_j)$, which is $F$-free. Hence, 
+  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a = |A|$, $b = |B|$, $c = |C|$. Since $G_1, G_2$ are induced graphs, $E(G_1[C]) = E(G_2[C]) = E(G[C]) = E(G_i) \cap E(G_j)$, which is $F$-free. Hence, 
   \begin{gather}
-    e(G_1) + e(G_2) \leq \binom{a + c}{2} +  \binom{b + c}{2} - 2\left[\binom{c}{2} - \textnormal{ex}(c, F)\right].
+    e(G_1) + e(G_2) \leq \binom{a + c}{2} +  \binom{b + c}{2} - 2\left[\binom{c}{2} - \ex(c, F)\right].
   \end{gather}
-  Define $f(a, b, c)$ as the function on the right-hand-side of (2.2). We show that $f(a, b, c)$
-  attains its maximum at $a = b = 0$ and $c = n$. 
+  Define $f(a, b, c)$ as the function on the right-hand-side of (2.2). We show that $f(a, b, c)$ attains its maximum at $a = b = 0$ and $c = n$. 
 
   \begin{claim}
-    If $c \leq \frac{n}{2}$, then $f(a, b, c) < 2 \cdot \textnormal{ex}(n, F)$.
+    If $c \leq \frac{n}{2}$, then $f(a, b, c) < 2 \cdot \ex(n, F)$.
   \end{claim}
 
   \begin{proof}
     Write $c = kn$ for some $k \in [0, 1/2]$. Since
     \[
-      f(a, b, kn) \leq 2\binom{(1 - k)n/2}{2} - 2\left[\binom{kn}{2} - \textnormal{ex}(kn, F)\right],
+      f(a, b, kn) \leq 2\binom{(1 - k)n/2}{2} - 2\left[\binom{kn}{2} - \ex(kn, F)\right],
     \]
     it suffices to show that
     \[
-      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
+      \ex(n, F) - \ex(c, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
     \]
-    for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\textnormal{ex}(n, F) = \left(1 -
-    \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
+    for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\ex(n, F) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
     \[
-      \textnormal{ex}(n, F) - \textnormal{ex}(c, F) \geq \textnormal{ex}(n, F) - \textnormal{ex}(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
+      \ex(n, F) - \ex(c, F) \geq \ex(n, F) - \ex(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
     \]
     On the right-hand-side, 
     \[
@@ -238,73 +190,56 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
     \]
     Combining the above inequalities now yields the claim, as $n$ is large.
   \end{proof}
-  Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough
-  $n$, $\text{ex}(n, F) = \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is
-  the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(n)$. This implies 
+  Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough $n$, $\text{ex}(n, F) = \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(n)$. This implies 
   \[
     \text{ex}(n + 1, F) - \text{ex}(n, F) \geq \text{ex}(n, K_{r + 1}) - \text{ex}(n + 1, K_{r + 1}),
   \]
   and so
   \[
-    f(a, b - 2, c + 2) - f(a, b, c) \geq 2a - 2c - 1 + 2[\textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1})].
+    f(a, b - 2, c + 2) - f(a, b, c) \geq 2a - 2c - 1 + 2[\ex(c + 2, K_{r + 1}) - \ex(c, K_{r + 1})].
   \]
-  Since $\textnormal{ex}(c + 1, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1}) \geq c - \left\lfloor
-  \frac{c}{r} \right\rfloor \geq c - \left\lfloor \frac{c}{2} \right\rfloor$, we have
+  Since $\ex(c + 1, K_{r + 1}) - \ex(c, K_{r + 1}) \geq c - \left\lfloor \frac{c}{r} \right\rfloor \geq c - \left\lfloor \frac{c}{2} \right\rfloor$, we have
   \[
-    \textnormal{ex}(c + 2, K_{r + 1}) - \textnormal{ex}(c, K_{r + 1}) \geq c + 1 - \left\lfloor \frac{c + 1}{2} \right\rfloor + c - \left\lfloor \frac{c}{2} \right\rfloor = c + 1,
+    \ex(c + 2, K_{r + 1}) - \ex(c, K_{r + 1}) \geq c + 1 - \left\lfloor \frac{c + 1}{2} \right\rfloor + c - \left\lfloor \frac{c}{2} \right\rfloor = c + 1,
   \]
   and thus 
   \[
     f(a, b - 2, c + 2) - f(a, b, c) \geq 2a + 1 > 0.
   \]
 
-  By symmetry, we also have $f(a - 2, b, c + 2) > f(a, b, c)$. Thus, $f$ attains its maximum when
-  $c$ is $n - 1$ or $n$. Equation (2.2) now yields, 
+  By symmetry, we also have $f(a - 2, b, c + 2) > f(a, b, c)$. Thus, $f$ attains its maximum when $c$ is $n - 1$ or $n$. Equation (2.2) now yields, 
   \begin{align*}
-    e(G_1) + e(G_2) \leq \max\left[2 \cdot \textnormal{ex}(n, F), 2 \cdot \textnormal{ex}(n - 1, F) + n - 1\right].
+    e(G_1) + e(G_2) \leq \max\left[2 \cdot \ex(n, F), 2 \cdot \ex(n - 1, F) + n - 1\right].
   \end{align*}
   Assume that $a = 0$. Since
   \begin{align}
-    2 \cdot \textnormal{ex}(n, F) - 
-    [2 \cdot \textnormal{ex}(n - 1, F) &+ n - 1] \nonumber \\
-    &\geq 2[\textnormal{ex}(n, K_{r + 1}) - \textnormal{ex}(n - 1, K_{r + 1})] - n + 1 \\
+    2 \cdot \ex(n, F) - 
+    [2 \cdot \ex(n - 1, F) &+ n - 1] \nonumber \\
+    &\geq 2[\ex(n, K_{r + 1}) - \ex(n - 1, K_{r + 1})] - n + 1 \\
     &= 2\left(n - \left\lceil \frac{n}{r} \right\rceil\right) - n + 1 \nonumber  \\
     &\geq n + 1 - 2\left\lceil \frac{n}{2} \right\rceil \geq 0,  \nonumber 
   \end{align}
   we have
   \[
-    e(G_1) + e(G_2) \leq 2 \cdot \textnormal{ex}(n, F).
+    e(G_1) + e(G_2) \leq 2 \cdot \ex(n, F).
   \]
-  If $c = n$, the equality holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$. Suppose
-  $c = n - 1$ and the equality holds. Observe that equation (2.3) is equal to zero only when $r = 2$
-  and $n$ is odd. Thus if $c = n - 1$, then the equality could only be achieved when $r = 2$, $n$ is
-  odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
+  If $c = n$, the equality holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$. Suppose $c = n - 1$ and the equality holds. Observe that equation (2.3) is equal to zero only when $r = 2$ and $n$ is odd. Thus if $c = n - 1$, then the equality could only be achieved when $r = 2$, $n$ is odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
 \end{proof}
 
 \chapter{General Case}
 
-We now relax the assumption that $G_1, \dots, G_m$ are induced subgraphs. The trivial construction
-of putting $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound
-\begin{gather}
-	\sum_{i = 1}^m e(G_i) = \binom{n}{2} + (m - 1)\text{ex}(n, F).
-\end{gather}
-In this section we examine whether this bound is tight. The following is an asymptotic result on the
-number of $G_i$'s:
+\textcolor{red}{TODO: add introduction.}
 
 \begin{theorem}
-	Suppose that $E(G_i) \cap E(G_j)$ does not include $r$-vertex graph $F$ for distinct $i, j$. Then
-	for large enough $n$,
-	\[
-		\sum_{i = 1}^m e(G_i) \leq m(1 + o(1))\textnormal{ex}(n, F),
-	\]
-	as $m \to \infty$.
+  For all $n$ and graph $F$,
+  \[
+    \dex(n, m, F) = m(1 + o(1))\ex(n, F)
+  \]
+  as $m \to \infty$.
 \end{theorem}
 
 \begin{proof}
-  Pick $\epsilon > 0$. Reorder $G_1, \ldots, G_m$ so that $G_1, \ldots, G_{m'}$ are all the $G_i$'s
-  containing at least $(1 + \epsilon)\text{ex}(n, F)$ edges. A theorem of Simonovits states that $G$
-  contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since there can
-  be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, 
+  Let $r = v(F)$. Pick $\epsilon > 0$. Reorder $G_1, \ldots, G_m$ so that $G_1, \ldots, G_{m'}$ are all the $G_i$'s containing at least $(1 + \epsilon)\text{ex}(n, F)$ edges. A theorem of Simonovits states that $G$ contains at least $\delta n^r$ copies of $F$ for some $\delta = \delta(\epsilon)$. Since there can be at most $\binom{n}{r}$ copies of $F$ across all $G_i$'s, 
   \[
     m'\delta n^{r} \leq \binom{n}{r} \leq n^r \implies m' \leq \frac{1}{\delta}.
   \]
@@ -313,30 +248,24 @@ number of $G_i$'s:
     \sum_{i = 1}^m e(G_i) 
     &= \sum_{i = 1}^{m'} e(G_i) + \sum_{i = m' + 1}^m e(G_i) \\
     &\leq \frac{1}{\delta}\binom{n}{2} + \left(m - \frac{1}{\delta}\right)(1 + \epsilon)\text{ex}(n, F) \\
-    &= m\left[1 + \epsilon + \frac{1}{m\delta}\left(\frac{\binom{n}{2}}{\textnormal{ex}(n, F)} - (1 + \epsilon)\right)\right]\textnormal{ex}(n, F).
+    &= m\left[1 + \epsilon + \frac{1}{m\delta}\left(\frac{\binom{n}{2}}{\ex(n, F)} - (1 + \epsilon)\right)\right]\ex(n, F).
   \end{align*}
   Since $\epsilon$ is arbitrary, the result follows.
 \end{proof}
 
 \begin{theorem}
-  Let $F$ be a graph such that there exists extremal $F$-free subgraph $H$ on $n$ vertices that have
-  maximum degree $\Delta(H) = o(n^{1/2})$. For $m$ such that $\binom{m}{k}\Delta(H) = o(n^{1/2})$,
-  if $G_1, \ldots, G_m$ are graphs on common vertex set $[n]$ with no copy of $F$ contained in any
-  $k$ of the $G_i$'s, then
+  For large enough $n$, suppose that $G_1, \ldots, G_m$ are graphs on common vertex set $[n]$ with no copy of $F$ contained in any $k$ of the $G_i$'s. If there exists extremal $F$-free subgraph $H$ on $n$ vertices such that $\binom{m}{k}\Delta(H) = o(n^{1/2})$, then
   \[
-    \sum_{i = 1}^m e(G_i) = (k - 1)\binom{n}{2} + \textnormal{ex}(n, F)\binom{m}{k},
+    \dex(n, m ,F) = (k - 1)\binom{n}{2} + \ex(n, F)\binom{m}{k}.
   \]
-  and the bound is tight.
 \end{theorem}
 
 \begin{proof}
-  For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i
-  \in S}$. Then 
+  For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$. Then 
   \[
     \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq (k - 1)\binom{n}{2} + \sum_{S \subseteq [m], |S| \geq k} (|S| - k + 1)|E_S|.
   \]
-  Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e. the set of edges that are contained in all $G_i$
-  with $i \in S$. When $|S| \geq k$, the edge set $A_S$ is $F$-free and thus 
+  Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e. the set of edges that are contained in all $G_i$ with $i \in S$. When $|S| \geq k$, the edge set $A_S$ is $F$-free and thus 
   \[
     \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
   \]
@@ -344,46 +273,30 @@ number of $G_i$'s:
   \[
     \sum_{\substack{S \subseteq [m] \\ |S| \geq k}} (|S| - k + 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = k}} \sum_{T \subseteq S} \frac{(|T| - k + 1)|E_T|}{\binom{|T|}{k}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = k}} \sum_{T \subseteq S} |E_T| \leq \binom{m}{k}\text{ex}(n, F),
   \]
-  as each $T \in [m]$ with $|T| \geq k$ is counted $\binom{|T|}{k}$ times in total and $|T| - k + 1
-  \leq \binom{|T|}{k}$. This proves the upper bound.
+  as each $T \in [m]$ with $|T| \geq k$ is counted $\binom{|T|}{k}$ times in total and $|T| - k + 1 \leq \binom{|T|}{k}$. This proves the upper bound.
 
-  Now we show the bound is tight. In particular, we need to show there exists a construction such
-  that the graph with edge set $E_S$ is an extremal $F$-free graph, for all $S \subseteq [m]$ of
-  size $k$. Let $M = \binom{m}{k}$ and $H_1, \ldots, H_M$ be copies of an extremal $F$-free graph on
-  $n$ vertices with $\Delta(H_i) = o(n^{1/2})$ for all $i$. It suffices to show that we can embed
-  each $H_i$ onto $[n]$ such that their edge sets are pairwise disjoint. We begin by an arbitrary
-  embedding of each $H_i$ and iteratively decrease the number of intersecting edges. Define a $(u,
-  v, i)$-swap by swapping the embedding of vertex $u$ and $v$ of $H_i$, i.e. replacing each edge
-  $\{u, w\} \in E(H_i)$ with the edge $\{u, w\}$ and each edge $\{v, w\} \in E(H_i)$ with the edge
-  $\{v, w\}$. This perserves the type of isomorphism of $H_i$. Given a vertex $v$, let $N(v) =
-  N_{H_1}(v) \cup \cdots \cup N_{H_M}(v)$. Suppose there exists an intersecting edge $\{u, w\} \in
-  E(H_i) \cap E(H_j)$. Since $|N(u)| \leq M \cdot \Delta(H_i) = o(n^{1/2})$, $|N(u) \cup N(N(u))| =
-  o(n)$ so there exists a vertex $v \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$,
-  performing a $(u, v, i)$-swap reduces the number of intersecting edges. The result now follows
-  from iterating this process.
+  Now we show the bound is tight. In particular, we need to show there exists a construction such that the graph with edge set $E_S$ is an extremal $F$-free graph, for all $S \subseteq [m]$ of size $k$. Let $M = \binom{m}{k}$ and $H_1, \ldots, H_M$ be copies of an extremal $F$-free graph on $n$ vertices with $\Delta(H_i) = o(n^{1/2})$ for all $i$. It suffices to show that we can embed each $H_i$ onto $[n]$ such that their edge sets are pairwise disjoint. We begin by an arbitrary embedding of each $H_i$ and iteratively decrease the number of intersecting edges. Define a $(u, v, i)$-swap by swapping the embedding of vertex $u$ and $v$ of $H_i$, i.e. replacing each edge $\{u, w\} \in E(H_i)$ with the edge $\{u, w\}$ and each edge $\{v, w\} \in E(H_i)$ with the edge $\{v, w\}$. This perserves the type of isomorphism of $H_i$. Given a vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_M}(v)$. Suppose there exists an intersecting edge $\{u, w\} \in E(H_i) \cap E(H_j)$. Since $|N(u)|
+  \leq M \cdot \Delta(H_i) = o(n^{1/2})$, $|N(u) \cup N(N(u))| = o(n)$ so there exists a vertex $v \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$, performing a $(u, v, i)$-swap reduces the number of intersecting edges. The result now follows from iterating this process.
 \end{proof}
 
 
 \section{Triangle $F$}
 
-Consider $F$ to be a triangle. Simply counting the number of triangles in each $G_i$ shows the
-following:
+Consider $F$ to be a triangle. Simply counting the number of triangles in each $G_i$ shows the following:
 
 \begin{theorem}
-	For any $\epsilon > 0$, if $E(G_i) \cap E(G_j)$ does not include $K_3$ for distinct $i, j$, then
-	\[
-		\sum_{i = 1}^m  e(G_i) < m(1 + \epsilon)\frac{n^2}{4} + (1 - \epsilon)\frac{n^2}{2\epsilon}.
-	\]
+  For all $n, m$ and $\epsilon > 0$,
+  \[
+    \dex(n, m, K_3) < \left(m \cdot \frac{1 + \epsilon}{4} + \frac{1}{2\epsilon} - \frac{1}{2}\right)n^2.
+  \]
 \end{theorem}
 
 \begin{claim}
-	There are less than $\frac{2}{\epsilon}$ number of $G_i$'s with $e(G_i) \geq (1 +
-	\epsilon)\frac{n^2}{4}$.
+	There are less than $\frac{2}{\epsilon}$ number of $G_i$'s with at least $(1 + \epsilon)\frac{n^2}{4}$ edges.
 \end{claim}
 
 \begin{proof}
-	Suppose $e(G_i) \geq (1 + \epsilon)\frac{n^2}{4}$ for $1\leq i \leq k$. Let $K_3(G)$ denote the
-	number of triangles in graph $G$. By the Moon-Moser inequality,
+	Suppose $e(G_i) \geq (1 + \epsilon)\frac{n^2}{4}$ for $1\leq i \leq k$. Let $K_3(G)$ denote the number of triangles in graph $G$. By the Moon-Moser inequality,
 	\[
 		K_3(G_i) \geq \epsilon(1 + \epsilon)\frac{n^3}{12}.
 	\]
@@ -398,44 +311,35 @@ By the claim,
 \[
   \sum_{i = 1}^m e(G_i) < \frac{2}{\epsilon}\binom{n}{2} + \left(m - \frac{2}{\epsilon}\right)(1 + \epsilon)\frac{n^2}{4} \leq m(1 + \epsilon)\frac{n^2}{4} + (1 - \epsilon)\frac{n^2}{2\epsilon},
 \]
-which proves Theorem 3.2.
+which proves Theorem 3.3.
 
-It can be easily shown that the bound in Theorem 3.2 is tight when $m = 2$, as
+When $m = 2$, 
 \[
-	e(G_1) + e(G_2) \leq \binom{n}{2} + e(G_{1, 2}) \leq \binom{n}{2} + \left\lfloor \frac{n^2}{4} \right\rfloor.
+	e(G_1) + e(G_2) \leq \binom{n}{2} + e(G_{1, 2}) \leq \binom{n}{2} + \left\lfloor \frac{n^2}{4} \right\rfloor,
 \]
+which meets the benchmark bound and so $\dex(n, 2, K_3) = \binom{n}{2} + \left\lfloor \frac{n^2}{4} \right\rfloor$.
+
 This result is also true for $m = 3$:
 
 \begin{proposition}
-	Let $G_1, G_2, G_3$ be subgraphs of some $G$ such that no triangle is contained in any two graphs,
-	then
-	\[
-		e(G_1) + e(G_2) + e(G_3) \leq \binom{n}{2} + \frac{n^2}{2}.
-	\]
+  For all $n$,
+  \[
+    \dex(n, 3, K_3) = \binom{n}{2} + \left\lfloor \frac{n^2}{2} \right\rfloor.
+  \]
 \end{proposition}
 
 \begin{proof}
-  Define $H_k \subseteq G$ be the graph with edges contained in at least $k$ number of $G_i$'s and
-  note that $e(G_1) + e(G_2) + e(G_3) = e(H_1) + e(H_2) + e(H_3)$. Thus it suffices to show that
-  $e(H_2) + e(H_3) \leq \frac{n^2}{2}$. Notice $H_2$ must not contain any triangles with two edges
-  in $H_3$, so
+  Define $H_k \subseteq G$ be the graph with edges contained in at least $k$ number of $G_i$'s and note that $e(G_1) + e(G_2) + e(G_3) = e(H_1) + e(H_2) + e(H_3)$. Thus it suffices to show that $e(H_2) + e(H_3) \leq \frac{n^2}{2}$. Notice $H_2$ must not contain any triangles with two edges in $H_3$, so
   \[
     e(H_2) + e(H_3) \leq \binom{n}{2} + e(H_3) - |\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}|.
   \]
-  Let $H'_3$ be the graph with the same vertex set as $H_3$ and edge set $\{\{u, v\} : u \neq v,
-  N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}$. It suffices to show that $\frac{n}{2} \geq e(H_3) -
-  e(H'_3)$. 
+  Let $H'_3$ be the graph with the same vertex set as $H_3$ and edge set $\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}$. It suffices to show that $\frac{n}{2} \geq e(H_3) - e(H'_3)$. 
 
-  Let $d_1 \geq d_2 \geq \cdots \geq d_n$ and $f_1 \geq f_2 \geq \cdots \geq f_n$ each be the degree
-  sequence of $H_3$ and $H_3'$, respectively. We show that $f_i \geq d_i - 1$ for all $i$. Let $v_i$
-  denote the vertex in $H$ with degree $d_i$ and $u_i$ be the vertex in $H$ with degree $f_i$. Let
-  $S_i = |N_{H_3}(v_1) \cup \cdots \cup N_{H_3}(v_i)|$. Since 
+  Let $d_1 \geq d_2 \geq \cdots \geq d_n$ and $f_1 \geq f_2 \geq \cdots \geq f_n$ each be the degree sequence of $H_3$ and $H_3'$, respectively. We show that $f_i \geq d_i - 1$ for all $i$. Let $v_i$ denote the vertex in $H$ with degree $d_i$ and $u_i$ be the vertex in $H$ with degree $f_i$. Let $S_i = |N_{H_3}(v_1) \cup \cdots \cup N_{H_3}(v_i)|$. Since 
   \[
     \sum_{u \in S_i} d_{H_3}(u) \geq d_1 + \cdots + d_i,
   \]
-  we have that $|S_i| \geq i$. But then $S_i \backslash \{u_1, \ldots, u_{i - 1}\}$ is non-empty,
-  and every $u \in S_i$ has degree $d_{H_3'}(u) \geq d_i - 1$. Hence, $f_i \geq d_i - 1$ for all
-  $i$, which yields
+  we have that $|S_i| \geq i$. But then $S_i \backslash \{u_1, \ldots, u_{i - 1}\}$ is non-empty, and every $u \in S_i$ has degree $d_{H_3'}(u) \geq d_i - 1$. Hence, $f_i \geq d_i - 1$ for all $i$, which yields
   \[
     e(H_3') = \frac{1}{2}\sum_{i = 1}^n f_i \geq \frac{1}{2}\sum_{i = 1}^n (d_i - 1) = e(H_3) - \frac{n}{2}.
   \]
@@ -445,27 +349,14 @@ However, the bound in Proposition 3.1 is not tight for $m \geq 4$, as shown in t
 
 \begin{center}
   \begin{tikzpicture}
-    \draw (4, 2) to node[midway, above] {$123$} (-4, 2);
-    \draw (-4, 2) to node[midway, left] {$124$} (-1, -1);
-    \draw (-1, -1) to node[midway, above] {$34$} (1, -1);
-    \draw (1, -1) to node[midway, right] {$124$} (4, 2);
-    \draw (0, 1) to node[midway, below] {$234$} (4, 2);
-    \draw (0, 1) to node[midway, below] {$134$} (-4, 2);
-    \draw (0, 1) to node[midway, left] {$123$} (-1, -1);
-    \draw (0, 1) to node[midway, right] {$123$} (1, -1);
-    \draw[bend left=80] (4, 2) to node[midway, right] {$134$} (-1, -1);
-    \draw[bend right=80] (-4, 2) to node[midway, left] {$234$} (1, -1);
+    \draw (4, 2) to node[midway, above] {$123$} (-4, 2); \draw (-4, 2) to node[midway, left] {$124$} (-1, -1); \draw (-1, -1) to node[midway, above] {$34$} (1, -1); \draw (1, -1) to node[midway, right] {$124$} (4, 2); \draw (0, 1) to node[midway, below] {$234$} (4, 2); \draw (0, 1) to node[midway, below] {$134$} (-4, 2); \draw (0, 1) to node[midway, left] {$123$} (-1, -1); \draw (0, 1) to node[midway, right] {$123$} (1, -1); \draw[bend left=80] (4, 2) to node[midway, right] {$134$} (-1, -1); \draw[bend right=80] (-4, 2) to node[midway, left] {$234$} (1, -1);
 
-    \foreach \x/\y in {0/1, 4/2, 1/-1, -1/-1, -4/2} {
-        \fill (\x, \y) circle (2pt);
-    }
+    \foreach \x/\y in {0/1, 4/2, 1/-1, -1/-1, -4/2} { \fill (\x, \y) circle (2pt); }
   \end{tikzpicture}
   \\
   \small{The number on each edge denotes the set of $G_i$'s that contain the edge.}
 \end{center}
-The above graph contains $29$ edges, which exceeds the bound $\binom{5}{2} + 3 \lfloor \frac{5^2}{4}
-\rfloor = 28$ by $1$. By blowing up the above graph, we can construct a graph with $n \in
-10\mathbb{Z}$ vertices that contains
+The above graph contains $29$ edges, which exceeds the bound $\binom{5}{2} + 3 \lfloor \frac{5^2}{4} \rfloor = 28$ by $1$. By blowing up the above graph, we can construct a graph with $n \in 10\mathbb{Z}$ vertices that contains
 \[
   5\binom{n/5}{2} + 29 \cdot \frac{(n/5)^2}{4}
 \]
@@ -473,16 +364,13 @@ edges, which exceeds the bound $\binom{n}{2} + 3\lfloor\frac{n^2}{4}\rfloor$ by 
 
 \section{Bipartite $F$}
 
-In this section, we discuss the case where $F$ is bipartite. In particular, we focus on the cases
-where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matching with two edges.
+In this section, we discuss the case where $F$ is bipartite. In particular, we focus on the cases where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matching with two edges.
 
 \begin{theorem}
-  Given graph $G$ and $G_1, \cdots, G_m$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
-  $P_2$ for distinct $i, j$. Then
   \[
-    \sum_{i = 1}^m e(G_i) \leq \left(\frac{1}{2} + o(1)\right)\frac{n^{2}\sqrt{m}}{2},
+    \dex(n, m, P_2) \leq \left(\frac{1}{2} + o(1)\right)n^{2}\sqrt{m}
   \]
-  $n \to \infty$ or $m \to \infty$.
+  as $n \to \infty$ or $m \to \infty$.
 \end{theorem}
 
 \begin{proof}
@@ -508,42 +396,26 @@ where $F \subseteq K_{2, 2}$ is $P_2$, a path of length $2$, or $M_2$, a matchin
   \]
   and solving the quadratic equation gives
   \[
-    \sum_{i = 1}^m e(G_i) \leq mn \cdot \frac{1 + \sqrt{4n^2/m + 1}}{4} =  \left(\frac{1}{2} + o(1)\right)\frac{n^{2}\sqrt{m}}{2},
+    \sum_{i = 1}^m e(G_i) \leq mn \cdot \frac{1 + \sqrt{4n^2/m + 1}}{4} =  \left(\frac{1}{2} + o(1)\right)n^{2}\sqrt{m},
   \]
   as $n \to \infty$ or $m \to \infty$.
 \end{proof}
 
-When $n = m$, the above bound is tight asymptotically, as shown by the following construction using projective
-planes.
+When $m = n$, the following projective plane construction shows the above bound is tight asymptotically:
 
 \begin{theorem}
-  Given graph $G$ and $G_1, \cdots, G_m$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
-  $P_2$ for distinct $i, j$. Then
   \[
-    \sum_{i = 1}^n e(G_i) \leq \left(\frac{1}{2} + o(1)\right)n^{5/2},
+    \dex(n, n, P_2) = \left(\frac{1}{2} + o(1)\right)n^{5/2},
   \]
-  as $n \to \infty$. This bound is tight asymptotically.
+  as $n \to \infty$. 
 \end{theorem}
 
 \begin{proof}
-  The upper bound is obtained by Theorem 3.4, so it suffices to give a construction to show the
-  tightness of the bound. Consider a finite projective plane of order $q$. The projective plane has
-  $n = q^2 + q + 1$ points and $n$ lines. Let $S_1, \ldots, S_n \subseteq [n]$ be the $n$ lines of
-  the projective plane. Note that each line $S_i$ contains $q + 1$ points, and the intersection of
-  any two distinct lines $S_i, S_j$ contains $|S_i \cap S_j| = 1$ point. Define $G_1, \ldots, G_n$
-  to be graphs on $[n]$, each with edge set $E(G_i) = \{\{j, k\} \subseteq [n] : j \neq k, \, j + k
-  \in S_i \mod n\}$. Note that the intersection of distinct $G_i$, $G_j$ is $P_2$ free: since $|S_i
-  \cap S_j| = 1$, if $\{a, b\}, \{a, c\} \in E(G_i) \cap E(G_j)$, then $a + b = a + c$ so $b = c$.
-  We now count the number of edges in $G_1, \ldots, G_n$. Since $|S_i| = q + 1$, for each point $j
-  \in [n]$, there are $q + 1$ choices for $k \in [n]$ such that $j + k \in S_i$. But then we have to
-  avoid counting the same edge twice and loops, so the number of edges in $G_i$ is
+  It suffices to show the tightness of the bound in Theorem 3.5. Consider a finite projective plane of order $q$. The projective plane has $n = q^2 + q + 1$ points and $n$ lines. Let $S_1, \ldots, S_n \subseteq [n]$ be the $n$ lines of the projective plane. Note that each line $S_i$ contains $q + 1$ points, and the intersection of any two distinct lines $S_i, S_j$ contains $|S_i \cap S_j| = 1$ point. Define $G_1, \ldots, G_n$ to be graphs on $[n]$, each with edge set $E(G_i) = \{\{j, k\} \subseteq [n] : j \neq k, \, j + k \in S_i \mod n\}$. Note that the intersection of distinct $G_i$, $G_j$ is $P_2$ free: since $|S_i \cap S_j| = 1$, if $\{a, b\}, \{a, c\} \in E(G_i) \cap E(G_j)$, then $a + b = a + c$ so $b = c$. We now count the number of edges in $G_1, \ldots, G_n$. Since $|S_i| = q + 1$, for each point $j \in [n]$, there are $q + 1$ choices for $k \in [n]$ such that $j + k \in S_i$. But then we have to avoid counting the same edge twice and loops, so the number of edges in $G_i$ is
   \[
     e(G_i) = \frac{n(q + 1) - \#\text{loops counted for } G_i}{2}.
   \]
-  If $j \in [n]$ is even, then $k = j/2$ is the unique number in $[n]$ such that $k + k = j \mod n$.
-  If $j \in [n]$ is odd, then $k = (n + j)/2$ is the unique number in $[n]$ such that $k + k = j
-  \mod n$, as $n$ is even. Hence, for each $j \in S_i$, there exists a unique $k \in [n]$ such that
-  $k + k = j \mod n$, and thus
+  If $j \in [n]$ is even, then $k = j/2$ is the unique number in $[n]$ such that $k + k = j \mod n$. If $j \in [n]$ is odd, then $k = (n + j)/2$ is the unique number in $[n]$ such that $k + k = j \mod n$, as $n$ is even. Hence, for each $j \in S_i$, there exists a unique $k \in [n]$ such that $k + k = j \mod n$, and thus
   \[
     \#\text{loops counted for } G_i = |S_i| = q + 1.
   \]
@@ -555,17 +427,14 @@ planes.
 \end{proof}
 
 \begin{theorem}
-  Given graph $G$ and $G_1, \cdots, G_n$ subgraphs of $G$ with $E(G_i) \cap E(G_j)$ not containing
-  $M_2$ for distinct $i, j$. Then
+  For all $n, m$,
   \[
-    \sum_{i = 1}^n e(G_i) \leq n^{5/2}.
+    \dex(n, m, M_2) \leq n^{5/2}.
   \]
 \end{theorem}
 
 \begin{proof}
-  Notice that $\#\{M_2 \subseteq G\} = \binom{e(G_i)}{2}$. On the other hand, each four vertices in
-  $G$ can form at most three $M_2$'s, so $\#\{M_2 \subseteq G\} \leq 3\binom{n}{4} \leq
-  \frac{n^4}{8}$. By the same argument as in Theorem 3.4, we have 
+  Notice that $\#\{M_2 \subseteq G\} = \binom{e(G_i)}{2}$. On the other hand, each four vertices in $G$ can form at most three $M_2$'s, so $\#\{M_2 \subseteq G\} \leq 3\binom{n}{4} \leq \frac{n^4}{8}$. By the same argument as in Theorem 3.4, we have 
   \[
     \sum_{i = 1}^n \binom{e(G_i)}{2} = \sum_{i = 1}^n \#\{M_2 \subseteq G_i\} \leq \#\{M_2 \subseteq G\} \leq \frac{n^4}{8}.
   \]
@@ -583,26 +452,17 @@ planes.
   \]
 \end{proof}
 
-We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
+We may obtain an exact result if we forbid both $P_2$ and $M_2$ at the same time:
 
 \begin{theorem}
-  Given graphs $G_1, \ldots, G_n \subseteq K_n$ with $E(G_i) \cap E(G_j)$ not containing $P_2$ or
-  $M_2$ for distinct $i, j$. Then
+  For all $n, m$,
   \[
-    \sum_{i = 1}^n e(G_i) \leq n^2 - n,
+    \dex(n, m, \{P_2, M_2\}) = n^2 - n.
   \]
-  and this bound is tight.
 \end{theorem}
 
 \begin{proof}
-  Denote the set of $G_i$'s as $\{G_i\} = \{G_1, \ldots, G_n\}$, and the set of distinct pairs of
-  $G_i$'s as $\{G_i\}^2 = \{\{G_j, G_k\} : j \neq k\}$. Consider the bipartite graph $H$ with
-  vertex set $V(H) = \{G_i\} \sqcup E(K_n)$ and edge set $E(H) = \{\{G_j, e\} \in \{G_i\} \times
-  E(K_n) : e \in G_j\}$. Define $\phi: \{G_i\}^2 \to 2^{E(K_n)}$ by sending each $\{G_j, G_k\}$ to
-  their common edge set $E(G_j) \cap E(G_k)$. Notice that each distinct $G_j, G_k$ have at most
-  one edge in common, so $|\phi(G_j, G_k)| \leq 1$. On the other hand, each edge $e \in E(G)$ can
-  be obtained via $\phi$ by $\binom{d_H(e)}{2}$ possible distinct pairs $(G_j, G_k)$, and thus
-  $|\phi^{-1}(e)| = \binom{d_H(e)}{2}$. But then
+  Denote the set of $G_i$'s as $\{G_i\} = \{G_1, \ldots, G_n\}$, and the set of distinct pairs of $G_i$'s as $\{G_i\}^2 = \{\{G_j, G_k\} : j \neq k\}$. Consider the bipartite graph $H$ with vertex set $V(H) = \{G_i\} \sqcup E(K_n)$ and edge set $E(H) = \{\{G_j, e\} \in \{G_i\} \times E(K_n) : e \in G_j\}$. Define $\phi: \{G_i\}^2 \to 2^{E(K_n)}$ by sending each $\{G_j, G_k\}$ to their common edge set $E(G_j) \cap E(G_k)$. Notice that each distinct $G_j, G_k$ have at most one edge in common, so $|\phi(G_j, G_k)| \leq 1$. On the other hand, each edge $e \in E(G)$ can be obtained via $\phi$ by $\binom{d_H(e)}{2}$ possible distinct pairs $(G_j, G_k)$, and thus $|\phi^{-1}(e)| = \binom{d_H(e)}{2}$. But then
   \[
     \binom{n}{2} \geq \sum_{(G_j, G_k) \in \{G_i\}^2} |\phi(G_j, G_k)| = \sum_{e \in E(K_n)} |\phi^{-1}(e)| = \sum_{e \in E(K_n)} \binom{d_H(e)}{2}.
   \]
@@ -616,9 +476,7 @@ We may obtain a tight bound if we forbid both $P_2$ and $M_2$ at the same time:
   \]
   and the result now follows from solving the quadratic inequality.
 
-  To see that this bound is tight, consider the construction such that for each distinct $i, j \in
-  [n]$, $E(G_i) \cap E(G_j)$ contains exactly one unique edge $e \in K_n$. The number of edges in
-  this construction is $2\binom{n}{2} = n^2 - n$.
+  To see that this bound is tight, consider the construction such that for each distinct $i, j \in [n]$, $E(G_i) \cap E(G_j)$ contains exactly one unique edge $e \in K_n$. The number of edges in this construction is $2\binom{n}{2} = n^2 - n$.
 \end{proof}
 
 \end{document}
