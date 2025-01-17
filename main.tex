@@ -20,7 +20,7 @@
 
 % Theorem Environments
 \newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{claim}{Claim}
 \newtheorem{conjecture}{Conjecture}[chapter]
 \newtheorem{definition}[theorem]{Definition}
@@ -78,8 +78,25 @@ We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, 
 
 In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We first show a simpler case where $F$ is a triangle.
 
-\textcolor{red}{TODO: add the ``suffice to show for $m = 2$'' lemma, the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
+\textcolor{red}{TODO: add the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
 
+\begin{lemma}
+  Let $n, m, k \in \N$ with $2 \leq k \leq m$, and let $F$ be a graph. Then
+  \[
+    \dexind(n, m, F) \leq \frac{m}{k} \cdot \dexind(n, k, F).
+  \]
+  Moreover, if the extremal condition for $k$ induced subgraphs is met only when all $k$ subgraphs are the same, then the equality holds and the extremal condition for $m$ induced subgraphs is met only when all $m$ subgraphs are the same.
+\end{lemma}
+
+\begin{proof}
+  Let $G_1, \ldots, G_m$ be induced subgraphs of $G_1 \cup \cdots \cup G_m$ with $E(G_i) \cap E(G_j)$ not containing $F$ for $i \neq j$. Put $G_{i + m} = G_i$ for all $i \in [m]$. Then
+  \[
+    \sum_{i = 1}^m e(G_i) = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})] \leq \frac{1}{k}\sum_{i = 1}^m \dexind(n, k, F) = \frac{m}{k} \cdot \dexind(n, k, F),
+  \]
+  which establishes the upper bound.
+
+  Suppose $\sum_{i = 1}^k e(G_i) = \dexind(n, k, F)$. By assumption $G_1 = \cdots = G_k$, so $e(G_i) = \dexind(n, k, F)/k$ for $1 \leq i \leq k$. Then the construction $G_1 = \cdots = G_m$ meets the upperbound. On the other hand, if $G_1 \neq G_2$ then $\sum_{i = 1}^k e(G_i) < \dexind(n, k, F)$. Since $\sum_{i = 1}^k e(G_{i + j}) \leq \dexind(n, k, F)$ for all $j \geq 1$, we have $\sum_{i = 1}^m e(G_i) < \frac{m}{k} \cdot \dexind(n, k, F)$. Thus the extremal condition is met only when $G_1 = \cdots = G_m$.
+\end{proof}
 
 \section{Triangle $F$}
 
