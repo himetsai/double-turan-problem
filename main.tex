@@ -3,20 +3,31 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage[noabbrev,capitalize]{cleveref}
 \usepackage{listings}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{mathtools}
+\usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usepackage[colorinlistoftodos]{todonotes}
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
 \usetikzlibrary{automata,positioning}
 
+\definecolor{crimson}{HTML}{DC143C}
+
 % Page layout
 \geometry{a4paper, margin=1in}
 \setlength{\parskip}{5pt}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=crimson,
+  urlcolor=crimson,
+  citecolor=crimson
+}
 
 % Theorem Environments
 \newtheorem{theorem}{Theorem}[chapter]
@@ -40,7 +51,6 @@
 \newcommand*{\F}{\mathds{F}}
 \newcommand*{\ex}{\textnormal{ex}}
 \newcommand*{\dex}{\textnormal{ex}_2}
-\newcommand*{\dexind}{\textnormal{ex}_2^*}
 
 % Title Page
 \title{Double Turán Problem}
@@ -59,7 +69,7 @@
 
 Let $\dex(n, m, F)$ be the maximum possible sum of the number of edges over $m$ subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$, with the constraint that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. Our goal is to determine $\dex(n, m, F)$ for different forbidden graphs $F$. A trivial construction with $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $\binom{n}{2} + (m - 1)\ex(n, F)$. In this work, we use this bound as a benchmark to either show the tightness of $\dex(n, m, F)$ or to provide a better bound.
 
-Additionally, we are also interested in a more restrictive version where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We denote $\dexind(n, m, F)$ as the maximum possible sum of the number of edges over $m$ induced subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$ such that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. The trivial construction by taking $G_1, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $m \cdot \ex(n, F)$. This is the benchmark we use to determine $\dexind(n, m, F)$.
+Additionally, we are also interested in a more restrictive version where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We denote $\dex^*(n, m, F)$ as the maximum possible sum of the number of edges over $m$ induced subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$ such that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. The trivial construction by taking $G_1, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $m \cdot \ex(n, F)$. This is the benchmark we use to determine $\dex^*(n, m, F)$.
 
 In this work, we will first discuss the induced case, and then shift our focus to the general case. At the end, we will discuss the case where $F$ is bipartite.
 
@@ -74,87 +84,138 @@ We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a,
 
 We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$.
 
-\chapter{Induced Case}
+\chapter{Induced Version}
 
-In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We first show a simpler case where $F$ is a triangle.
+In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$ and $E(G_i) \cap E(G_j)$ does not contain $F$ for $i \neq j$. Here, we say that the extremal condition for $m$ subgraphs is met if $\sum_{i = 1}^m e(G_i) = \dex^*(n, m, F)$.
 
 \textcolor{red}{TODO: add the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
 
-\begin{lemma}
-  Let $n, m, k \in \N$ with $2 \leq k \leq m$, and let $F$ be a graph. Then
+The following lemma shows that the problem can be redueced to only two graphs.
+
+\begin{lemma}\label{lem:induce-reduce}
+  Let $n, m, k \in \N$ such that $2 \leq k \leq m$, and let $F$ be a graph. Then
   \[
-    \dexind(n, m, F) \leq \frac{m}{k} \cdot \dexind(n, k, F).
+    \dex^*(n, m, F) \leq \frac{m}{k} \cdot \dex^*(n, k, F).
   \]
-  Moreover, if the extremal condition for $k$ induced subgraphs is met only when all $k$ subgraphs are the same, then the equality holds and the extremal condition for $m$ induced subgraphs is met only when all $m$ subgraphs are the same.
+  Moreover, if the extremal condition for $k$ induced subgraphs is met only when $G_1 = \cdots = G_k$, then the above equality holds and the extremal condition for $m$ induced subgraphs is met only when $G_1 = \cdots = G_m$.
 \end{lemma}
+
+\textcolor{red}{Not putting equality because I'm unsure if a construction for $k$ subgraphs can always generalize to $m$ subgraphs. For example, if $F = K_3$ and $n$ is odd, the $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ construction cannot be generalized to $m = n + 1$ subgraphs.}
 
 \begin{proof}
   Let $G_1, \ldots, G_m$ be induced subgraphs of $G_1 \cup \cdots \cup G_m$ with $E(G_i) \cap E(G_j)$ not containing $F$ for $i \neq j$. Put $G_{i + m} = G_i$ for all $i \in [m]$. Then
   \[
-    \sum_{i = 1}^m e(G_i) = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})] \leq \frac{1}{k}\sum_{i = 1}^m \dexind(n, k, F) = \frac{m}{k} \cdot \dexind(n, k, F),
+    \sum_{i = 1}^m e(G_i) = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})] \leq \frac{1}{k}\sum_{i = 1}^m \dex^*(n, k, F) = \frac{m}{k} \cdot \dex^*(n, k, F),
   \]
   which establishes the upper bound.
 
-  Suppose $\sum_{i = 1}^k e(G_i) = \dexind(n, k, F)$. By assumption $G_1 = \cdots = G_k$, so $e(G_i) = \dexind(n, k, F)/k$ for $1 \leq i \leq k$. Then the construction $G_1 = \cdots = G_m$ meets the upperbound. On the other hand, if $G_1 \neq G_2$ then $\sum_{i = 1}^k e(G_i) < \dexind(n, k, F)$. Since $\sum_{i = 1}^k e(G_{i + j}) \leq \dexind(n, k, F)$ for all $j \geq 1$, we have $\sum_{i = 1}^m e(G_i) < \frac{m}{k} \cdot \dexind(n, k, F)$. Thus the extremal condition is met only when $G_1 = \cdots = G_m$.
+  Suppose $\sum_{i = 1}^k e(G_i) = \dex^*(n, k, F)$. By assumption $G_1 = \cdots = G_k$, so $e(G_i) = \dex^*(n, k, F)/k$ for $1 \leq i \leq k$. Hence, the construction $G_1 = \cdots = G_m$ meets the upperbound. On the other hand, if $G_1 \neq G_2$ then $\sum_{i = 1}^k e(G_i) < \dex^*(n, k, F)$. Since $\sum_{i = 1}^k e(G_{i + j}) \leq \dex^*(n, k, F)$ for all $j \geq 1$, we have $\sum_{i = 1}^m e(G_i) < \frac{m}{k} \cdot \dex^*(n, k, F)$. Thus the extremal condition is met only when $G_1 = \cdots = G_m$.
 \end{proof}
 
-\section{Triangle $F$}
-
-\begin{theorem}
-  For all $n$,
+\begin{lemma}\label{lem:induce-cond}
+  Let $n\geq 1$, $m \geq 2$ and $F$ be some graph. If $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$ for all $1 \leq c \leq n$, then
   \[
-    \dexind(n, n, F) = n \cdot \ex(n, F).
+    \dex^*(n, m, F) = m \cdot \ex(n, F)
   \]
-  In particular, the extremal number is reached only if $G_1 = G_2 = \cdots = G_n = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}.$
-\end{theorem}
+  and $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met.
+\end{lemma}
 
-First we prove the case for two graphs:
+\textcolor{red}{Not sure if this statement can be strengthened into if and only if. We would need to show there's no $F$ such that $\ex(c, F) - \ex(c - 1, F) \leq \frac{c - 1}{2}$ for some $c$ but $f$ has a unique maximum at $c = n$. In other words, there can not exist $F$ such that its extremal number increases slowly at some small $c$ but eventually catches up.}
 
-\begin{lemma}
-  Suppose $E(G_1) \cap E(G_2)$ does not include $K_3$. Then
+\begin{proof}
+  By \cref{lem:induce-reduce}, it suffices to show the case for two subgraphs. Let $G_1, G_2$ be induced subgraphs of $G_1 \cup G_2$ with $E(G_1) \cap E(G_2)$ not containing $F$. Moreover, let $C = V(G_1) \cap V(G_2)$ and put $a = |V(G_1) \backslash C|, b = |V(G_2) \backslash C|$, and $c = |C|$. Since $G_1, G_2$ are induced subgraphs, $G_1[C] = G_2[C] = G_{1, 2}$. But then $G_{1, 2}$ is $F$-free, so $e(G_1[C]) = e(G_2[C]) \leq \ex(c, F)$. This yields the inequality
   \[
-    e(G_1) + e(G_2) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor,
+    e(G_1) + e(G_2) \leq \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \ex(c, F)\right].
   \]
-  with equality if and only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$, unless $n$ is odd and $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$.
+  Let $f(a, b, c)$ denote the expression on the right-hand-side of the above inequality. 
+
+  \begin{claim}
+    $f$ has a unique maximum at $c = n$.
+  \end{claim}
+
+  \begin{proof}
+    Suppose $b < n$. Since $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$,
+    \begin{align*}
+      f(a, b, c) - f(a, b + 1, c - 1)
+      &= \binom{a + c}{2} - \binom{a + c - 1}{2} \\
+      &\qquad - 2\left[\binom{c}{2} - \binom{c - 1}{2} - \ex(c, F) + \ex(c - 1, F)\right] \\
+      &= a - c + 1 + 2[\ex(c + 1, F) - \ex(c, F)] > a \geq 0.
+    \end{align*}
+    Thus, $f$ is strictly increasing with respect to $c$. By symmetry, $f$ has a unique maximum at $c = n$.
+  \end{proof}
+  By the claim,
+  \[
+    e(G_1) + e(G_2) \leq 2\binom{n}{2} - 2\left[\binom{n}{2} - \ex(n, F)\right] = 2 \cdot \ex(n, F),
+  \] 
+  and and $G_1 = G_2 = G_{1, 2}$ are extremal graphs for $F$ on $n$ vertices.
+\end{proof}
+
+\section{Complete Graph Case}
+
+\begin{lemma}\label{lem:induce-cond-complete}
+  For $n \geq 1$ and $r \geq 2$,
+  \[
+    \ex(n, K_{r + 1}) - \ex(n - 1, K_{r + 1}) \geq \frac{n - 1}{2},
+  \]
+  with equality if and only if $n$ is odd and $r = 2$.
 \end{lemma}
 
 \begin{proof}
-  Let $C = V(G_1) \cap V(G_2)$, $A = V(G_1) \backslash C$, and $B = V(G_2) \backslash C$. Put $a = |A|$, $b = |B|$, and $c = |C|$. We may assume that $a + b + c = n$.
-
-  We find an upper bound for $e(G_1) + e(G_2)$ with respect to $a, b, c$. Since $G_1, G_2$ are induced graphs, $\{u, v\} \in E(G_1)$ if and only if $\{u, v\} \in E(G_2)$, for $u, v \in C$, and thus $E(G_1[C]) = E(G_2[C]) = E(G_i) \cap E(G_j)$. But then $E(G_i) \cap E(G_j)$ is triangle-free, so $e(G_1[C]) \leq \left\lfloor\frac{c^2}{4}\right\rfloor$, with equality if and only if $G_1[C] = K_{\left\lceil\frac{c}{2}\right\rceil, \left\lfloor\frac{c}{2}\right\rfloor}$. Hence, 
-  \begin{gather}
-    e(G_1) + e(G_2) \leq \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor\right].
-  \end{gather}
-  Define $f(a, b, c)$ as the function on the right-hand-side of (2.1). We show that $f(a, b, c)$ attains its maximum $2\left\lfloor\frac{n^2}{4}\right\rfloor$ at $a = b = 0$ and $c = n$. For $b \geq 2$,
-  \begin{align*}
-    f(a, b - 2, c + 2) - f(a, b, c)
-    &= \binom{a + c + 2}{2} - \binom{a + c}{2} \\
-    &\qquad - 2\left[\binom{c + 2}{2} - \binom{c}{2} - \left\lfloor\frac{(c + 2)^2}{4}\right\rfloor + \left\lfloor\frac{c^2}{4}\right\rfloor\right] \\
-    &= 2(a + c) + 1 - 2[2c + 1 - (c + 1)] \\
-    &= 2a + 1 > 0.
-  \end{align*}
-  By symmetry, $f(a - 2, b, c + 2) > f(a, b, c)$, and thus $f$ attains its maximum when $c$ is $n - 1$ or $n$, that is, $a + b \leq 1$. Equation (2.1) now yields, 
+  By Turán's Theorem,
   \[
-    e(G_1) + e(G_2) \leq 2\left\lfloor\frac{n^2}{4}\right\rfloor.
+    \ex(n, K_{r + 1}) - \ex(n - 1, K_{r + 1}) = \delta(T_r(n)) = n - \left\lceil \frac{n}{r} \right\rceil \geq n - \left\lceil\frac{n}{2}\right\rceil.
   \]
-  Assume that $a = 0$. When $c = n$, the equality holds only if $G_1 = G_2 = K_{\left\lceil\frac{n}{2}\right\rceil, \left\lfloor\frac{n}{2}\right\rfloor}$. If $c = n - 1$, then the equality holds only if $n$ is odd, $G_1 = G[C] = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2$ is a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
+  The result now follows.
 \end{proof}
 
-We now prove Theorem 2.1.
+The following theorem for complete graphs with more than $3$ vertices now follows directly from \cref{lem:induce-cond} and \cref{lem:induce-cond-complete}:
 
-\begin{proof}[Proof of Theorem 2.1]
-  Assume that $n > 1$. Put $G_{n + i} = G_i$. By Lemma 3.2,
+\begin{theorem}
+  For $n \geq 1$, $m \geq 2$, and $r \geq 3$, 
   \[
-    \sum_{i = 1}^n e(G_i) = \frac{1}{2}\sum_{i = 1}^n (e(G_i) + e(G_{i + 1})) \leq \frac{1}{2}\sum_{i = 1}^n 2\left\lfloor\frac{n^2}{4}\right\rfloor = n\left\lfloor\frac{n^2}{4}\right\rfloor.
+    \dex^*(n, m, K_{r + 1}) = m \cdot e(T_{r}(n)),
   \]
-  Suppose the equality holds. By Lemma 3.2, we are done if $n$ is even. Suppose $n$ is odd and $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. By applying Lemma 3.2 repeatedly, 
-   \begin{align*}
+  and $G_1 = \cdots = G_m = T_{r}(n)$ when the extremal condition is met.
+\end{theorem}
+
+Surprisingly, the triangle case is more complicated than the case for larger complete graphs. As shown in \cref{lem:induce-cond-complete}, the condition given by \cref{lem:induce-cond} is not satisfied for all $n$ in the triangle case, and there are indeed constructions of induced subgraphs $G_1, G_2$ that meet the extremal condition but are neither equal nor both complete bipartite graphs. For odd $n$, consider $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$. The number of edges over $G_1, G_2$ is $\frac{(n - 1)^2}{2} + n - 1 = \frac{n^2 - 1}{2} = 2\left\lfloor \frac{n^2}{4}\right\rfloor$, which meets the benchmark construction of two complete bipartite graphs. Hence, for the triangle case we have to make some comprimises.
+
+\begin{theorem}
+  For $n \geq 1$ and $m \geq 2$, 
+  \[
+    \dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor.
+  \]
+  Moreover, if $n$ is even or $m$ is odd, then the extremal condition is met only when $G_1 = G_2$ are complete balanced bipartite graphs on $n$ vertices. Otherwise, the extremal condition is met only when either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
+\end{theorem}
+
+\begin{proof}
+  By \cref{lem:induce-cond} and \cref{lem:induce-cond-complete}, we are done if $n$ is even, so we may assume that $n$ is odd. We first show the following claim.
+
+  \begin{claim}
+    $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the extremal condition is met only when either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
+  \end{claim}
+
+  \begin{proof}
+    Let $a, b, c$, and $f(a, b, c)$ be defined as in the proof of \cref{lem:induce-cond}. Then
+    \begin{align*}
+      f(a, b, c) - f(a, b + 2, c - 2)
+      &= \binom{a + c}{2} - \binom{a + c - 2}{2} \\
+      &\qquad - 2\left[\binom{c}{2} - \binom{c - 2}{2} - \left\lfloor\frac{c^2}{4}\right\rfloor + \left\lfloor\frac{(c - 2)^2}{4}\right\rfloor\right] \\
+      &= 2(a + c) + 1 - 2[2c + 1 - (c + 1)] \\
+      &= 2a + 1 > 0.
+    \end{align*}
+    Hence, $f$ attains its maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $c = n$ or $n - 1$, that is, $a + b \leq 1$. Thus $\dex^*(n, 2, K_3) \leq 2\left\lfloor \frac{n^2}{4} \right\rfloor$. Assume that $a = 0$. When $c = n$, $G_1 = G_2 = G_{1, 2}$ are extremal graphs for $K_3$, which is the complete balanced bipartite graph on $n$ vertices. When $c = n - 1$, $G_1 = G_{1, 2} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and 
+    $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$, to meet the extremal number.
+  \end{proof}
+  By \cref{lem:induce-reduce} and the above claim, $\dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor$. It remains to show that for odd $m$, $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ when the extremal condition is met. Suppose not. Then the claim guarantees $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. Put $G_{m + i} = i$. By applying the claim repeatedly, 
+  \begin{align*}
     G_i &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
     G_{i + 1} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} \\
     G_{i + 2} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
-    &\qquad\quad \vdots
-   \end{align*}
-   and the alternation proceeds. But then $G_{n + i} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ as $n$ is odd, and this contradiction completes the proof.
+    &\qquad\quad \vdots \\
+    G_{i + m} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor},
+  \end{align*}
+  as $m$ is odd. But then $G_{i + m} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$, and this contradiction completes the proof.
 \end{proof}
 
 \section{Non-bipartite $F$}
@@ -162,7 +223,7 @@ We now prove Theorem 2.1.
 \begin{theorem}
   Suppose $F$ is $(r + 1)$-colorable, with $r \geq 2$. For large enough $n$,
   \[
-    \dexind(n, n, F) = n \cdot \ex(n, F).
+    \dex^*(n, n, F) = n \cdot \ex(n, F).
   \]
   In particular, the extremal number is reached only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$.
 \end{theorem}
@@ -243,7 +304,7 @@ By the same argument as in Theorem 2.1, it suffices to prove the following lemma
   If $c = n$, the equality holds only if $G_1 = G_2$ are $n$-vertex extramal graphs for $F$. Suppose $c = n - 1$ and the equality holds. Observe that equation (2.3) is equal to zero only when $r = 2$ and $n$ is odd. Thus if $c = n - 1$, then the equality could only be achieved when $r = 2$, $n$ is odd, $G_1$ is an $(n - 1)$-vertex extremal graph for $F$, and $G_2 = G_1 + K_1$.
 \end{proof}
 
-\chapter{General Case}
+\chapter{General Version}
 
 \textcolor{red}{TODO: add introduction.}
 
