@@ -93,11 +93,11 @@ In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1
 The following lemma shows that the problem can be redueced to only two graphs.
 
 \begin{lemma}\label{lem:induce-reduce}
-  Let $n, m, k \in \N$ such that $2 \leq k \leq m$, and let $F$ be a graph. Then
+  Let $n, m, k \geq 1$ such that $2 \leq k \leq m$, and let $F$ be some graph. Then
   \[
     \dex^*(n, m, F) \leq \frac{m}{k} \cdot \dex^*(n, k, F).
   \]
-  Moreover, if the extremal condition for $k$ induced subgraphs is met only when $G_1 = \cdots = G_k$, then the above equality holds and the extremal condition for $m$ induced subgraphs is met only when $G_1 = \cdots = G_m$.
+  Moreover, if the extremal condition for $k$ induced subgraphs is met only when $G_1 = \cdots = G_k$, then the above equality holds and the extremal condition for $m$ induced subgraphs is met if and only if $G_1 = \cdots = G_m$.
 \end{lemma}
 
 \textcolor{red}{Not putting equality because I'm unsure if a construction for $k$ subgraphs can always generalize to $m$ subgraphs. For example, if $F = K_3$ and $n$ is odd, the $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ construction cannot be generalized to $m = n + 1$ subgraphs.}
@@ -117,7 +117,7 @@ The following lemma shows that the problem can be redueced to only two graphs.
   \[
     \dex^*(n, m, F) = m \cdot \ex(n, F)
   \]
-  and $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met.
+  and the extremal condition is met if and only if $G_1 = \cdots = G_m$ are extremal graphs for $F$.
 \end{lemma}
 
 \textcolor{red}{Not sure if this statement can be strengthened into if and only if. We would need to show there's no $F$ such that $\ex(c, F) - \ex(c - 1, F) \leq \frac{c - 1}{2}$ for some $c$ but $f$ has a unique maximum at $c = n$. In other words, there can not exist $F$ such that its extremal number increases slowly at some small $c$ but eventually catches up.}
@@ -139,7 +139,7 @@ The following lemma shows that the problem can be redueced to only two graphs.
       f(a, b, c) - f(a, b + 1, c - 1)
       &= \binom{a + c}{2} - \binom{a + c - 1}{2} \\
       &\qquad - 2\left[\binom{c}{2} - \binom{c - 1}{2} - \ex(c, F) + \ex(c - 1, F)\right] \\
-      &= a - c + 1 + 2[\ex(c + 1, F) - \ex(c, F)] > a \geq 0.
+      &= a - c + 1 + 2[\ex(c, F) - \ex(c - 1, F)] > a \geq 0.
     \end{align*}
     Thus, $f$ is strictly increasing with respect to $c$. By symmetry, $f$ has a unique maximum at $c = n$.
   \end{proof}
@@ -152,7 +152,7 @@ The following lemma shows that the problem can be redueced to only two graphs.
 
 \section{Complete Graph Case}
 
-\begin{lemma}\label{lem:induce-cond-complete}
+\begin{lemma}\label{lem:induce-complete-cond}
   For $n \geq 1$ and $r \geq 2$,
   \[
     \ex(n, K_{r + 1}) - \ex(n - 1, K_{r + 1}) \geq \frac{n - 1}{2},
@@ -168,31 +168,33 @@ The following lemma shows that the problem can be redueced to only two graphs.
   The result now follows.
 \end{proof}
 
-The following theorem for complete graphs with more than $3$ vertices now follows directly from \cref{lem:induce-cond} and \cref{lem:induce-cond-complete}:
+The following theorem for complete graphs with more than $3$ vertices now follows directly from \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}:
 
-\begin{theorem}
+\begin{theorem}\label{thm:induce-complete-no-triangle}
   For $n \geq 1$, $m \geq 2$, and $r \geq 3$, 
   \[
     \dex^*(n, m, K_{r + 1}) = m \cdot e(T_{r}(n)),
   \]
-  and $G_1 = \cdots = G_m = T_{r}(n)$ when the extremal condition is met.
+  and the extremal condition is met if and only if $G_1 = \cdots = G_m = T_{r}(n)$.
 \end{theorem}
 
-Surprisingly, the triangle case is more complicated than the case for larger complete graphs. As shown in \cref{lem:induce-cond-complete}, the condition given by \cref{lem:induce-cond} is not satisfied for all $n$ in the triangle case, and there are indeed constructions of induced subgraphs $G_1, G_2$ that meet the extremal condition but are neither equal nor both complete bipartite graphs. For odd $n$, consider $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$. The number of edges over $G_1, G_2$ is $\frac{(n - 1)^2}{2} + n - 1 = \frac{n^2 - 1}{2} = 2\left\lfloor \frac{n^2}{4}\right\rfloor$, which meets the benchmark construction of two complete bipartite graphs. Hence, for the triangle case we have to make some comprimises.
+Surprisingly, the triangle case is more complicated than the case for larger complete graphs. As shown in \cref{lem:induce-complete-cond}, the condition given by \cref{lem:induce-cond} is not satisfied for all $n$ in the triangle case, and there are indeed constructions of induced subgraphs $G_1, G_2$ that meet the extremal condition but are neither equal nor both complete bipartite graphs. For odd $n$, consider $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$. The number of edges over $G_1, G_2$ is $\frac{(n - 1)^2}{2} + n - 1 = \frac{n^2 - 1}{2} = 2\left\lfloor \frac{n^2}{4}\right\rfloor$, which meets the benchmark construction of two complete bipartite graphs. Hence, for the triangle case we have to make some comprimises.
 
-\begin{theorem}
+\begin{theorem}\label{thm:induce-triangle}
   For $n \geq 1$ and $m \geq 2$, 
   \[
     \dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor.
   \]
-  Moreover, if $n$ is even or $m$ is odd, then the extremal condition is met only when $G_1 = G_2$ are complete balanced bipartite graphs on $n$ vertices. Otherwise, the extremal condition is met only when either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
+  Moreover, if $n$ is even or $m$ is odd, then the extremal condition is met if and only if $G_1 = \cdots = G_m$ are complete balanced bipartite graphs on $n$ vertices. Otherwise, the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k + 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
 \end{theorem}
 
 \begin{proof}
-  By \cref{lem:induce-cond} and \cref{lem:induce-cond-complete}, we are done if $n$ is even, so we may assume that $n$ is odd. We first show the following claim.
+  % By \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done if $n$ is even, so we may assume that $n$ is odd. 
+  
+  We first show the following claim.
 
   \begin{claim}
-    $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the extremal condition is met only when either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
+    $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the extremal condition is met only when $G_1 = G_2 = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$, unless $n$ is odd, $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$, and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
   \end{claim}
 
   \begin{proof}
@@ -204,10 +206,20 @@ Surprisingly, the triangle case is more complicated than the case for larger com
       &= 2(a + c) + 1 - 2[2c + 1 - (c + 1)] \\
       &= 2a + 1 > 0.
     \end{align*}
-    Hence, $f$ attains its maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $c = n$ or $n - 1$, that is, $a + b \leq 1$. Thus $\dex^*(n, 2, K_3) \leq 2\left\lfloor \frac{n^2}{4} \right\rfloor$. Assume that $a = 0$. When $c = n$, $G_1 = G_2 = G_{1, 2}$ are extremal graphs for $K_3$, which is the complete balanced bipartite graph on $n$ vertices. When $c = n - 1$, $G_1 = G_{1, 2} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and 
-    $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$, to meet the extremal number.
+    This shows that $f$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ at $c = n - 1$ and $c = n$, which implies $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$. We are done if $c = n$, so assume that $c = n - 1$ and $a = 0$. Then $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
+    \[
+      e(G_1) + e(G_2) = 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor + \deg(v),
+    \]
+    where $v$ is the only vertex not in $C$. But then to meet the extremal condition, 
+    \[
+      \deg(v) = 2\left\lfloor\frac{n^2}{4}\right\rfloor - 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor = \begin{cases}
+        n & \text{if $n$ is even}, \\
+        n - 1 & \text{if $n$ is odd}.
+      \end{cases}
+    \]
+    Hence, $n$ must be odd and $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
   \end{proof}
-  By \cref{lem:induce-reduce} and the above claim, $\dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor$. It remains to show that for odd $m$, $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ when the extremal condition is met. Suppose not. Then the claim guarantees $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. Put $G_{m + i} = i$. By applying the claim repeatedly, 
+  By \cref{lem:induce-reduce} and the above claim, it remains to show that for odd $m$, $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ when the extremal condition is met. Suppose not. the above claim then guarantees $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. Put $G_{j + m} = G_j$ for all $j$. By applying the claim repeatedly, 
   \begin{align*}
     G_i &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
     G_{i + 1} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} \\
@@ -218,17 +230,71 @@ Surprisingly, the triangle case is more complicated than the case for larger com
   as $m$ is odd. But then $G_{i + m} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$, and this contradiction completes the proof.
 \end{proof}
 
-\section{Non-bipartite $F$}
+Since $n$ cannot be both even and odd, we have the following corollary:
 
-\begin{theorem}
-  Suppose $F$ is $(r + 1)$-colorable, with $r \geq 2$. For large enough $n$,
+\begin{corollary}
+  For $n \geq 1$,
   \[
-    \dex^*(n, n, F) = n \cdot \ex(n, F).
+    \dex^*(n, n, K_3) = n \left\lfloor \frac{n^2}{4} \right\rfloor,
   \]
-  In particular, the extremal number is reached only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$.
+  and the extremal condition is met if and only if $G_1 = \cdots = G_n$ are complete balanced bipartite graphs on $n$ vertices. 
+\end{corollary}
+
+Combining \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}, we have the following theorem for complete graphs:
+
+\begin{theorem}\label{thm:induce-complete}
+  For $n \geq 1$ and $m, r \geq 2$, 
+  \[
+    \dex^*(n, m, K_{r + 1}) = m \cdot \ex(n, K_{r + 1}).
+  \]
+  Moreover, the extremal condition is met if and only if $G_1 = \cdots = G_m = T_r(n)$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
 \end{theorem}
 
-By the same argument as in Theorem 2.1, it suffices to prove the following lemma:
+\section{Non-bipartite $F$}
+
+For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
+
+\begin{theorem}
+  For $n \geq 1$, and $m, r \geq 2$, if $F$ is $(r + 1)$-colorable, then large enough $n$
+  \[
+    \dex^*(n, m, F) = m \cdot \ex(n, F),
+  \]
+  and the extremal condition is met if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+\end{theorem}
+
+\begin{proof}
+  It suffices to show for $m = 2$ by \cref{lem:induce-reduce}. Let $a, b, c$ and $f(a, b, c)$ be defined as in the proof of \cref{lem:induce-cond}. We first show that $f$ fails to meet the desired bound for small $c$.
+
+  \begin{claim}
+    If $c \leq \frac{n}{2}$, then $f(a, b, c) < 2 \cdot \ex(n, F)$.
+  \end{claim}
+
+  \begin{proof}
+    Write $c = kn$ for some $k \in [0, 1/2]$. Since
+    \[
+      f(a, b, kn) \leq 2\binom{(1 - k)n/2}{2} - 2\left[\binom{kn}{2} - \ex(kn, F)\right],
+    \]
+    it suffices to show that
+    \[
+      \ex(n, F) - \ex(kn, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
+    \]
+    for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\ex(n, F) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
+    \[
+      \ex(n, F) - \ex(kn, F) \geq \ex(n, F) - \ex(n/2, F) \geq \left(1 - \frac{1}{r}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
+    \]
+    On the right-hand-side, 
+    \[
+      \binom{(1 - k)n/2}{2} - \binom{kn}{2} = (1 - 2k - 3k^2)\frac{n^2}{8} + o(n^2) \leq \frac{n^2}{8} + o(n^2).
+    \]
+    Combining the above inequalities now yields the claim, as $n$ is large.
+  \end{proof}
+
+  Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough $n$, $\text{ex}(n, F) = \text{ex}(n, K_{r + 1}) + \text{ex}(n, \tilde{F})$, where $\tilde{F}$ is the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(n)$. This implies
+  \[
+    \text{ex}(n, F) - \text{ex}(n - 1, F) \geq \text{ex}(n, K_{r + 1}) - \text{ex}(n - 1, K_{r + 1}).
+  \]
+  Thus by \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done for $r > 3$ or $n$ is even. For $r = 2$ and $n$ odd, the proof is follows the argument for the triangle case. \textcolor{red}{TODO: maybe write this out.}
+\end{proof}
 
 \begin{lemma}
   Let $F$ be $(r + 1)$-colorable, with $r \geq 2$. Suppose $E(G_1) \cap E(G_2)$ does not include $F$. For large enough $n$,
