@@ -68,37 +68,40 @@
 
 \chapter{Introduction}
 
-Let $\dex(n, m, F)$ be the maximum possible sum of the number of edges over $m$ subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$, with the constraint that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. Our goal is to determine $\dex(n, m, F)$ for different forbidden graphs $F$. A trivial construction with $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $\binom{n}{2} + (m - 1)\ex(n, F)$. In this work, we use this bound as a benchmark to either show the tightness of $\dex(n, m, F)$ or to provide a better bound.
-
-Additionally, we are also interested in a more restrictive version where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. We denote $\dex^*(n, m, F)$ as the maximum possible sum of the number of edges over $m$ induced subgraphs $G_1, \ldots, G_m$ on the same vertex set $[n]$ such that $E(G_i) \cap E(G_j)$ does not contain graph $F$ for $i \neq j$. The trivial construction by taking $G_1, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $m \cdot \ex(n, F)$. This is the benchmark we use to determine $\dex^*(n, m, F)$.
-
-In this work, we will first discuss the induced case, and then shift our focus to the general case. At the end, we will discuss the case where $F$ is bipartite.
+\textcolor{red}{TODO: Add introduction and motivation.}
 
 \section{Definitions and Notation}
+
+Denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$.
+
 Let $G = (V, E)$ be a graph. Let $V(G) = V$ denote the vertex set and $E(G) = E$ denote the edge set of $G$. We note by $v(G) = |V|$ the number of vertices and $e(G) = |E|$ the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$.
 
-Given $G_1, \ldots, G_m$ subgraphs of $G$, we denote $G_{i_1, \ldots, i_k}$ as the subgraph of $G$ with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{\alpha})$. 
+Given graphs $G_1, \ldots, G_m$ on some vertex set $V$, we denote $G_{i_1, \ldots, i_k}$ as graph on $V$ with edge set $E(G_{i_1, \ldots, i_k}) = \bigcap_{\alpha = 1}^k E(G_{i_\alpha})$. Given two graphs $G_1, G_2$, we denote $G_1 \cup G_2$ as the graph on $V(G_1) \cup V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cup E(G_2)$. Let $s$
 
-In this thesis, we reserve $n$ to denote the number of vertices in a graph. Given a graph $F$, we denote $\ex(n, F)$ to be the extremal number for $F$ on a graph with $n$ vertices, i.e. the maximum number of edges in a $n$-vertex graph that does not contain $F$ as a subgraph. 
+In this thesis, we reserve $n$ to denote the number of vertices in a graph. We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with $n$ edges. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
 
-We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the size of its parts. We denote $P_n$ as a path with $n$ edges, and $C_n$ as a cycle with $n$ edges. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
+Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum  possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Given graphs $G_1, \ldots, G_m$ on the same set of vertices and $F$, we say that $G_1, \ldots, G_m$ are pairwise $F$-free if $E(G_i) \cap E(G_j)$ does not contain $F$ for $i \neq j$.
 
-We also denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$.
+\section{Problem Statement}
+
+Let $\dex(n, m, F)$ be the maximum possible number of edges that $m$ pairwise $F$-free graphs on $n$ vertices can have. Our goal is to determine $\dex(n, m, F)$ for different forbidden graphs $F$. A trivial construction with $G_1 = K_n$ and $G_2, \ldots, G_m$ to be extremal graphs for $F$ yields the lower bound $\dex(n, m, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)$. In this work, we use this bound as a benchmark to either show its tightness or to improve it.
+
+Additionally, we are also interested in a more restrictive version where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$. Let $\dex^*(n, m, F)$ as the maximum possible number of edges that $m$ pairwise $F$-free graphs on $n$ vertices can have, with the constraint that each graph is an induced subgraph of their union. A trivial construction with $G_1 = \cdots = G_m$ to be extremal graphs for $F$ yields the lower bound $\dex^*(n, m, F) \geq m \cdot \ex(n, F)$. This is the benchmark we use to determine $\dex^*(n, m, F)$. Similar to the non-induced case, we will use this bound as a benchmark and base our work on it.
 
 \chapter{Induced Version}
 
-In this section, we assume that $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$ and $E(G_i) \cap E(G_j)$ does not contain $F$ for $i \neq j$. Here, we say that the extremal condition for $m$ subgraphs is met if $\sum_{i = 1}^m e(G_i) = \dex^*(n, m, F)$. 
+In this section, we investigate the case where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$ and are pairwise $F$-free, for some specified $F$. Unless otherwise specified, when we say $G_1, \ldots, G_m$ are induced subgraph, we mean that they are induced subgraphs of $G_1 \cup \cdots \cup G_m$.
 
 \textcolor{red}{TODO: add the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
 
 The following lemma shows that the problem can be redueced to only two graphs.
 
 \begin{lemma}\label{lem:induce-reduce}
-  Let $n, m, k \geq 1$ such that $2 \leq k \leq m$, and let $F$ be some graph. Then
+  Let $n, m, k \geq 1$ such that $2 \leq k \leq m$, $F$ be some graph, and $G_1, \ldots, G_m$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then
   \[
     \dex^*(n, m, F) \leq \frac{m}{k} \cdot \dex^*(n, k, F).
   \]
-  Moreover, if the extremal condition for $k$ induced subgraphs is met only when $G_1 = \cdots = G_k$, then the above equality holds and the extremal condition for $m$ induced subgraphs is met if and only if $G_1 = \cdots = G_m$.
+  Moreover, if $\sum_{i = 1}^k e(G_i) = \dex^*(n, k, F)$ only if $G_1 = \cdots = G_k$, then $\sum_{i = 1}^m e(G_i) = \dex^*(n, m, F)$ only if $G_1 = \cdots = G_m$ and $\dex^*(n, m, F) = \frac{m}{k} \cdot \dex^*(n, k, F)$.
 \end{lemma}
 
 \textcolor{red}{Not putting equality because I'm unsure if a construction for $k$ subgraphs can always generalize to $m$ subgraphs. For example, if $F = K_3$ and $n$ is odd, the $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ construction cannot be generalized to $m = n + 1$ subgraphs.}
@@ -117,7 +120,7 @@ The following lemma shows that the problem can be redueced to only two graphs.
 \[
   e(G_1) + e(G_2) \leq \binom{a + c}{2} + \binom{b + c}{2} - 2\left[\binom{c}{2} - \ex(c, F)\right].
 \]
-Define construction function $\con(a, b, c, F)$ as the expression on the right-hand-side of the above inequality. The maximum of $\con$ tells us the extremal condition for two subgraphs. In particular, our benchmark construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices meets the extremal condition if $\con$ is maximized when $c = n$. Thus the problem is further reduced to an optimization problem over $\con$. For $0 \leq b \leq n - k$ and $k \leq c \leq n$, define
+Define construction function $\con(a, b, c, F)$ as the expression on the right-hand-side of the above inequality. $\con(a, b, c, F)$ describes the optimal construction given $a, b, c$, and thus maximizing $\con$ with respect to $a, b, c$ tells us the extremal condition for two subgraphs. In particular, our benchmark construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices meets the extremal condition if $\con(a, b, c, F)$ has a maximum at $c = n$. Thus the problem is further reduced to an optimization problem over $\con$. For $0 \leq b \leq n - k$ and $k \leq c \leq n$, define
 \begin{align*}
   \Delta_k \con(a, b, c, F) 
   &= \con(a, b, c, F) - \con(a, b + k, c - k, F) \\
@@ -130,7 +133,7 @@ and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will 
   \[
     \dex^*(n, m, F) = m \cdot \ex(n, F)
   \]
-  and the extremal condition is met if and only if $G_1 = \cdots = G_m$ are extremal graphs for $F$.
+  and the extremal condition is met if and only if all $m$ induced pairwise $F$-free subgraphs are equal and extremal graphs for $F$.
 \end{lemma}
 
 \textcolor{red}{Not sure if this statement can be strengthened into if and only if. We would need to show there's no $F$ such that $\ex(c, F) - \ex(c - 1, F) \leq \frac{c - 1}{2}$ for some $c$ but $\con$ has a unique maximum at $c = n$. In other words, there can not exist $F$ such that its extremal number increases slowly at some small $c$ but eventually catches up.}
@@ -146,7 +149,7 @@ and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will 
   Thus, $\con$ is strictly increasing with respect to $c$ for $c \geq c_0$. By symmetry of $a$ and $b$, $\con$ has a unique maximum of $2 \cdot \ex(n, F)$ at $c = n$, which yields the unique extremal construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices.
 \end{proof}
 
-\section{Complete Graph Case}
+\section{Complete Graph $F$}
 
 \begin{lemma}\label{lem:induce-complete-cond}
   For $n \geq 1$ and $r \geq 2$,
@@ -167,21 +170,21 @@ and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will 
 The following theorem for complete graphs with more than $3$ vertices now follows directly from \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}:
 
 \begin{theorem}\label{thm:induce-complete-no-triangle}
-  For $n \geq 1$, $m \geq 2$, and $r \geq 3$, 
+  Let $n \geq 1$, $m \geq 2$, and $r \geq 3$, and let $G_1, \ldots, G_m$ be pairwise $K_{r + 1}$-free induced subgraphs on $n$ vertices. Then
   \[
     \dex^*(n, m, K_{r + 1}) = m \cdot e(T_{r}(n)),
   \]
-  and the extremal condition is met if and only if $G_1 = \cdots = G_m = T_{r}(n)$.
+  and $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if $G_1 = \cdots = G_m = T_{r}(n)$.
 \end{theorem}
 
 Surprisingly, the triangle case is more complicated than the case for larger complete graphs. As shown in \cref{lem:induce-complete-cond}, the condition given by \cref{lem:induce-cond} is not satisfied for all $n$ in the triangle case, and there are indeed constructions of induced subgraphs $G_1, G_2$ that meet the extremal condition but are neither equal nor both complete bipartite graphs. For odd $n$, consider $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$. The number of edges over $G_1, G_2$ is $\frac{(n - 1)^2}{2} + n - 1 = \frac{n^2 - 1}{2} = 2\left\lfloor \frac{n^2}{4}\right\rfloor$, which meets the benchmark construction of two complete bipartite graphs. We will show that this is the only deviant construction for the triangle case.
 
 \begin{theorem}\label{thm:induce-triangle}
-  For $n \geq 1$ and $m \geq 2$, 
+  Let $n \geq 1$, $m \geq 2$, and let $G_1, \ldots, G_m$ be pairwise $K_3$-free induced subgraphs on $n$ vertices. Then
   \[
     \dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor.
   \]
-  Moreover, if $n$ is even or $m$ is odd, then the extremal condition is met if and only if $G_1 = \cdots = G_m$ are complete balanced bipartite graphs on $n$ vertices. Otherwise, the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k + 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  Moreover, if $n$ is even or $m$ is odd, then $\sum_i e(G_i)$ if and only if $G_1 = \cdots = G_m = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$. Otherwise, the extremal condition is met if and only if either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k + 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
 \end{theorem}
 
 \begin{proof}
@@ -226,36 +229,36 @@ Surprisingly, the triangle case is more complicated than the case for larger com
   as $m$ is odd. But then $G_{i + m} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$, and this contradiction completes the proof.
 \end{proof}
 
-Since $n$ cannot be both even and odd, we have the following corollary:
-
-\begin{corollary}
-  For $n \geq 1$,
-  \[
-    \dex^*(n, n, K_3) = n \left\lfloor \frac{n^2}{4} \right\rfloor,
-  \]
-  and the extremal condition is met if and only if $G_1 = \cdots = G_n$ are complete balanced bipartite graphs on $n$ vertices. 
-\end{corollary}
-
 Combining \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}, we have the following theorem for complete graphs:
 
 \begin{theorem}\label{thm:induce-complete}
-  For $n \geq 1$ and $m, r \geq 2$, 
+  For $n \geq 1$ and $m, r \geq 2$, let $G_1, \ldots, G_m$ be pairwise $K_{r + 1}$-free induced subgraphs on $n$ vertices. Then
   \[
-    \dex^*(n, m, K_{r + 1}) = m \cdot \ex(n, K_{r + 1}).
+    \dex^*(n, m, K_{r + 1}) = m \cdot e(T_r(n)).
   \]
-  Moreover, the extremal condition is met if and only if $G_1 = \cdots = G_m = T_r(n)$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  Moreover, $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if $G_1 = \cdots = G_m = T_r(n)$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
 \end{theorem}
+
+Since $n$ cannot be both even and odd, we also have the following corollary:
+
+\begin{corollary}\label{cor:induce-complete}
+  For $n \geq 2$, let $G_1, \ldots, G_n$ be pairwise $K_{r + 1}$-free induced subgraphs on $n$ vertices. Then
+  \[
+    \dex^*(n, n, K_{r + 1}) = n \cdot e(T_r(n)).
+  \]
+  and $\sum_i e(G_i) = \dex^*(n, n, K_3)$ if and only if $G_1 = \cdots = G_n = T_r(n)$.
+\end{corollary}
 
 \section{Non-bipartite $F$}
 
 For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
 
 \begin{theorem}
-  For $n \geq 1$, and $m, r \geq 2$, if $F$ is $(r + 1)$-colorable, then large enough $n$
+  Let $n \geq 1$, $m, r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_m$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
   \[
     \dex^*(n, m, F) = m \cdot \ex(n, F),
   \]
-  and the extremal condition is met if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the extremal condition is met if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  and $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
 \end{theorem}
 
 \begin{proof}
@@ -302,6 +305,20 @@ For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in ge
   \]
   with equality only if $n$ is odd. Hence, $\con(a, b, c, F) \leq 2 \cdot \ex(n, F)$. We may assume that $n$ is odd and $c = n - 1$, otherwise we are done by \cref{lem:induce-reduce}. Then in the extremal condition, $G_1 = G_{1, 2}$ is the extremal graph for $F$ on $n - 1$ vertices, and $G_2$ must be $G_1 + K_1$. It remains to show that for odd $m$, $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met, and this follows from the parity argument in the proof of \cref{thm:induce-triangle}.
 \end{proof}
+
+Similar to \cref{cor:induce-complete}, we have the following corollary:
+
+\begin{corollary}
+  Let $n , r\geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
+  \[
+    \dex^*(n, n, F) = n \cdot \ex(n, F),
+  \]
+  and $\sum_i e(G_i) = \dex^*(n, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$.
+\end{corollary}
+
+\section{Bipartite $F$}
+
+\section{Hypergraph $F$}
 
 \chapter{General Version}
 
