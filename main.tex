@@ -92,8 +92,6 @@ Additionally, we are also interested in a more restrictive version where $G_1, \
 
 In this section, we investigate the case where $G_1, \ldots, G_m$ are induced subgraphs of $G_1 \cup \cdots \cup G_m$ and are pairwise $F$-free, for some specified $F$. Unless otherwise specified, when we say $G_1, \ldots, G_m$ are induced subgraph, we mean that they are induced subgraphs of $G_1 \cup \cdots \cup G_m$.
 
-\textcolor{red}{TODO: add the condition for all $G_i$'s to be extremal graphs for $F$ for all $m$, and generalize to hypergraph.}
-
 The following lemma shows that the problem can be redueced to only two graphs.
 
 \begin{lemma}\label{lem:induce-reduce}
@@ -120,15 +118,15 @@ The following lemma shows that the problem can be redueced to only two graphs.
 \[
   e(G_1) + e(G_2) \leq \binom{d}{2} + \binom{n - c - d}{2} + (n - c)c + 2\ex(c, F).
 \]
-But then notice that $\binom{n - c}{2} \geq \binom{d}{2} + \binom{n - c - d}{2}$ for all $0 \geq d \geq n$. This tells us it is optimal to put $d = 0$ and $G_1 = G_{1, 2}$ for our construction. Hence, define the construction function
+But then notice that $\binom{n - c}{2} > \binom{d}{2} + \binom{n - c - d}{2}$ for $0 < d < n - c$. This implies our construction is optimized when $d = 0$ or $d = n - c$, that is, to let $G_2$ contain $G_1$ or the other way around. Hence, we may assume $d = 0$ and define the construction function as
 \[
   \con(n, c, F) \coloneq \binom{n - c}{2} + (n - c)c + 2\ex(c, F),
 \]
-i.e. the number of edges over two induced graphs in this construction. Since $e(G_1) + e(G_2) \leq \con(n, c, F)$, 
+i.e. the number of edges over two induced graphs in the above construction. Since $e(G_1) + e(G_2) \leq \con(n, c, F)$, 
 \[
   \dex^*(n, 2, F) = \max_{0 \leq c \leq n} \con(n, c, F),
 \]
-and thus the problem is reduced to maximizing $\con$ over $c$. In particular, our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices meets the extremal condition if $\con(n, c, F)$ has a maximum at $c = n$. For $0 \leq k \leq c \leq n$, define
+and thus the problem is reduced to maximizing $\con$ over $c$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq c \leq n$, define
 \[
   \Delta_k \con(n, c, F) \coloneq \con(n, c, F) - \con(n, c - k, F) = \frac{1}{2}k(k - 2c + 1) + 2[\ex(c, F) - \ex(c - k, F)]
 \]
@@ -142,7 +140,7 @@ and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will 
   and the extremal condition is met if and only if all $m$ induced pairwise $F$-free subgraphs are equal and extremal graphs for $F$.
 \end{lemma}
 
-\textcolor{red}{Not sure if this statement can be strengthened into if and only if. We would need to show there's no $F$ such that $\ex(c, F) - \ex(c - 1, F) \leq \frac{c - 1}{2}$ for some $c$ but $\con$ has a unique maximum at $c = n$. In other words, there can not exist $F$ such that its extremal number increases slowly at some small $c$ but eventually catches up.}
+\textcolor{red}{This should be if and only if and I will strengthen it shortly.}
 
 \begin{proof}
   It suffices to show $\con(n, c, F)$ has a unique maximum of $2\ex(n, F)$ at $c = n$. We may assume $c \geq c_0$ by assumption. Suppose $c < n$. Since $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$,
@@ -250,30 +248,34 @@ Since $n$ cannot be both even and odd, we also have the following corollary:
 
 \section{Non-bipartite $F$}
 
-For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
+For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. 
+
+More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
 
 \begin{theorem}
   Let $n \geq 1$, $m, r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_m$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
   \[
     \dex^*(n, m, F) = m \cdot \ex(n, F),
   \]
-  and $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  and $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if when either $G_1 = \cdots = G_m$ are $n$-vertex extremal graph for $F$, or $G_{2k - 1}$ is the $(n - 1)$-vertex extremal graph for $F$ and $G_{2k} = G_1 + K_1$ for all $k \in [m/2]$.
 \end{theorem}
+
+\textcolor{red}{This proof only works for $r \geq 3$. Ignore the case $r = 2$ for now.}
 
 \begin{proof}
   It suffices to show for $m = 2$ by \cref{lem:induce-reduce}. We first show that $\con(n, c, F)$ fails to meet the desired bound for small $c$.
   \begin{claim}
-    If $c \leq \frac{n}{2}$, then $f(a, b, c) < 2 \cdot \ex(n, F)$.
+    If $c \leq \frac{n}{2}$, then $\con(n, c, F) < 2\ex(n, F)$.
   \end{claim}
 
   \begin{proof}
     Write $c = kn$ for some $k \in [0, 1/2]$. Since
     \[
-      f(a, b, kn) \leq 2\binom{(1 - k)n/2}{2} - 2\left[\binom{kn}{2} - \ex(kn, F)\right],
+      \con(n, kn, F) = \binom{(1 - k)n}{2} + k(1 - k)n^2 + 2\ex(kn, F),
     \]
     it suffices to show that
     \[
-      \ex(n, F) - \ex(kn, F) > \binom{(1 - k)n/2}{2} - \binom{kn}{2}
+      \ex(n, F) - \ex(kn, F) > \frac{1}{2}\binom{(1 - k)n}{2} + \frac{k(1 - k)}{2}n^2
     \]
     for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\ex(n, F) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
     \[
@@ -281,16 +283,20 @@ For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in ge
     \]
     On the right-hand-side, 
     \[
-      \binom{(1 - k)n/2}{2} - \binom{kn}{2} = (1 - 2k - 3k^2)\frac{n^2}{8} + o(n^2) \leq \frac{n^2}{8} + o(n^2).
+      \frac{1}{2}\binom{(1 - k)n}{2} + \frac{k(1 - k)}{2}n^2 = \frac{1 - k^2}{4}n^2 + o(n^2) \leq \frac{n^2}{4} + o(n^2)
     \]
-    Combining the above inequalities now yields the claim, as $n$ is large.
+    \textcolor{red}{The problem is here. If $r = 2$, there does not exist $\alpha \in (0, 1]$ such that for $c \leq \alpha n$ the claim works: Erdős-Stone gives us $\ex(n, F) - \ex(kn, F) \geq \frac{1}{4}\left(1 - \alpha^2\right)n^2 + o(n^2)$, which exceeds the bound $\frac{n^2}{4} + o(n^2)$ for the right-hand-side for any $\alpha > 0$. }
   \end{proof}
 
   Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough $c$, $\ex(c, F) = \ex(c, K_{r + 1}) + \ex(c, \tilde{F})$, where $\tilde{F}$ is the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(c)$. This implies
   \[
     \ex(c, F) - \ex(c - 1, F) \geq \ex(c, K_{r + 1}) - \ex(c - 1, K_{r + 1}),
   \]
-  as we assume $n$ is sufficiently large. Thus by \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done if $r > 3$. The above inequality also implies that for $r = 2$,
+  as we assume $n$ is sufficiently large. Thus by \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done if $r > 3$. 
+
+  \textcolor{red}{The remaining proof is for $r = 3$.}
+  
+  The above inequality also implies that for $r = 2$,
   \[
     \Delta_2 \con(n, c, F) \geq \Delta_2 \con(n, c, K_3),
   \]
@@ -307,14 +313,38 @@ For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in ge
 
 Similar to \cref{cor:induce-complete}, we have the following corollary:
 
+\textcolor{red}{This also only works for $r \geq 3$ because of the theorem above.}
+
 \begin{corollary}
-  Let $n , r\geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
+  Let $n , r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
   \[
     \dex^*(n, n, F) = n \cdot \ex(n, F),
   \]
   and $\sum_i e(G_i) = \dex^*(n, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$.
 \end{corollary}
 
+For small $n$, we may not be able to achieve the same result. Consider the case when $F$ is the bowtie graph, i.e. the $5$-vertex graph with two triangles sharing a vertex. For $n \leq 4$, the $n$-vertex extremal graph for $F$ is the complete graph $K_n$. For $n \geq 5$, the $n$-vertex extremal graph for $F$ is then $K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ plus an edge, and so $\ex(n, F) = \left\lfloor\frac{n^2}{4}\right\rfloor + 1$. But then in this case when $n = 5$, 
+\[
+  \con(5, 4, F) = 2e(K_4) + 4 = 16 > \con(5, 5, F) = 2\left(\left\lfloor\frac{5^2}{4}\right\rfloor + 1\right) = 14.
+\]
+This yields an instance where the construction $G_1 = K_{v(F) - 1}$ and $G_2 = K_n$ beats our benchmark construction. Thus the following lemma gives a lower bound for $n$ to avoid losing to this construction.
+
+\begin{lemma}
+  Let $n \geq 1$, $r \geq 2$, and $F$ be $(r + 1)$-colorable with $|V(F)| = t \geq 3$. If $n > t^2 - 3t + 2$ and $r$ divides $n$, then 
+  \[
+    \con(n, n, F) > \con(n, t - 1, F).
+  \]
+  \begin{proof}
+    We need to show that
+    \[
+      2\ex(n, F) - \binom{n}{2} > \binom{t - 1}{2}.
+    \]
+    Since $\ex(n, F) \geq e(T_r(n)) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} \geq \frac{n^2}{4}$,
+    \[
+      2\ex(n, F) - \binom{n}{2} \geq \frac{n^2}{2} - \binom{n}{2} = \frac{n}{2} > \frac{t^2 - 3t + 2}{2} = \binom{t - 1}{2}.
+    \]
+  \end{proof}
+\end{lemma}
 \section{Bipartite $F$}
 
 \section{Hypergraph $F$}
