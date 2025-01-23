@@ -122,11 +122,15 @@ But then notice that $\binom{n - c}{2} > \binom{d}{2} + \binom{n - c - d}{2}$ fo
 \[
   \con(n, c, F) \coloneq \binom{n - c}{2} + (n - c)c + 2\ex(c, F),
 \]
-i.e. the number of edges over two induced graphs in the above construction. Since $e(G_1) + e(G_2) \leq \con(n, c, F)$, 
-\[
-  \dex^*(n, 2, F) = \max_{0 \leq c \leq n} \con(n, c, F),
-\]
-and thus the problem is reduced to maximizing $\con$ over $c$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq c \leq n$, define
+i.e. the number of edges over two induced graphs in the above construction. Since $e(G_1) + e(G_2) \leq \con(n, c, F)$, we have the following
+\begin{lemma}\label{lem:optimize-con}
+  Let $F$ be some graph. For $n \geq 1$,
+  \[
+    \dex^*(n, 2, F) = \max_{0 \leq c \leq n} \con(n, c, F).
+  \]
+  Moreover, let $G_1, G_2$ be induced pairwise $F$-free subgraphs and $c_{max}$ be some maximizer of $\con(n, c, F)$. Then $e(G_1) + e(G_2) = \dex^*(n, 2, F)$ only if $G_1, G_2$ are the construction described by $\con(n, c_{max}, F)$.
+\end{lemma}
+Thus the problem is reduced to maximizing $\con$ over $c$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq c \leq n$, define
 \[
   \Delta_k \con(n, c, F) \coloneq \con(n, c, F) - \con(n, c - k, F) = \frac{1}{2}k(k - 2c + 1) + 2[\ex(c, F) - \ex(c - k, F)]
 \]
@@ -143,7 +147,7 @@ and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will 
 \textcolor{red}{This should be if and only if and I will strengthen it shortly.}
 
 \begin{proof}
-  It suffices to show $\con(n, c, F)$ has a unique maximum of $2\ex(n, F)$ at $c = n$. We may assume $c \geq c_0$ by assumption. Suppose $c < n$. Since $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$,
+  By \cref{lem:induce-reduce} and \cref{lem:optimize-con}, it suffices to show $\con(n, c, F)$ has a unique maximum of $2\ex(n, F)$ at $c = n$. We may assume $c \geq c_0$ by assumption. Suppose $c < n$. Since $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$,
   \[
     \Delta \con(n, c, F) = - c + 1 + 2[\ex(c, F) - \ex(c - 1, F)] > 0.
   \]
@@ -185,12 +189,10 @@ Surprisingly, the triangle case is more complicated than the case for larger com
   \[
     \dex^*(n, m, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor.
   \]
-  Moreover, if $n$ is even or $m$ is odd, then $\sum_i e(G_i)$ if and only if $G_1 = \cdots = G_m = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$. Otherwise, the extremal condition is met if and only if either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k + 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  Moreover, $\sum_i e(G_i) = \dex^*(n, m, K_3)$ if and only if $G_1 = \cdots = G_m = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$, unless $n$ is odd and $m = 2$, in which case $e(G_1) + e(G_2) = \dex^*(n, 2, K_3)$ if and only if either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2} = G_1 + K_1$.
 \end{theorem}
 
 \begin{proof}
-  % By \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done if $n$ is even, so we may assume that $n$ is odd. 
-  
   We first show the following claim.
 
   \begin{claim}\label{claim:induce-triangle}
@@ -202,7 +204,7 @@ Surprisingly, the triangle case is more complicated than the case for larger com
     \[
       \Delta_2 \con(n, c, K_3) = -2c + 3 + 2\left[\left\lfloor\frac{c^2}{4}\right\rfloor - \left\lfloor\frac{(c - 2)^2}{4}\right\rfloor\right] = -2c + 3 + 2(c - 1) = 1 > 0,
     \]
-    $\con(n, c, K_3)$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $c \geq n - 1$, which implies $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$. We are done if $c = n$, so assume that $c = n - 1$. Then in the extremal condition, $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
+    $\con(n, c, K_3)$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $c \geq n - 1$, so $\dex^*(n, 2, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$ by \cref{lem:optimize-con}. We are done if $c = n$, so assume that $c = n - 1$. Then in the extremal condition, $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
     \[
       e(G_1) + e(G_2) = 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor + \deg(v),
     \]
@@ -215,15 +217,7 @@ Surprisingly, the triangle case is more complicated than the case for larger com
     \]
     Hence, $n$ must be odd and $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
   \end{proof}
-  By \cref{lem:induce-reduce} and the above claim, it remains to show that for odd $m$, $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ when the extremal condition is met. Suppose not. the above claim then guarantees $G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ for some $i$. Put $G_{j + m} = G_j$ for all $j$. By applying the claim repeatedly, 
-  \begin{align*}
-    G_i &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
-    G_{i + 1} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} \\
-    G_{i + 2} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1 \\
-    &\qquad\quad \vdots \\
-    G_{i + m} &= K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor},
-  \end{align*}
-  as $m$ is odd. But then $G_{i + m} = G_i = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$, and this contradiction completes the proof.
+  By \cref{lem:induce-reduce} and the above claim, it remains to show that for odd $n$ and $m = 3$, $G_1 = \cdots = G_3 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ if the extremal condition is met. Suppose not. The above claim then guarantees one of the subgraphs, say $G_1$, is $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$. But then by the claim $G_2 = G_3 = G_1 + K_1$, which contradicts that $G_2, G_3$ are pairwise $K_3$-free. This completes the proof.
 \end{proof}
 
 Combining \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}, we have the following theorem for complete graphs:
@@ -233,7 +227,7 @@ Combining \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle},
   \[
     \dex^*(n, m, K_{r + 1}) = m \cdot e(T_r(n)).
   \]
-  Moreover, $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if $G_1 = \cdots = G_m = T_r(n)$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case the $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if when either $G_1 = \cdots = G_m = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{2k - 1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2k} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$ for all $k \in [m/2]$.
+  Moreover, $\sum_i e(G_i) = \dex^*(n, m, K_{r + 1})$ if and only if $G_1 = \cdots = G_m = T_r(n)$, unless $r = 2$, $n$ is odd, and $m = 2$, in which case the $e(G_1) + e(G_2) = \dex^*(n, 2, K_3)$ if and only if either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2} = G_1+ K_1$.
 \end{theorem}
 
 Since $n$ cannot be both even and odd, we also have the following corollary:
@@ -257,7 +251,7 @@ More specifically, the Erdős-Stone Theorem tells us that for large $n$, the ext
   \[
     \dex^*(n, m, F) = m \cdot \ex(n, F),
   \]
-  and $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m$ is even, in which case $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if when either $G_1 = \cdots = G_m$ are $n$-vertex extremal graph for $F$, or $G_{2k - 1}$ is the $(n - 1)$-vertex extremal graph for $F$ and $G_{2k} = G_1 + K_1$ for all $k \in [m/2]$.
+  and $\sum_i e(G_i) = \dex^*(n, m, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m = 2$, in which case $e(G_1) + e(G_2) = \dex^*(n, 2, F)$ if and only if when either $G_1 = G_2$ are $n$-vertex extremal graph for $F$, or $G_{1}$ is the $(n - 1)$-vertex extremal graph for $F$ and $G_{2} = G_1 + K_1$.
 \end{theorem}
 
 \textcolor{red}{This proof only works for $r \geq 3$. Ignore the case $r = 2$ for now.}
@@ -308,20 +302,20 @@ More specifically, the Erdős-Stone Theorem tells us that for large $n$, the ext
   \[
     2 \cdot \ex(n, F) - [2 \cdot \ex(n - 1, F) + n - 1] \geq 2[\ex(n, K_{3}) - \ex(n - 1, K_{3})] - n + 1 \geq 0,
   \]
-  with equality only if $n$ is odd. Hence, $\con(n, c, F) \leq 2 \cdot \ex(n, F)$. We may assume that $n$ is odd and $c = n - 1$, otherwise we are done by \cref{lem:induce-reduce}. Then in the extremal condition, $G_1 = G_{1, 2}$ is the extremal graph for $F$ on $n - 1$ vertices, and $G_2$ must be $G_1 + K_1$. It remains to show that for odd $m$, $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met, and this follows from the parity argument in the proof of \cref{thm:induce-triangle}.
+  with equality only if $n$ is odd. Hence, $\con(n, c, F) \leq 2 \cdot \ex(n, F)$. We may assume that $n$ is odd and $c = n - 1$, otherwise we are done by \cref{lem:induce-reduce}. Then in the extremal condition, $G_1 = G_{1, 2}$ is the extremal graph for $F$ on $n - 1$ vertices, and $G_2$ must be $G_1 + K_1$. It remains to show that for $m \geq 3$, $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met, and this follows from the argument in the proof of \cref{thm:induce-triangle}.
 \end{proof}
 
-Similar to \cref{cor:induce-complete}, we have the following corollary:
+% Similar to \cref{cor:induce-complete}, we have the following corollary:
 
-\textcolor{red}{This also only works for $r \geq 3$ because of the theorem above.}
+% \textcolor{red}{This also only works for $r \geq 3$ because of the theorem above.}
 
-\begin{corollary}
-  Let $n , r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
-  \[
-    \dex^*(n, n, F) = n \cdot \ex(n, F),
-  \]
-  and $\sum_i e(G_i) = \dex^*(n, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$.
-\end{corollary}
+% \begin{corollary}
+%   Let $n , r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
+%   \[
+%     \dex^*(n, n, F) = n \cdot \ex(n, F),
+%   \]
+%   and $\sum_i e(G_i) = \dex^*(n, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$.
+% \end{corollary}
 
 For small $n$, we may not be able to achieve the same result. Consider the case when $F$ is the bowtie graph, i.e. the $5$-vertex graph with two triangles sharing a vertex. For $n \leq 4$, the $n$-vertex extremal graph for $F$ is the complete graph $K_n$. For $n \geq 5$, the $n$-vertex extremal graph for $F$ is then $K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ plus an edge, and so $\ex(n, F) = \left\lfloor\frac{n^2}{4}\right\rfloor + 1$. But then in this case when $n = 5$, 
 \[
