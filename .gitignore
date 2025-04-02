@@ -2,3 +2,5 @@
 *.gz
 
 *.ipynb
+
+/draft
