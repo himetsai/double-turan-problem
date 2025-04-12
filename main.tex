@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[10pt, reqno]{report}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{geometry}
 \usepackage{graphicx}
@@ -102,14 +102,12 @@ In this chapter, we investigate the case where $G_1, \ldots, G_m$ are induced su
 The following lemma shows that the problem can be redueced to only two graphs.
 
 \begin{lemma}\label{lem:induce-reduce}
-  Let $n, m, k \geq 1$ such that $2 \leq k \leq m$, $F$ be some graph, and $G_1, \ldots, G_m$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then
+  Let $n, m, k \geq 2$ with $m \geq k$, $F$ be some graph. Then
   \[
     \dex^*(m, n, F) \leq \frac{m}{k} \cdot \dex^*(k, n, F).
   \]
-  Moreover, if $\sum_{i = 1}^k e(G_i) = \dex^*(k, n, F)$ only if $G_1 = \cdots = G_k$, then $\sum_{i = 1}^m e(G_i) = \dex^*(m, n, F)$ only if $G_1 = \cdots = G_m$ and $\dex^*(m, n, F) = \frac{m}{k} \cdot \dex^*(k, n, F)$.
+  Moreover, let $G_1, \ldots, G_m$ be induced doubly $F$-free graphs on $[n]$ and suppose that $\sum_{i = 1}^k e(G_i) = \dex^*(k, n, F)$ only if $G_1 = \cdots = G_k$. Then $\sum_{i = 1}^m e(G_i) = \dex^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
 \end{lemma}
-
-\textcolor{red}{Not putting equality because I'm unsure if a construction for $k$ subgraphs can always generalize to $m$ subgraphs. For example, if $F = K_3$ and $n$ is odd, the $G_1 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor}$ and $G_2 = K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$ construction cannot be generalized to $m = n + 1$ subgraphs.}
 
 \begin{proof}
   Let $G_1, \ldots, G_m$ be induced subgraphs of $G_1 \cup \cdots \cup G_m$ with $E(G_i) \cap E(G_j)$ not containing $F$ for $i \neq j$. Put $G_{i + m} = G_i$ for all $i \in [m]$. Then
@@ -121,45 +119,52 @@ The following lemma shows that the problem can be redueced to only two graphs.
   Suppose $\sum_{i = 1}^k e(G_i) = \dex^*(k, n, F)$. By assumption $G_1 = \cdots = G_k$, so $e(G_i) = \dex^*(k, n, F)/k$ for $1 \leq i \leq k$. Hence, the construction $G_1 = \cdots = G_m$ meets the upperbound. On the other hand, if $G_1 \neq G_2$ then $\sum_{i = 1}^k e(G_i) < \dex^*(k, n, F)$. Since $\sum_{i = 1}^k e(G_{i + j}) \leq \dex^*(k, n, F)$ for all $j \geq 1$, we have $\sum_{i = 1}^m e(G_i) < \frac{m}{k} \cdot \dex^*(k, n, F)$. Thus the extremal condition is met only when $G_1 = \cdots = G_m$.
 \end{proof}
 
-\cref{lem:induce-reduce} allows us to reduce the problem to the case for two subgraphs $G_1, G_2$. Let $C = V(G_1) \cap V(G_2)$, $c = |C|$, $d = |V(G_1) \backslash A|$, and $n - c - d = |V(G_2) \backslash C|$. Note that $c, d \in \Z_{\geq 0}$. Since $G_1, G_2$ are induced subgraphs of $G_1 \cup G_2$, we have $G_1[C] = G_2[C] = G_{1, 2}$. But then $G_{1, 2}$ is $F$-free, so $e(G_1[C]) = e(G_2[C]) \leq \ex(c, F)$. Given $c, d$, the optimal construction to maximize the number of edges over $G_1, G_2$ is thus putting $G_{1, 2}$ as an extremal graph for $F$ on $c$ vertices and connect all edges that are not induced in $A$. This yields the inequality
+\cref{lem:induce-reduce} allows us to reduce the problem to the case for two subgraphs $G_1, G_2$. Let $S = V(G_1) \cap V(G_2)$, $t = |T|$, $s = |V(G_1) \backslash T|$, and $n - t - s = |V(G_2) \backslash T|$. Note that $t, s \in \Z_{\geq 0}$. Since $G_1, G_2$ are induced subgraphs of $G_1 \cup G_2$, we have $G_1[T] = G_2[T] = G_1 \cap G_2$. But then $G_1 \cap G_2$ is $F$-free, so $e(G_1[T]) = e(G_2[T]) \leq \ex(t, F)$. Fixing $s$ and $t$, the optimal construction to maximize the number of edges over $G_1, G_2$ is thus putting $G_1 \cap G_2$ as an extremal graph for $F$ on $c$ vertices and connect all edges that are not induced in $A$. This yields the inequality
 \[
-  e(G_1) + e(G_2) \leq \binom{d}{2} + \binom{n - c - d}{2} + (n - c)c + 2\ex(c, F).
+  e(G_1) + e(G_2) \leq \binom{s}{2} + \binom{n - s - t}{2} + (n - t)t + 2\ex(t, F).
 \]
-But then notice that $\binom{n - c}{2} > \binom{d}{2} + \binom{n - c - d}{2}$ for $0 < d < n - c$. This implies our construction is optimized when $d = 0$ or $d = n - c$, that is, to let $G_2$ contain $G_1$ or the other way around. Hence, we may assume $d = 0$ and define the construction function as
-\[
-  \con(n, c, F) \coloneq \binom{n - c}{2} + (n - c)c + 2\ex(c, F),
-\]
-i.e. the number of edges over two induced graphs in the above construction. Since $e(G_1) + e(G_2) \leq \con(n, c, F)$ for some given $c$, we have the following:
+But then notice $\binom{n - t}{2} > \binom{s}{2} + \binom{n - t - s}{2}$ for $0 < s < n - t$. This implies our construction is optimized when $s = 0$ or $s = n - t$, that is, to let $G_2$ contain $G_1$ or the other way around. Hence, we may assume $s = 0$ and define the following construction function:
+
+\begin{definition}
+  For $n \geq t \geq 1$ and $F$ some graph, define 
+  \[
+    \con(n, t, F) \coloneq \binom{n - t}{2} + (n - t)t + 2\ex(t, F).
+  \]
+  The construction described by $\con(n, t, F)$ are graphs $G_1, G_2$ on $[n]$, such that $G_2$ is the $t$-vertex extremal graph for $F$ and $G_1 = G_2 + K_{n - t}$. 
+\end{definition}
+
+The above discussion also yields the following lemma:
+
 \begin{lemma}\label{lem:optimize-con}
   Let $F$ be some graph. For $n \geq 1$,
   \[
-    \dex^*(2, n, F) = \max_{0 \leq c \leq n} \con(n, c, F).
+    \dex^*(2, n, F) = \max_{0 \leq t \leq n} \con(n, t, F).
   \]
-  Moreover, let $G_1, G_2$ be induced pairwise $F$-free subgraphs and $c_{max}$ be some maximizer of $\con(n, c, F)$. Then $e(G_1) + e(G_2) = \dex^*(2, n, F)$ only if $G_1, G_2$ are the construction described by $\con(n, c_{max}, F)$.
+  Moreover, the equality holds for $n$-vertex graphs $G_1, G_2$ only if $G_1, G_2$ are the construction described by $\con(n, t_{max}, F)$, where $t_{max} = \arg\max_{0 \leq t \leq n} \con(n, t, F)$.
 \end{lemma}
 
-The problem is now reduced to maximizing $\con$ over $c$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq c \leq n$, define
+The problem is now reduced to maximizing $\con$ over $t$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq t \leq n$, define
 \[
-  \Delta_k \con(n, c, F) \coloneq \con(n, c, F) - \con(n, c - k, F) = \frac{1}{2}k(k - 2c + 1) + 2[\ex(c, F) - \ex(c - k, F)]
+  \Delta_k \con(n, t, F) \coloneq \con(n, t, F) - \con(n, t - k, F) = \frac{1}{2}k(k - 2t + 1) + 2[\ex(t, F) - \ex(t - k, F)]
 \]
-and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will show that the maximum of $\con$ happens when $c \geq n - k$ by proving that $\Delta_k \con(n, c, F) > 0$ for all $c \leq n - k$.
+and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will show that the maximum of $\con$ happens when $t \geq n - k$ by proving that $\Delta_k \con(n, t, F) > 0$ for all $c=t \leq n - k$.
 
 \begin{lemma}\label{lem:induce-cond}
-  Let $n, c_0 \geq 1$, $m \geq 2$, and $F$ be some graph. If $\con(n, c, F)< 2 \cdot \ex(n, F)$ for $0 \leq c < c_0$ and $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$ for $c_0 \leq c \leq n$, then
+  Let $n, t_0 \geq 1$, $m \geq 2$, and $F$ be some graph. If $\con(n, t, F)< 2 \cdot \ex(n, F)$ for $0 \leq t < t_0$ and $\ex(t, F) - \ex(t - 1, F) > \frac{t - 1}{2}$ for $t_0 \leq t \leq n$, then
   \[
-    \dex^*(m, n, F) = m \cdot \ex(n, F)
+    \dex^*(m, n, F) = m \cdot \ex(n, F).
   \]
-  and the extremal condition is met if and only if all $m$ induced pairwise $F$-free subgraphs are equal and extremal graphs for $F$.
+  Moreover, the equality holds for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if all $G_1 = G_2 = \cdots = G_m$ are extremal graphs for $F$.
 \end{lemma}
 
-\textcolor{red}{This should be if and only if and I will strengthen it shortly.}
+% \textcolor{red}{This should be if and only if and I will strengthen it shortly.}
 
 \begin{proof}
-  By \cref{lem:induce-reduce} and \cref{lem:optimize-con}, it suffices to show $\con(n, c, F)$ has a unique maximum of $2\ex(n, F)$ at $c = n$. We may assume $c \geq c_0$ by assumption. Suppose $c < n$. Since $\ex(c, F) - \ex(c - 1, F) > \frac{c - 1}{2}$,
+  By \cref{lem:induce-reduce} and \cref{lem:optimize-con}, it suffices to show $\con(n, t, F)$ has a unique maximum of $2\ex(n, F)$ at $t = n$. We may assume $t \geq t_0$ by assumption. Suppose $t < n$. Since $\ex(t, F) - \ex(t - 1, F) > \frac{t - 1}{2}$,
   \[
-    \Delta \con(n, c, F) = - c + 1 + 2[\ex(c, F) - \ex(c - 1, F)] > 0.
+    \Delta \con(n, t, F) = - t + 1 + 2[\ex(t, F) - \ex(t - 1, F)] > 0.
   \]
-  Thus, $\con$ is strictly increasing with respect to $c$ for $c \geq c_0$, so $\con$ has a unique maximum of $2 \cdot \ex(n, F)$ at $c = n$, which yields the unique extremal construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices.
+  Thus, $\con$ is strictly increasing with respect to $t$ for $t \geq t_0$, so $\con$ has a unique maximum of $2 \cdot \ex(n, F)$ at $t = n$, which yields the unique extremal construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices.
 \end{proof}
 
 \section{Complete Graph $F$}
@@ -179,7 +184,7 @@ Surprisingly, the proof for the triangle case $(r = 3)$ is more complicated than
 \begin{lemma}\label{lem:induce-complete-cond}
   For $n \geq 2$ and $r \geq 3$,
   \[
-    \ex(k, n_{r}) - \ex(n - 1, K_{r}) \geq \frac{n - 1}{2},
+    \ex(n, K_{r}) - \ex(n - 1, K_{r}) \geq \frac{n - 1}{2},
   \]
   with equality if and only if $n$ is odd and $r = 3$.
 \end{lemma}
@@ -187,7 +192,7 @@ Surprisingly, the proof for the triangle case $(r = 3)$ is more complicated than
 \begin{proof}
   By Turán's Theorem,
   \[
-    \ex(k, n_{r}) - \ex(n - 1, K_{r}) = \delta(T_{r - 1}(n)) = n - \left\lceil \frac{n}{r - 1} \right\rceil \geq n - \left\lceil\frac{n}{2}\right\rceil.
+    \ex(n, K_{r}) - \ex(n - 1, K_{r}) = \delta(T_{r - 1}(n)) = n - \left\lceil \frac{n}{r - 1} \right\rceil \geq n - \left\lceil\frac{n}{2}\right\rceil.
   \]
   The result now follows.
 \end{proof}
@@ -195,7 +200,7 @@ Surprisingly, the proof for the triangle case $(r = 3)$ is more complicated than
 \begin{theorem}\label{thm:induce-complete-no-triangle}
   For $n, m \geq 2$ and $r \geq 4$, 
   \[
-    \dex^*(m, n, K_{r}) = m \cdot \ex(k, K_{r}),
+    \dex^*(m, n, K_{r}) = m \cdot \ex(n, K_{r}),
   \]
   with equality for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if $G_1 = \cdots = G_m = T_{r - 1}(n)$.
 \end{theorem}
@@ -215,34 +220,29 @@ As shown in \cref{lem:induce-complete-cond}, the condition given by \cref{lem:in
 \end{theorem}
 
 \begin{proof}
-  We first show the following claim.
+  We claim that $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the equality holds for $G_1, G_2$ on $[n]$ only when $G_1 = G_2 = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ unless $n$ is odd, $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$, and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
 
-  \begin{claim}\label{claim:induce-triangle}
-    $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the extremal condition is met only when $G_1 = G_2 = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$, unless $n$ is odd, $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$, and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
-  \end{claim}
+  Consider $\Delta_2 \con(n, t, K_3)$. Since
+  \[
+    \Delta_2 \con(n, t, K_3) = -2t + 3 + 2\left[\left\lfloor\frac{t^2}{4}\right\rfloor - \left\lfloor\frac{(t - 2)^2}{4}\right\rfloor\right] = -2t + 3 + 2(t - 1) = 1 > 0,
+  \]
+  $\con(n, t, K_3)$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $t \geq n - 1$, so $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$ by \cref{lem:optimize-con}. We are done if $t = n$, so assume that $t = n - 1$. Then in the extremal condition, $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
+  \[
+    e(G_1) + e(G_2) = 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor + \deg(v),
+  \]
+  where $v$ is the only vertex not in $G_1 \cap G_2$. But then to meet the extremal condition, 
+  \[
+    \deg(v) = 2\left\lfloor\frac{n^2}{4}\right\rfloor - 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor = \begin{cases}
+      n & \text{if $n$ is even}, \\
+      n - 1 & \text{if $n$ is odd}.
+    \end{cases}
+  \]
+  Hence, $n$ must be odd and $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$. This shows the claim.
 
-  \begin{proof}
-    Consider $\Delta_2 \con(n, c, K_3)$. Since
-    \[
-      \Delta_2 \con(n, c, K_3) = -2c + 3 + 2\left[\left\lfloor\frac{c^2}{4}\right\rfloor - \left\lfloor\frac{(c - 2)^2}{4}\right\rfloor\right] = -2c + 3 + 2(c - 1) = 1 > 0,
-    \]
-    $\con(n, c, K_3)$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $c \geq n - 1$, so $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$ by \cref{lem:optimize-con}. We are done if $c = n$, so assume that $c = n - 1$. Then in the extremal condition, $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
-    \[
-      e(G_1) + e(G_2) = 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor + \deg(v),
-    \]
-    where $v$ is the only vertex not in $G_{1, 2}$. But then to meet the extremal condition, 
-    \[
-      \deg(v) = 2\left\lfloor\frac{n^2}{4}\right\rfloor - 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor = \begin{cases}
-        n & \text{if $n$ is even}, \\
-        n - 1 & \text{if $n$ is odd}.
-      \end{cases}
-    \]
-    Hence, $n$ must be odd and $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$.
-  \end{proof}
-  By \cref{lem:induce-reduce} and the above claim, it remains to show that for odd $n$ and $m = 3$, $G_1 = \cdots = G_3 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ if the extremal condition is met. Suppose not. The above claim then guarantees one of the subgraphs, say $G_1$, is $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$. But then by the claim $G_2 = G_3 = G_1 + K_1$, which contradicts that $G_2, G_3$ are pairwise $K_3$-free. This completes the proof.
+  By \cref{lem:induce-reduce} and our claim, it remains to show that for odd $n$ and $m = 3$, $G_1 = G_2 = G_3 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ if the extremal condition is met. Suppose not. Our claim then guarantees one of the subgraphs, say $G_1$, is $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$. But then by our claim $G_2 = G_3 = G_1 + K_1$, which contradicts that $G_2, G_3$ are pairwise $K_3$-free. This completes the proof.
 \end{proof}
 
-\cref{thm:induce-complete} now follows directly from \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}. In fact, we proved that \cref{thm:induce-complete} also applies for $m = 2$, unless $r = 3$ and $n$ is odd.
+\cref{thm:induce-complete} now follows directly from \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}.
 
 % Since $n$ cannot be both even and odd, we also have the following corollary:
 
@@ -261,64 +261,39 @@ For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in ge
 More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
 
 \begin{theorem}
-  For $m, r \geq 3$, $n$ large enough, and $r$-colorable graph $F$, 
+  Let $m, r \geq 3$, and $F$ be a $r$-colorable graph. Then for large enough $n$, 
   \[
     \dex^*(m, n, F) = m \cdot \ex(n, F),
   \]
   with equality for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if $G_1 = \cdots = G_m$ are extremal $F$-free graphs.
-
-  % and $\sum_i e(G_i) = \dex^*(m, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are $n$-vertex extremal graphs for $F$, unless $r = 2$, $n$ is odd, and $m = 2$, in which case $e(G_1) + e(G_2) = \dex^*(2, n, F)$ if and only if when either $G_1 = G_2$ are $n$-vertex extremal graph for $F$, or $G_{1}$ is the $(n - 1)$-vertex extremal graph for $F$ and $G_{2} = G_1 + K_1$.
 \end{theorem}
 
-\textcolor{red}{This proof only works for $r \geq 4$. Ignore the case $r = 3$ for now.}
-
 \begin{proof}
-  It suffices to show for $m = 2$ by \cref{lem:induce-reduce}. We first show that $\con(n, c, F)$ fails to meet the desired bound for small $c$.
-  \begin{claim}
-    If $c \leq \frac{n}{2}$, then $\con(n, c, F) < 2\ex(n, F)$.
-  \end{claim}
-
-  \begin{proof}
-    Write $c = kn$ for some $k \in [0, 1/2]$. Since
-    \[
-      \con(n, kn, F) = \binom{(1 - k)n}{2} + k(1 - k)n^2 + 2\ex(kn, F),
-    \]
-    it suffices to show that
-    \[
-      \ex(n, F) - \ex(kn, F) > \frac{1}{2}\binom{(1 - k)n}{2} + \frac{k(1 - k)}{2}n^2
-    \]
-    for all $k \in [0, 1/2]$. By the Erdős-Stone theorem, $\ex(n, F) = \left(1 - \frac{1}{r - 1}\right)\frac{n^2}{2} + o(n^2)$ and so the left-hand-side is at least
-    \[
-      \ex(n, F) - \ex(kn, F) \geq \ex(n, F) - \ex(n/2, F) \geq \left(1 - \frac{1}{r - 1}\right)\left(\frac{n^2}{2} - \frac{n^2}{8}\right) - o(n^2) \geq \frac{3n^2}{16} - o(n^2).
-    \]
-    On the right-hand-side, 
-    \[
-      \frac{1}{2}\binom{(1 - k)n}{2} + \frac{k(1 - k)}{2}n^2 = \frac{1 - k^2}{4}n^2 + o(n^2) \leq \frac{n^2}{4} + o(n^2)
-    \]
-    \textcolor{red}{The problem is here. If $r = 3$, there does not exist $\alpha \in (0, 1]$ such that for $c \leq \alpha n$ the claim works: Erdős-Stone gives us $\ex(n, F) - \ex(kn, F) \geq \frac{1}{4}\left(1 - \alpha^2\right)n^2 + o(n^2)$, which exceeds the bound $\frac{n^2}{4} + o(n^2)$ for the right-hand-side for any $\alpha > 0$. }
-  \end{proof}
-
-  Thus we may assume that $c > \frac{n}{2}$. A theorem of Simonovits states that for large enough $c$, $\ex(c, F) = \ex(c, K_{r}) + \ex(c, \tilde{F})$, where $\tilde{F}$ is the family of residue subgraphs of $F$ after $F$ is embedded into $T_r(c)$. Since $\ex(c, \tilde{F})$ is non-decreasing on $c$,
-  \[
-    \ex(c, F) - \ex(c - 1, F) \geq \ex(c, K_{r}) - \ex(c - 1, K_{r}),
-  \]
-  as we assume $n$ is sufficiently large. Thus by \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}, we are done for $r \geq 4$. 
-
-  \textcolor{red}{The remaining proof is for $r = 3$.}
+  By \cref{lem:induce-reduce}, it suffices to show the case for $m = 3$. Let $G_1, G_2, G_3$ be induced doubly $F$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \dex^*(3, n, F)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\dex^*(3, n, F) \geq 3\ex(n, F)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, F)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, F)$, it suffices to show that $G_1 = G_2$ are $n$-vertex $F$-free extremal graphs.
   
-  The above inequality also implies that for $r = 3$,
+  Let $t = |V(G_1 \cap G_2)|$. If $t < \sqrt{n}$, then
   \[
-    \Delta_2 \con(n, c, F) \geq \Delta_2 \con(n, c, K_3),
+    2\ex(n, F) \geq 2e(T_{r - 1}(n)) \geq 2\left\lfloor\frac{n^2}{4}\right\rfloor \geq \binom{n}{2} + \binom{\sqrt{n}}{2} > \con(n, t, F).
   \]
-  which is positive by the proof of \cref{claim:induce-triangle}. Thus when $c$ is $n - 1$ or $n$, $\con(n, c, F)$ attains its maximum, and plugging in $c = n$ and $c = n -1$ yields 
+  Thus $t \geq \sqrt{n}$. But then for large enough $t$, any extremal $t$-vertex $F$-free graph contains a spanning complete $(r - 1)$-partite subgraph $T_{r - 1}(t)$, so we may add $\ex(t - 1, F) - e(T_{r - 1}(t - 1))$ egdes to $T_{r - 1}(t)$ and still avoid $F$ as a subgraph. Hence for large enough $t$, we have $\ex(t, F) \geq \ex(t - 1, F) - e(T_{r - 1}(t - 1)) + e(T_{r - 1}(t))$, and so
   \[
-    \con(n, c, F) \leq \max\left[2 \cdot \ex(n, F), 2 \cdot \ex(n - 1, F) + n - 1\right].
+    \ex(t, F) - \ex(t - 1, F) \geq e(T_{r - 1}(t)) - e(T_{r - 1}(t - 1)) \geq t - \left\lceil \frac{t}{r - 1} \right\rceil.
   \]
-  By \cref{lem:induce-complete-cond},
+  It immediately follows that
+  \begin{equation}
+    \con(n, t, F) - \con(n, t - 1, F) = - t + 1 + 2[\ex(t, F) - \ex(t - 1, F)] = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con}
+  \end{equation}
+  For $r \geq 4$, $\con(n, t, F)$ is strictly increasing on $t$, so by \cref{lem:optimize-con}, 
   \[
-    2 \cdot \ex(n, F) - [2 \cdot \ex(n - 1, F) + n - 1] \geq 2[\ex(k, n_{3}) - \ex(n - 1, K_{3})] - n + 1 \geq 0,
+    \dex^*(2, n, F) = \con(n, n, F) = 2\ex(n, F) = e(G_1) + e(G_2),
+  \] 
+  and $G_1 = G_2$ are $n$-vertex $F$-free extremal graphs, as desired. 
+  
+  Now suppose $r = 3$. Equation \eqref{eq:con} shows that $\con(n, t, F)$ is strictly increasing for even $t$ and $\con(n, t, F) \geq \con(n, t - 1, F)$ for odd $t$. By \cref{lem:optimize-con}, we now have 
+  \[
+    \dex^*(2, n, F) = \max[\con(n, n, F), \con(n, n - 1, F)] = 2\ex(n, F) = e(G_1) + e(G_2),
   \]
-  with equality only if $n$ is odd. Hence, $\con(n, c, F) \leq 2 \cdot \ex(n, F)$. We may assume that $n$ is odd and $c = n - 1$, otherwise we are done by \cref{lem:induce-reduce}. Then in the extremal condition, $G_1 = G_{1, 2}$ is the extremal graph for $F$ on $n - 1$ vertices, and $G_2$ must be $G_1 + K_1$. It remains to show that for $m \geq 3$, $G_1 = \cdots = G_m$ are extremal graphs for $F$ when the extremal condition is met, and this follows from the argument in the proof of \cref{thm:induce-triangle}.
+  and either $G_1 = G_2$ are $n$-vertex extremal $F$-free graphs, or $G_2$ is an $(n - 1)$-vertex extremal $F$-free graph and $G_1 = G_2 + K_1$. If the latter case is true, then $e(G_3) \geq \ex(n, F) > e(G_2)$, and this contradiction completes the proof.
 \end{proof}
 
 % Similar to \cref{cor:induce-complete}, we have the following corollary:
@@ -340,24 +315,21 @@ For small $n$, we may not be able to achieve the same result. Consider the case 
 This yields an instance where the construction $G_1 = K_{v(F) - 1}$ and $G_2 = K_n$ beats our benchmark construction. Thus the following lemma gives a lower bound for $n$ to avoid losing to this construction.
 
 \begin{lemma}
-  Let $n \geq 1$, $r \geq 2$, and $F$ be $(r + 1)$-colorable with $|V(F)| = t \geq 3$. If $n > t^2 - 3t + 2$ and $r$ divides $n$, then 
+  Let $n, r, k \geq 3$, and $F$ be $r$-colorable with $|V(F)| = k$. If $n > k^2 - 3k + 2$ and $r - 1$ divides $n$, then 
   \[
-    \con(n, n, F) > \con(n, t - 1, F).
+    \con(n, n, F) > \con(n, k - 1, F).
   \]
   \begin{proof}
     We need to show that
     \[
-      2\ex(n, F) - \binom{n}{2} > \binom{t - 1}{2}.
+      2\ex(n, F) - \binom{n}{2} > \binom{k - 1}{2}.
     \]
-    Since $\ex(n, F) \geq e(T_r(n)) = \left(1 - \frac{1}{r}\right)\frac{n^2}{2} \geq \frac{n^2}{4}$,
+    Since $\ex(n, F) \geq e(T_{r - 1}(n)) = \left(1 - \frac{1}{r - 1}\right)\frac{n^2}{2} \geq \frac{n^2}{4}$,
     \[
-      2\ex(n, F) - \binom{n}{2} \geq \frac{n^2}{2} - \binom{n}{2} = \frac{n}{2} > \frac{t^2 - 3t + 2}{2} = \binom{t - 1}{2}.
+      2\ex(n, F) - \binom{n}{2} \geq \frac{n^2}{2} - \binom{n}{2} = \frac{n}{2} > \frac{k^2 - 3k + 2}{2} = \binom{k - 1}{2}.
     \]
   \end{proof}
 \end{lemma}
-\section{Bipartite $F$}
-
-\section{Hypergraph $F$}
 
 \chapter{General Version}
 
@@ -638,7 +610,7 @@ In this section, we discuss the case where $F$ is bipartite. In particular, we f
   \begin{proof}
     Suppose $G_1, G_2, \ldots, G_n$ are graphs on $[n]$ containing no double $P_2$ and $\sum_{i = 1}^n e(G_i) \geq (1/2 + o(1))n^{5/2}$, with $e(G_1) \geq e(G_2) \geq \cdots \geq e(G_n)$. Then $G_1, G_2, \ldots, G_m$ are graphs with no double $P_2$ and $\sum_{i = 1}^m e(G_i) \geq (1/2 + o(1))mn^{3/2}$. Hence, it suffices to prove the case for $m = n$.
 
-    Consider a finite projective plane of order $q$. The projective plane has $n = q^2 + q + 1$ points and $n$ lines, where $q$ is a prime chosen so that $n = (1 + o(1))(q^2 + q + 1)$ as $q \to \infty$. Let $S_1, \ldots, S_n \subseteq [n]$ be the $n$ lines of the projective plane. Note that each line $S_i$ contains $q + 1$ points, and the intersection of any two distinct lines $S_i, S_j$ contains $|S_i \cap S_j| = 1$ point. 
+    Consider a finite projective plane with $n$ points and $n$ lines, with prime $q$ chosen so that $n = (1 + o(1))(q^2 + q + 1)$ as $q \to \infty$. Let $S_1, \ldots, S_n \subseteq [n]$ be the $n$ lines of the projective plane. Note that each line $S_i$ contains $q + 1$ points, and the intersection of any two distinct lines $S_i, S_j$ contains $|S_i \cap S_j| = 1$ point. 
     
     Define $G_1, \ldots, G_n$ to be graphs on $[n]$, each with edge set
     \[
@@ -664,7 +636,7 @@ In this section, we discuss the case where $F$ is bipartite. In particular, we f
     $\dex(m, n, P_2) \geq (1/2 + o(1))\sqrt{m}n^{2}$, for $n < m \leq n^2$.
   \end{claim}
   \begin{proof}
-    \textcolor{red}{I don't understand the proof for this claim.}
+    
   \end{proof}
 \end{proof}
 
