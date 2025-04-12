@@ -143,33 +143,9 @@ The above discussion also yields the following lemma:
   Moreover, the equality holds for $n$-vertex graphs $G_1, G_2$ only if $G_1, G_2$ are the construction described by $\con(n, t_{max}, F)$, where $t_{max} = \arg\max_{0 \leq t \leq n} \con(n, t, F)$.
 \end{lemma}
 
-The problem is now reduced to maximizing $\con$ over $t$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. For $0 \leq k \leq t \leq n$, define
-\[
-  \Delta_k \con(n, t, F) \coloneq \con(n, t, F) - \con(n, t - k, F) = \frac{1}{2}k(k - 2t + 1) + 2[\ex(t, F) - \ex(t - k, F)]
-\]
-and denote $\Delta \con = \Delta_1 \con$. Most of the work in this section will show that the maximum of $\con$ happens when $t \geq n - k$ by proving that $\Delta_k \con(n, t, F) > 0$ for all $c=t \leq n - k$.
-
-\begin{lemma}\label{lem:induce-cond}
-  Let $n, t_0 \geq 1$, $m \geq 2$, and $F$ be some graph. If $\con(n, t, F)< 2 \cdot \ex(n, F)$ for $0 \leq t < t_0$ and $\ex(t, F) - \ex(t - 1, F) > \frac{t - 1}{2}$ for $t_0 \leq t \leq n$, then
-  \[
-    \dex^*(m, n, F) = m \cdot \ex(n, F).
-  \]
-  Moreover, the equality holds for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if all $G_1 = G_2 = \cdots = G_m$ are extremal graphs for $F$.
-\end{lemma}
-
-% \textcolor{red}{This should be if and only if and I will strengthen it shortly.}
-
-\begin{proof}
-  By \cref{lem:induce-reduce} and \cref{lem:optimize-con}, it suffices to show $\con(n, t, F)$ has a unique maximum of $2\ex(n, F)$ at $t = n$. We may assume $t \geq t_0$ by assumption. Suppose $t < n$. Since $\ex(t, F) - \ex(t - 1, F) > \frac{t - 1}{2}$,
-  \[
-    \Delta \con(n, t, F) = - t + 1 + 2[\ex(t, F) - \ex(t - 1, F)] > 0.
-  \]
-  Thus, $\con$ is strictly increasing with respect to $t$ for $t \geq t_0$, so $\con$ has a unique maximum of $2 \cdot \ex(n, F)$ at $t = n$, which yields the unique extremal construction of $G_1 = G_2$ being extremal graphs for $F$ on $n$ vertices.
-\end{proof}
+The problem is now reduced to maximizing $\con$ over $t$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. 
 
 \section{Complete Graph $F$}
-
-We will show the following result in this section:
 
 \begin{theorem}\label{thm:induce-complete}
   For $n, m, r \geq 3$, 
@@ -179,86 +155,33 @@ We will show the following result in this section:
   with equality for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if $G_1 = \cdots = G_m = T_{r - 1}(n)$.
 \end{theorem}
 
-Surprisingly, the proof for the triangle case $(r = 3)$ is more complicated than the cases for larger $r$. Hence, we will first prove the case for $r \geq 4$ and then prove the triangle case separately. In particular, the case for $r \geq 4$ is a direct consequence of the following lemma:
-
-\begin{lemma}\label{lem:induce-complete-cond}
-  For $n \geq 2$ and $r \geq 3$,
-  \[
-    \ex(n, K_{r}) - \ex(n - 1, K_{r}) \geq \frac{n - 1}{2},
-  \]
-  with equality if and only if $n$ is odd and $r = 3$.
-\end{lemma}
-
 \begin{proof}
-  By Turán's Theorem,
+  By \cref{lem:induce-reduce}, it suffices to show the case for $m = 3$. Let $G_1, G_2, G_3$ be induced doubly $K_r$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \dex^*(3, n, K_r)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\dex^*(3, n, K_r) \geq 3\ex(n, K_r)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, K_r)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_r)$, it suffices to show that $G_1 = G_2 = T_{r - 1}(n)$. In particular, we will use \cref{lem:optimize-con} to show that $G_1, G_2$ is an extremal configuration without containing a double $K_r$. 
+
+  Let $t = |V(G_1 \cap G_2)|$. By Turán's Theorem,
   \[
-    \ex(n, K_{r}) - \ex(n - 1, K_{r}) = \delta(T_{r - 1}(n)) = n - \left\lceil \frac{n}{r - 1} \right\rceil \geq n - \left\lceil\frac{n}{2}\right\rceil.
+    \ex(t, K_{r}) - \ex(t - 1, K_{r}) = e(T_{r - 1}(t)) - e(T_{r - 1}(t - 1)) = t - \left\lceil \frac{t}{r - 1} \right\rceil.
   \]
-  The result now follows.
+  It immediately follows that
+  \begin{equation}
+    \con(n, t, K_r) - \con(n, t - 1, K_r) = - t + 1 + 2[\ex(t, K_r) - \ex(t - 1, K_r)] = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con1}
+  \end{equation}
+  For $r \geq 4$, $\con(n, t, K_r)$ is strictly increasing on $t$, so by \cref{lem:optimize-con}, 
+  \[
+    \dex^*(2, n, K_r) = \con(n, n, K_r) = 2\ex(n, K_r) = e(G_1) + e(G_2)
+  \]
+  and $G_1 = G_2 = T_{r - 1}(n)$, as desired. 
+
+  Now suppose $r = 3$. Equation \eqref{eq:con1} shows that $\con(n, t, K_r)$ is non-decreasing on $t$ and $\con(n, t, K_r) > \con(n, t, K_r)$ for even $t$. By \cref{lem:optimize-con}, we now have 
+  \[
+    \dex^*(2, n, K_r) = \max[\con(n, n, K_r), \con(n, n - 1, K_r)] = 2\ex(n, K_r) = e(G_1) + e(G_2),
+  \]
+  and either $G_1 = G_2 = T_{r - 1}(n)$, or $G_2 = T_{r - 1}(n - 1)$ and $G_1 = G_2 + K_1$. If the latter case is true, then $e(G_3) \geq \ex(n, F) > e(G_2)$, and this contradiction completes the proof.
 \end{proof}
-
-\begin{theorem}\label{thm:induce-complete-no-triangle}
-  For $n, m \geq 2$ and $r \geq 4$, 
-  \[
-    \dex^*(m, n, K_{r}) = m \cdot \ex(n, K_{r}),
-  \]
-  with equality for $n$-vertex graphs $G_1, G_2, \ldots, G_m$ if and only if $G_1 = \cdots = G_m = T_{r - 1}(n)$.
-\end{theorem}
-
-\begin{proof}
-  The result follows from \cref{lem:induce-cond} and \cref{lem:induce-complete-cond}.
-\end{proof}
-
-As shown in \cref{lem:induce-complete-cond}, the condition given by \cref{lem:induce-cond} is not satisfied for all $n$ in the triangle case, and there are indeed constructions of induced subgraphs $G_1, G_2$ that meet the extremal condition but are neither equal nor both complete bipartite graphs. For odd $n$, consider $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$. The number of edges over $G_1, G_2$ is $\frac{(n - 1)^2}{2} + n - 1 = \frac{n^2 - 1}{2} = 2\left\lfloor \frac{n^2}{4}\right\rfloor$, which meets the benchmark construction of two complete bipartite graphs. We will show that this is the only deviant construction for the triangle case.
-
-\begin{theorem}\label{thm:induce-triangle}
-  Let $n, m \geq 2$, and let $G_1, \ldots, G_m$ be pairwise $K_3$-free induced subgraphs on $n$ vertices. Then
-  \[
-    \dex^*(m, n, K_3) = m \left\lfloor \frac{n^2}{4} \right\rfloor.
-  \]
-  Moreover, $\sum_i e(G_i) = \dex^*(m, n, K_3)$ if and only if $G_1 = \cdots = G_m = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$, unless $n$ is odd and $m = 2$, in which case $e(G_1) + e(G_2) = \dex^*(2, n, K_3)$ if and only if either $G_1 = G_2 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ or $G_{1} = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$ and $G_{2} = G_1 + K_1$.
-\end{theorem}
-
-\begin{proof}
-  We claim that $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$, and the equality holds for $G_1, G_2$ on $[n]$ only when $G_1 = G_2 = K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ unless $n$ is odd, $G_1 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}}$, and $G_2 = K_{\frac{n - 1}{2}, \frac{n - 1}{2}} + K_1$.
-
-  Consider $\Delta_2 \con(n, t, K_3)$. Since
-  \[
-    \Delta_2 \con(n, t, K_3) = -2t + 3 + 2\left[\left\lfloor\frac{t^2}{4}\right\rfloor - \left\lfloor\frac{(t - 2)^2}{4}\right\rfloor\right] = -2t + 3 + 2(t - 1) = 1 > 0,
-  \]
-  $\con(n, t, K_3)$ has a maximum of $2\left\lfloor \frac{n^2}{4} \right\rfloor$ when $t \geq n - 1$, so $\dex^*(2, n, K_3) = 2\left\lfloor\frac{n^2}{4}\right\rfloor$ by \cref{lem:optimize-con}. We are done if $t = n$, so assume that $t = n - 1$. Then in the extremal condition, $G_1 = G_{1, 2} = K_{\left\lfloor\frac{n - 1}{2}\right\rfloor, \left\lceil\frac{n - 1}{2}\right\rceil}$ and
-  \[
-    e(G_1) + e(G_2) = 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor + \deg(v),
-  \]
-  where $v$ is the only vertex not in $G_1 \cap G_2$. But then to meet the extremal condition, 
-  \[
-    \deg(v) = 2\left\lfloor\frac{n^2}{4}\right\rfloor - 2\left\lfloor\frac{(n - 1)^2}{4}\right\rfloor = \begin{cases}
-      n & \text{if $n$ is even}, \\
-      n - 1 & \text{if $n$ is odd}.
-    \end{cases}
-  \]
-  Hence, $n$ must be odd and $G_2$ must be a copy of $G_1$ with all vertices adjacent to the only remaining vertex, i.e. $G_2 = G_1 + K_1$. This shows the claim.
-
-  By \cref{lem:induce-reduce} and our claim, it remains to show that for odd $n$ and $m = 3$, $G_1 = G_2 = G_3 = K_{\frac{n + 1}{2}, \frac{n - 1}{2}}$ if the extremal condition is met. Suppose not. Our claim then guarantees one of the subgraphs, say $G_1$, is $K_{\left\lceil\frac{n - 1}{2}\right\rceil, \left\lfloor\frac{n - 1}{2}\right\rfloor} + K_1$. But then by our claim $G_2 = G_3 = G_1 + K_1$, which contradicts that $G_2, G_3$ are pairwise $K_3$-free. This completes the proof.
-\end{proof}
-
-\cref{thm:induce-complete} now follows directly from \cref{thm:induce-complete-no-triangle} and \cref{thm:induce-triangle}.
-
-% Since $n$ cannot be both even and odd, we also have the following corollary:
-
-% \begin{corollary}\label{cor:induce-complete}
-%   For $n \geq 2$, let $G_1, \ldots, G_n$ be pairwise $K_{r + 1}$-free induced subgraphs on $n$ vertices. Then
-%   \[
-%     \dex^*(n, n, K_{r + 1}) = n \cdot e(T_r(n)).
-%   \]
-%   and $\sum_i e(G_i) = \dex^*(n, n, K_{r + 1})$ if and only if $G_1 = \cdots = G_n = T_r(n)$.
-% \end{corollary}
 
 \section{Non-bipartite $F$}
 
-For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. 
-
-More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
+For non-bipartite $F$, it is hard to determine the extremal graphs for $F$ in general, but their structures becomes more apparent when $n$ is large. More specifically, the Erdős-Stone Theorem tells us that for large $n$, the extremal graph for $F$ mimics the structure of the Turán graph. With this idea in mind, the following theorem is a generalization of \cref{thm:induce-complete} for large $n$.
 
 \begin{theorem}
   Let $m, r \geq 3$, and $F$ be a $r$-colorable graph. Then for large enough $n$, 
@@ -269,7 +192,7 @@ More specifically, the Erdős-Stone Theorem tells us that for large $n$, the ext
 \end{theorem}
 
 \begin{proof}
-  By \cref{lem:induce-reduce}, it suffices to show the case for $m = 3$. Let $G_1, G_2, G_3$ be induced doubly $F$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \dex^*(3, n, F)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\dex^*(3, n, F) \geq 3\ex(n, F)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, F)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, F)$, it suffices to show that $G_1 = G_2$ are $n$-vertex $F$-free extremal graphs.
+  By \cref{lem:induce-reduce}, it suffices to show the case for $m = 3$. Let $G_1, G_2, G_3$ be induced doubly $F$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \dex^*(3, n, F)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\dex^*(3, n, F) \geq 3\ex(n, F)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, F)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, F)$, it suffices to show that $G_1 = G_2$ are $n$-vertex $F$-free extremal graphs. In particular, we will use \cref{lem:optimize-con} to show that $G_1, G_2$ is an extremal configuration without containing a double $F$.
   
   Let $t = |V(G_1 \cap G_2)|$. If $t < \sqrt{n}$, then
   \[
@@ -281,7 +204,7 @@ More specifically, the Erdős-Stone Theorem tells us that for large $n$, the ext
   \]
   It immediately follows that
   \begin{equation}
-    \con(n, t, F) - \con(n, t - 1, F) = - t + 1 + 2[\ex(t, F) - \ex(t - 1, F)] = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con}
+    \con(n, t, F) - \con(n, t - 1, F) = - t + 1 + 2[\ex(t, F) - \ex(t - 1, F)] \geq t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con}
   \end{equation}
   For $r \geq 4$, $\con(n, t, F)$ is strictly increasing on $t$, so by \cref{lem:optimize-con}, 
   \[
