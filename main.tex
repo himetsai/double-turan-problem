@@ -104,44 +104,50 @@ The following lemma shows that the problem can be redueced to only two graphs.
 \begin{lemma}\label{lem:induce-reduce}
   Let $n, m, k \geq 2$ with $m \geq k$, $F$ be some graph. Then
   \[
-    \dex^*(m, n, F) \leq \frac{m}{k} \cdot \dex^*(k, n, F).
+    \dex^*(m, n, F) = \frac{m}{k} \cdot \dex^*(k, n, F).
   \]
   Moreover, let $G_1, \ldots, G_m$ be induced doubly $F$-free graphs on $[n]$ and suppose that $\sum_{i = 1}^k e(G_i) = \dex^*(k, n, F)$ only if $G_1 = \cdots = G_k$. Then $\sum_{i = 1}^m e(G_i) = \dex^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
 \end{lemma}
 
 \begin{proof}
-  Let $G_1, \ldots, G_m$ be induced subgraphs of $G_1 \cup \cdots \cup G_m$ with $E(G_i) \cap E(G_j)$ not containing $F$ for $i \neq j$. Put $G_{i + m} = G_i$ for all $i \in [m]$. Then
+  Let $G_1, \ldots, G_m$ be induced doubly $F$-free graphs on $[n]$. Put $G_{i + m} = G_i$ for all $i \in [m]$. Then
   \[
     \sum_{i = 1}^m e(G_i) = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})] \leq \frac{1}{k}\sum_{i = 1}^m \dex^*(k, n, F) = \frac{m}{k} \cdot \dex^*(k, n, F),
   \]
-  which establishes the upper bound.
+  which establishes the upper bound. The lower bound follows from the construction with $G_1 = \cdots = G_m$ to be $n$-vertex extremal graphs for $F$.
 
-  Suppose $\sum_{i = 1}^k e(G_i) = \dex^*(k, n, F)$. By assumption $G_1 = \cdots = G_k$, so $e(G_i) = \dex^*(k, n, F)/k$ for $1 \leq i \leq k$. Hence, the construction $G_1 = \cdots = G_m$ meets the upperbound. On the other hand, if $G_1 \neq G_2$ then $\sum_{i = 1}^k e(G_i) < \dex^*(k, n, F)$. Since $\sum_{i = 1}^k e(G_{i + j}) \leq \dex^*(k, n, F)$ for all $j \geq 1$, we have $\sum_{i = 1}^m e(G_i) < \frac{m}{k} \cdot \dex^*(k, n, F)$. Thus the extremal condition is met only when $G_1 = \cdots = G_m$.
+  Now suppose $\sum_{i = 1}^m e(G_i) = \frac{m}{k} \cdot \dex^*(k, n, F)$ and $G_1 \neq G_2$. By assumption $\sum_{i = 1}^k e(G_i) < \dex^*(k, n, F)$. But then $\sum_{i = 1}^k e(G_{i + j}) > \dex^*(k, n, F)$ for some $j \geq 1$, contradiction. 
 \end{proof}
 
-\cref{lem:induce-reduce} allows us to reduce the problem to the case for two subgraphs $G_1, G_2$. Let $S = V(G_1) \cap V(G_2)$, $t = |T|$, $s = |V(G_1) \backslash T|$, and $n - t - s = |V(G_2) \backslash T|$. Note that $t, s \in \Z_{\geq 0}$. Since $G_1, G_2$ are induced subgraphs of $G_1 \cup G_2$, we have $G_1[T] = G_2[T] = G_1 \cap G_2$. But then $G_1 \cap G_2$ is $F$-free, so $e(G_1[T]) = e(G_2[T]) \leq \ex(t, F)$. Fixing $s$ and $t$, the optimal construction to maximize the number of edges over $G_1, G_2$ is thus putting $G_1 \cap G_2$ as an extremal graph for $F$ on $c$ vertices and connect all edges that are not induced in $A$. This yields the inequality
-\[
-  e(G_1) + e(G_2) \leq \binom{s}{2} + \binom{n - s - t}{2} + (n - t)t + 2\ex(t, F).
-\]
-But then notice $\binom{n - t}{2} > \binom{s}{2} + \binom{n - t - s}{2}$ for $0 < s < n - t$. This implies our construction is optimized when $s = 0$ or $s = n - t$, that is, to let $G_2$ contain $G_1$ or the other way around. Hence, we may assume $s = 0$ and define the following construction function:
+\cref{lem:induce-reduce} allows us to reduce the problem to the case for two subgraphs $G_1, G_2$. 
 
 \begin{definition}
   For $n \geq t \geq 1$ and $F$ some graph, define 
   \[
     \con(n, t, F) \coloneq \binom{n - t}{2} + (n - t)t + 2\ex(t, F).
   \]
-  The construction described by $\con(n, t, F)$ are graphs $G_1, G_2$ on $[n]$, such that $G_2$ is the $t$-vertex extremal graph for $F$ and $G_1 = G_2 + K_{n - t}$. 
+  The construction described by $\con(n, t, F)$ are graphs $G_1, G_2$ on $[n]$, such that $G_2$ is a $t$-vertex extremal graph for $F$ and $G_1 = G_2 + K_{n - t}$. 
 \end{definition}
-
-The above discussion also yields the following lemma:
 
 \begin{lemma}\label{lem:optimize-con}
   Let $F$ be some graph. For $n \geq 1$,
   \[
     \dex^*(2, n, F) = \max_{0 \leq t \leq n} \con(n, t, F).
   \]
-  Moreover, the equality holds for $n$-vertex graphs $G_1, G_2$ only if $G_1, G_2$ are the construction described by $\con(n, t_{max}, F)$, where $t_{max} = \arg\max_{0 \leq t \leq n} \con(n, t, F)$.
+  Moreover, the equality holds for graphs $G_1, G_2$ on $[n]$ only if $G_1, G_2$ are the construction described by $\con(n, t_{max}, F)$, where $t_{max} \in [n]$ is a maximizer for $\con(n, t, F)$.
 \end{lemma}
+
+\begin{proof}
+  Let $G_1, G_2$ be induced doubly $F$-free graphs on $[n]$. Put $T = V(G_1) \cap V(G_2)$, $t = |T|$, $s = |V(G_1) \backslash T|$, and $n - t - s = |V(G_2) \backslash T|$. Note that $t, s \in \Z_{\geq 0}$. Since $G_1, G_2$ are induced subgraphs of $G_1 \cup G_2$, we have $G_1[T] = G_2[T] = G_1 \cap G_2$. But then $G_1 \cap G_2$ is $F$-free, so $e(G_1[T]) = e(G_2[T]) \leq \ex(t, F)$. Notice there can be at most $t(n - t)$ edges between $T$ and $(V(G_1) \cup V(G_2)) \backslash T$. Since $G[V(G_1) \backslash T] \leq \binom{s}{2}$ and $G[V(G_2) \backslash T] \leq \binom{n - t - s}{2}$,
+  \[
+    e(G_1) + e(G_2) \leq \binom{s}{2} + \binom{n - s - t}{2} + t(n - t) + 2\ex(t, F).
+  \]
+  But then $\binom{n - t}{2} > \binom{s}{2} + \binom{n - t - s}{2}$ for $0 < s < n - t$, so
+  \[
+    e(G_1) + e(G_2) \leq \binom{n - t}{2} + (n - t)t + 2\ex(t, F) = \con(n, t, F).
+  \]
+  This establishes the upperbound. From this we also know that $e(G_1) + e(G_2) = \con(n, t, F)$ only if $G_1, G_2$ are the construction described by $\con(n, t, F)$. The result now follows.
+\end{proof}
 
 The problem is now reduced to maximizing $\con$ over $t$. In particular, $\con(n, n, F)$ gives our benchmark construction of $G_1 = G_2$ being the extremal graphs for $F$ on $n$ vertices. 
 
@@ -310,9 +316,7 @@ This yields an instance where the construction $G_1 = K_{v(F) - 1}$ and $G_2 = K
 
 \section{Complete $F$}
 
-It turns out that $\dex(m, n, K_r)$ can be determined exactly, but the statement of the theorem requires some definitions. Let $k \geq 2$ and sets $S_{ij} \subseteq [m]$, for $1 \leq i < j \leq k$. We call the following type of construction a \textit{$k$-blowup}: 
-
-Define $G_1, G_2, \ldots, G_m$ by partitioning $[n]$ into $k$ sets $V_1, V_2, \ldots, V_k$ and letting $\{u, v\} \in E(G_h)$ whenever $u \in V_i, v \in V_j, h \in S_{ij}$. Additionally, for each $i \in [k]$ and $\{u, v\} \subseteq V_i$, we place $\{u, v\}$ in exactly one of $G_1$. 
+It turns out that $\dex(m, n, K_r)$ can be determined exactly, but the statement of the theorem requires some definitions. Let $k \geq 2$ and sets $S_{ij} \subseteq [m]$, for $1 \leq i < j \leq k$. We call the following type of construction a \textit{$k$-blowup}: Define $G_1, G_2, \ldots, G_m$ by partitioning $[n]$ into $k$ sets $V_1, V_2, \ldots, V_k$ and letting $\{u, v\} \in E(G_h)$ whenever $u \in V_i, v \in V_j, h \in S_{ij}$. Additionally, for each $i \in [k]$ and $\{u, v\} \subseteq V_i$, we place $\{u, v\}$ in exactly one of $G_1$. 
 
 Given a $k$-blowup, we may define $m$ graphs $H_1, H_2, \ldots, H_m$ on $[k]$ with edge set $E(H_h) \coloneq \{\{i, j\} : h \in S_{ij}\}$ for $h \in [m]$. We call $H_1, H_2, \ldots, H_m$ the \textit{pattern} of the $k$-blowup, and we say that a $k$-blowup is doubly $F$-free if its pattern is doubly $F$-free. 
 
