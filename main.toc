@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Link graphs and hypergraphs}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Main results : the induced case}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Main results : the non-induced case}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Definitions and Notation}{7}{subsection.1.4}%
+\contentsline {section}{\numberline {2}The induced double Tur\'{a}n problem}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Proof of Theorem \ref {thm:complete}}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Proof of Theorem \ref {thm:inducedF}}{10}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Proof of Theorem \ref {thm:inducedP}}{12}{subsection.2.3}%
+\contentsline {section}{\numberline {3}The non-induced double Tur\'{a}n problem}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Proof of Theorem \ref {thm:asymp}}{12}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Proof of Theorem \ref {wilsontheorem}}{13}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Proof of Theorem \ref {thm:pm}}{14}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Proof of Theorem \ref {thm:blowup}}{18}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Proof of Theorem \ref {thm:triangles}}{20}{subsection.3.5}%
