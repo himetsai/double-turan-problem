@@ -177,18 +177,12 @@ When $F$ is bipartite, the value of $\phi(m,n,F)$ for larger $m$ appears to be d
 \begin{theorem}\label{thm:pm}
 Let $P$ be the path with two edges and let $M$ be the matching with two edges. Then as $m,n \rightarrow \infty$, \jv{Some of these statements need a dependency between $m$ and $n$, else they are false. Also did we not discuss lower bound on $\phi(m,n,P)$ when $m \geq n$? Like $n^2\sqrt{m}$ perhaps? }
 
-\rt{For the lower bound on $\phi(m,n,P)$ when $m \geq n$, we did discuss the construction of putting a smaller projective plane in each line of the projective plane. I just have problem with the sizes of the projective planes that I could not recreate the proof.}
-
-
 \begin{itemize}
-    \item[{\rm 1.}] $\phi(m, n, P) \leq \left(\frac{1}{2} + o(1)\right)\min\{n^{2}\sqrt{m}, mn^{3/2}\}$, and this bound is tight for $\sqrt{n} \leq m \leq n^2$.
-    \item[{\rm 3.}] $\phi(m, n, M) \leq \frac{m + \sqrt{m^2 + mn^4 + 4m^2n^3}}{2}$.
-    \item[{\rm 4.}] $\phi(m, n, \{P, M\}) \leq n^2 + \frac{mn}{\sqrt{2}}$.
+    \item[{\rm 1.}] $\phi(m, n, P) = \left(\frac{1}{2} + o(1)\right)\min\{n^{2}\sqrt{m}, mn^{3/2}\}$, for $m \leq n^2$.
     \end{itemize}
  \end{theorem}
 
-Interestingly, while Conjecture \ref{conj:main} 
-proposes $\phi^*(m,n,P) = O(n^2 + mn)$ for all $m,n \geq 1$, the above theorem shows $\phi(m,n,P)$ is much larger, of order at least $mn^{3/2}$ when $m \geq \sqrt{n}$.  
+Interestingly, while Conjecture \ref{conj:main} proposes $\phi^*(m,n,P) = O(n^2 + mn)$ for all $m,n \geq 1$, the above theorem shows $\phi(m,n,P)$ is much larger, of order at least $mn^{3/2}$ when $m \geq \sqrt{n}$.  
 
  
  Our first theorem on $\phi(m,n,F)$ for non-bipartite graphs $F$ uses the notion of \textit{supersaturation} -- see Erd\H{o}s and Simonovits~\cite{ErdosSimonovits1983}. We determine the asymptotic value of $\phi(m,n,F)$ as $m \rightarrow \infty$ when $F$ is a non-bipartite graph:
@@ -213,16 +207,6 @@ let $f(m,n,r)$ denote the maximum of $e(H_1) + e(H_2) + \dots + e(H_m)$ such tha
 Let $r \geq 2$ and $m,n \geq 1$. Then 
 \[ \phi(m,n,K_r) = f(m,n,r).\]
 \end{theorem}
-
-\rt{We also have this generalization of the blowup theorem proved. I didn't include it because I haven't understood the proof.}
-
-We may generalize this result to any family of graphs up to asymptotic error:
-
-\begin{theorem}\label{thm:blowup-general}
-  Let $m,n \geq 1$, and let $\F$ be a family of graphs. Then 
-  \[ \phi(m,n,K_r) = f(m,n,\F).\]
-\end{theorem}
-\rt{need to define $f(m,n,\F)$.}
 
 While computing $f(m,n,r)$ is a finite calculation, the Ramsey number $R_k(r)$ unfortunately appears to be intractable in general; it is known that $R_2(3) = 6$ and 
 $R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are known~\cite{ConlonFerber2021,Lefmann1987}. In the special case $r = m = 3$, the following holds: 
@@ -269,7 +253,7 @@ The first observation is that the determination of $\phi^*(m, n, F)$ can be redu
   \]
   which establishes the upper bound. The lower bound follows from the construction with $G_1 = \cdots = G_m$ to be $n$-vertex extremal graphs for $F$.
 
-  Now suppose $\sum_{i = 1}^m e(G_i) = \frac{m}{k} \cdot \phi^*(k, n, F)$ and $G_1 \neq G_2$. By assumption $\sum_{i = 1}^k e(G_i) < \phi^*(k, n, F)$. But then $\sum_{i = 1}^k e(G_{i + j}) > \phi^*(k, n, F)$ for some $j \geq 1$, contradiction. 
+  Now suppose $\sum_{i = 1}^m e(G_i) = (m/k)\phi^*(k, n, F)$ and $G_1 \neq G_2$. By assumption $\sum_{i = 1}^k e(G_i) < \phi^*(k, n, F)$. But then $\sum_{i = 1}^k e(G_{i + j}) > \phi^*(k, n, F)$ for some $j \geq 1$, contradiction. 
 \end{proof}
 
 Now that we may determine $\phi^*(m, n, F)$ by examining $\phi^*(m, n, F)$, the second observation is that $\phi^*(m, n, F)$ can be further reduced to a finite optimization problem on a single variable. To state the lemma, we introduce the following construction function: 
@@ -401,26 +385,24 @@ This yields an instance where the construction $G_1 = K_{k - 1}$ and $G_2 = K_n$
 
 \subsection{Proof of Theorem \ref{thm:inducedP}}
 
-\jv{This is to be written}
-\begin{comment}
-According to Theorem \ref{thm:pm}.2, 
-$\phi(n,n,P) = (1/2 + o(1))n^{5/2}$. So to prove Theorem \ref{thm:inducedP}, it is sufficient to show 
-$\phi^*(n,n,P) = o(n^{5/2})$. To this end, let $G_1,G_2,\dots,G_n$ be induced and double $P$-free. 
-Form the graph $H$ with vertex set $[2n]$ such that 
-\[ E(H) = \{\{i,j\},\{j,k\},\{i,k\} : \{i,j\} \in E(G_k)\}.\]
-The number of triangles in $H$ is exactly $\sum_{i = 1}^n e(G_i)$. By Theorem \ref{thm:pm}.1, 
-this is $O(n^{5/2}) = o(n^3)$, and therefore there exists a set $E$ of $M = o(n^2)$ edges of $H$ 
-such that every triangle in $H$ contains at least one edge from $E$. Let $d(e)$ be the number of triangles in $H$ containing an edge $e \in M$. Suppose
-\[ \sum_{i = 1}^n e(G_i) \geq \epssilon n^{5/2}.\]
-Then 
-\[ \sum_{e \in M} d(e) \geq \epsilon n^{5/2}.\]
-Suppose $v \in V(H)$ is contained in $r = r(v)$ edges of $E$, say $e_1,e_2,\dots,e_r \in E$. Then the number of pairs of triangles in $H$ such that one triangle contains some $e_i$ and the other contains some $e_j$ with $i \neq j$ is at least 
-\[ \sum_{i = 1}^r d(e_i) - 2n.\]
-So the total number of such pairs of triangles in $H$ 
-is at least 
-\[ \sum_{v \in V(H)} \sum_{i = 1}^{r(v)} d(e_i) - 2n^2.\]
-\end{comment}
-
+According to Theorem \ref{thm:pm}, $\phi(n,n,P) = (1/2 + o(1))n^{5/2}$. So to prove Theorem \ref{thm:inducedP}, it is sufficient to show 
+$\phi^*(n,n,P) = o(n^{5/2})$. To this end, let $G_1,G_2,\dots,G_n$ be induced and double $P$-free
+and let $\epsilon > 0$. Let $d_i(v)$ be the degree of vertex $v$ in the graph $G_i$. 
+Let $I$ be the set of pairs $(i,v)$ such that $d_i(v) \geq \sqrt{n}/\epsilon + 1$. Since $G_1,G_2,\dots,Gm$ do not contain a double $P$, 
+\[ \sum_{(i,v) \in I} {d_i(v) \choose 2} \leq n^3.\]
+The maximum possible value of $\sum_{(i,v) \in I} d_i(v)$ subject to this constraint is when $d_i(v) = \sqrt{n}/\epsilon + 1$ for all $(i,v)$, in which case 
+\[ \sum_{(i,v) \in I} d_i(v) \leq (2\epsilon^2 n^2) \cdot \Bigr(\frac{\sqrt{n}}{\epsilon} + 1\Bigr) = 3\epsilon n^{5/2}\]
+for large enough $n$. Remove all edges of $G_i$ 
+on vertex $v$ such that $(i,v) \in I$. The total number of edges removed is at most $3\epsilon n^{5/2}$. Let $G_1',G_2',\dots,G_n'$ be the remaining 
+subgraphs of $G_1,G_2,\dots,G_n$. If $e(G_i') \leq \epsilon n^{3/2}$, then remove all edges of $G_i'$. The total number of edges removed is at most $\epsilon n^{5/2}$. The remaining graphs $G_1'',G_2'',\dots,G_m''$ have each at least $\epsilon n^{3/2}$ edges and maximum degree at most $\sqrt{n}/\epsilon$. In particular, each $G_i''$ contains a matching $M_i$ of size at least $\epsilon^2 n/2$. If $m \leq \epsilon n$, 
+then 
+\[ \sum_{i = 1}^n e(G_i) \leq 4\epsilon n^{5/2} + \sum_{i = 1}^m e(G_i'') \leq 4\epsilon n^{5/2} + \phi(m,n,P) \leq 5\epsilon n^{5/2}\]
+by Theorem \ref{thm:pm}. If $m > \epsilon n$, 
+then
+we apply Szemer\'{e}di's Regularity Lemma (see Ruzsa and Szemer\'{e}di~\cite{RuzsaSzemeredi1978}) to find, for some $\delta > 0$ depending only on $\epsilon$, a matching say $M_1$ in $G_1''$ 
+such that for some pair of set $X, Y \subseteq V(M)$ of size at least $\delta n$ each, there is a set $E$ of at least $\delta^3 n^2$ edges $\{x,y\}$ of $G_1'' \cup G_2'' \cup \dots \cup G_m''$ such that $x \in X$ and $y \in Y$. Since $G_1''$ is induced, $E \subseteq E(G_1)$. In particular, there are at least 
+$\delta^5 n^3/4$ copies of $P$ in $G_1$. We can repeat the argument in the remaining graphs $G_i'' : i \in [2,m]$ to get say $M_2$ in $G_2''$ as above, which gives $\delta^5 n^3/4$ copies of $P$ in $G_2$. If we do this $4\delta^{-5}$ times, then we have found $n^3$ copies of $P$ in the first $4\delta^{-5}$ graphs, and two of them have the same edge-set. 
+We conclude $\sum_{i = 1}^n e(G_i) \leq 5\epsilon n^{5/2}$ if $n$ is large enough. Since this is true for all $\epsilon > 0$, we are done. \qed
 
 
 
@@ -486,7 +468,7 @@ Thereafter, we show that if there is an extremal $F$-free graph with maximum deg
 
 The different parts of Theorem \ref{thm:pm} give bounds on $\phi(m,n,P)$, $\phi(m,n,M)$ and $\phi(m,n,\{P,M\})$. 
 
-\textit{Upperbound for Theorem \ref{thm:pm}.1} Let $G_1, \ldots, G_m$ be graphs on $[n]$ not containing a double $P$. We start with the following claim:
+\textit{Upper bound for Theorem \ref{thm:pm}.1} Let $G_1, \ldots, G_m$ be graphs on $[n]$ not containing a double $P$. We start with the following claim:
   \begin{claim}
     $\phi(m, n, P) \leq mn \cdot (1 + \sqrt{4n^2/m + 1})/4$.
   \end{claim}
@@ -531,7 +513,7 @@ The different parts of Theorem \ref{thm:pm} give bounds on $\phi(m,n,P)$, $\phi(
     This proves the claim.
   \end{proof}
   
-  \textit{Lowerbound for \ref{thm:pm}.1}. 
+  \textit{Lower bound for Theorem \ref{thm:pm}.1}. 
     We now show 
     \[ \phi(m, n, P) \geq \begin{cases}
       (1/2 + o(1))mn^{3/2}, & \text{if } \sqrt{n} \leq m \leq n, \\
@@ -564,68 +546,6 @@ The different parts of Theorem \ref{thm:pm} give bounds on $\phi(m,n,P)$, $\phi(
     
     The case for $n < m \leq n^2$ is similar. Consider the finite projective plane $P$ with $n$ points defined above. Since $|S_i| = q + 1 > \sqrt{n} \geq n^2/m$, we may further place a smaller projective plane $P_i$ with $n^2/m$ points inside each line $S_i$. Since each line of $P_i$ has size roughly $n/\sqrt{m}$, each $S_i$ contains roughly $m/n$ lines, and thus we now have $m$ small lines in total. Define $G_i'$ on each small line the same way we defined $G_i$ on $S_i$. Following the same line of calculations above, the construction of $G_1', \ldots, G_m'$ now gives $\sum_{i = 1}^m e(G_i) = (1/2 + o(1))\sqrt{m}n^2$, provided $m \leq n^2$. 
     \qed
-
-  \jv{What is missing here}
-    
-  \textit{Proof of Theorem \ref{thm:pm}.2}.
-  We now show for all $m,n \geq 1$, \jv{This is false, maybe $m \leq n$ or something? What happens for general $m$?}\rt{I have rewrote this proof. The original bound of $n^{5/2}$ works for $m \leq n$.}
-  \[
-    \phi(m, n, M) \leq \frac{m + \sqrt{m^2 + mn^4 + 4m^2n^3}}{2}
-  \]
-  Notice that
-  \[
-    \#\{M \subseteq G_i\} \geq \binom{e(G_i)}{2} - \#\{P \subseteq K_n\} \geq \binom{e(G_i)}{2}- 3\binom{n}{3}
-  \]
-  \jv{That statement is false}. On the other hand, each four vertices in $G$ can form at most three $M$'s, so $\#\{M \subseteq K_n\} \leq 3\binom{n}{4} \leq n^4/8$. Using the same argument in Theorem 5.2, we have 
-  \[
-    \sum_{i = 1}^m \binom{e(G_i)}{2} - 3m\binom{n}{3} = \sum_{i = 1}^m \#\{M \subseteq G_i\} \leq \#\{M \subseteq K_n\} \leq \frac{n^4}{8}.
-  \]
-  By Jensen's inequality,
-  \[
-    \sum_{i = 1}^m \binom{e(G_i)}{2} \geq m\binom{\sum_{i = 1}^m e(G_i)/m}{2} = \frac{1}{2m}\left[\left(\sum_{i = 1}^m e(G_i)\right)^2 - m\sum_{i = 1}^m e(G_i)\right].
-  \]
-  Combining the above inequalities yields
-  \[
-    \left(\sum_{i = 1}^m e(G_i)\right)^2 - m\sum_{i = 1}^m e(G_i) \leq mn^4/4 + m^2n^3,
-  \]
-  and solving the quadratic inequality gives
-  \[
-    \sum_{i = 1}^m e(G_i) \leq \frac{m + \sqrt{m^2 + mn^4 + 4m^2n^3}}{2}
-  \]
-This proves Theorem \ref{thm:pm}.2.
-
-\textit{Proof of Theorem \ref{thm:pm}.3}.
-  We are to show 
-  \[
-    \phi(m, n, \{P, M\}) \leq n^2 + \frac{mn}{\sqrt{2}}.
-  \]
-  For all $m,n \geq 1$, let $G_1, \ldots, G_m$ be graphs on $[n]$ that contain neither a double $P$ nor a double $M$. Construct the bipartite graph $H$, where one part consists of the set $[m]$, the other part consists of all edges of $K_n$, and edge set given by $E(H) = \{\{i, e\} : e \in E(G_i)\}$. Notice that $H$ is $K_{2, 2}$-free: if $\{i, e\}, \{j, e\}, \{i, f\}, \{j, f\}$ are edges in $H$, then $G_i \cap G_j$ contains a double $P$ or a double $M$, contradiction. It now follows from the K\H{o}vari-S\'{o}s-Tur\'{a}n Theorem that
-  \[
-    \sum_{i = 1}^m e(G_i) = e(H) \leq 2\binom{n}{2} + m\binom{n}{2}^{\frac{n}{2}} \leq n^2 + \frac{mn}{\sqrt{2}},
-  \]
-  as desired. \qed
-
-  % We are to show 
-  % \[
-  %   \phi(m, n, \{P, M\}) = n^2 - n.
-  % \]
-  % for all $m,n \geq 1$. \jv{This is again false. Is $m = n$?} Let $G_1,G_2,\dots,G_m$ 
-  % be graphs on $[n]$ not containing a double $P$ or a double $M$.  Denote the set of $G_i$'s as $\{G_i\} = \{G_1, \ldots, G_n\}$, \jv{Again, is $m = n$ or what here.} and the set of distinct pairs of $G_i$'s as $\{G_i\}^2 = \{\{G_j, G_k\} : j \neq k\}$. Consider the bipartite graph $H$ with vertex set $V(H) = \{G_i\} \sqcup E(K_n)$ and edge set $E(H) = \{\{G_j, e\} \in \{G_i\} \times E(K_n) : e \in G_j\}$. Define $\phi: \{G_i\}^2 \to 2^{E(K_n)}$ by sending each $\{G_j, G_k\}$ to their common edge set $E(G_j) \cap E(G_k)$. Notice that each distinct $G_j, G_k$ have at most one edge in common, so $|\phi(G_j, G_k)| \leq 1$. On the other hand, each edge $e \in E(G)$ can be obtained via $\phi$ by $\binom{d_H(e)}{2}$ possible distinct pairs $(G_j, G_k)$, and thus $|\phi^{-1}(e)| = \binom{d_H(e)}{2}$. But then
-  % \[
-  %   \binom{n}{2} \geq \sum_{(G_j, G_k) \in \{G_i\}^2} |\phi(G_j, G_k)| = \sum_{e \in E(K_n)} |\phi^{-1}(e)| = \sum_{e \in E(K_n)} \binom{d_H(e)}{2}.
-  % \]
-  % By Jensen's inequality,
-  % \[
-  %   \sum_{e \in E(K_n)} \binom{d_H(e)}{2} \geq \binom{n}{2}\binom{\sum_{e \in E(K_n)} d_H(e)/\binom{n}{2}}{2} = \binom{n}{2}\binom{\sum_{i = 1}^n e(G_i)/\binom{n}{2}}{2}.
-  % \]
-  % Combining the above inequalities yields
-  % \[
-  %   2\binom{n}{2}^2 \geq \left(\sum_{i = 1}^n e(G_i)\right)^2 - \binom{n}{2}\sum_{i = 1}^n e(G_i),
-  % \]
-  % and the result now follows from solving the quadratic inequality.
-
-  % To see that this bound is tight, let $V(K_n) = [n]$ and let $G_i = \{\{i,j\} : j \in [n] \backslash \{i\}$. Then $E(G_i) \cap E(G_j) = \{i,j\}$, so 
-  % $G_1,G_2,\dots,G_n$ are double $P$-free and double $M$-free. Furthermore, $\sum_{i = 1}^n e(G_i) = n^2 - n$. \qed
 
 \subsection{Proof of Theorem \ref{thm:blowup}}
 
