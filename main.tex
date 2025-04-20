@@ -123,7 +123,6 @@ In the case $F = K_r$, we shall see the theorem is true for all $n \geq 3$:
 Let $m, n, r \geq 3$. Then $\phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n))$ with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
 \end{theorem}
 
-
 In the case $F$ is a bipartite graph, even the problem of determining the order of magnitude of $\phi^*(m,n,F)$ appears to be difficult, and we do not know the order of magnitude of $\phi^*(m,n,P)$ when $P$ is a path with two edges. In this thesis, we propose the following very broad conjecture:
 
 \begin{conjecture}\label{conj:main}
@@ -190,8 +189,7 @@ Let $P$ be the path with two edges. Then as $n \rightarrow \infty$,
 
 Interestingly, while Conjecture \ref{conj:main} proposes $\phi^*(m,n,P) = O(n^2 + mn)$ for all $m,n \geq 1$, the above theorem shows $\phi(m,n,P)$ is much larger, of order at least $mn^{3/2}$ when $m \geq \sqrt{n}$.  
 
- 
- Our first theorem on $\phi(m,n,F)$ for non-bipartite graphs $F$ uses the notion of \textit{supersaturation} -- see Erd\H{o}s and Simonovits~\cite{ErdosSimonovits1983}. We determine the asymptotic value of $\phi(m,n,F)$ as $m \rightarrow \infty$ when $F$ is a non-bipartite graph:
+Our first theorem on $\phi(m,n,F)$ for non-bipartite graphs $F$ uses the notion of \textit{supersaturation} -- see Erd\H{o}s and Simonovits~\cite{ErdosSimonovits1983}. We determine the asymptotic value of $\phi(m,n,F)$ as $m \rightarrow \infty$ when $F$ is a non-bipartite graph:
 
 \begin{theorem}\label{thm:asymp}
   Let $n \geq 1$ and let $F$ be a non-bipartite graph. Then as $m \rightarrow \infty$, 
@@ -199,7 +197,6 @@ Interestingly, while Conjecture \ref{conj:main} proposes $\phi^*(m,n,P) = O(n^2 
     \phi(m, n, F) = (1 + o(1))m \cdot \ex(n, F).
   \]
 \end{theorem}
-
 
 The next result we present concerns non-bipartite graphs. To state the theorem, we require the notion of $k$-color Ramsey numbers. Define
 $R_k(r)$ to be the \textit{$k$-color Ramsey number} for the complete graph $K_r$: that is, the minimum $N$ such that there exists a monochromatic $F$ in any coloring of $E(K_N)$ with $k$ colors. 
@@ -237,8 +234,6 @@ In this thesis, we reserve $n$ to denote the number of vertices in a graph. We c
 Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Given graphs $G_1, \ldots, G_m$ on the same set of vertices and $F$, we say that $G_1, \ldots, G_m$ are pairwise $F$-free if $E(G_i) \cap E(G_j)$ does not contain $F$ for $i \neq j$. Let $v$ be a vertex from $G_1, G_2, \ldots, G_m$. Unless otherwise specified, we denote $d(v)$ as the sum of the degree of $v$ over all $G_i$.
 
 \section{The induced double Tur\'{a}n problem}
-
-\jv{This section could be written more cleanly.}
 
 We prove the theorems for $\phi^*(m, n ,F)$ in this chapter. In particular, the main theorem we prove is Theorem \ref{thm:inducedF} for general non-bipartite graphs $F$ and in the special case of cliques. We will first introduce two observations that significantly simplify the problem.
 
@@ -294,27 +289,27 @@ Now that we may determine $\phi^*(m, n, F)$ by examining $\phi^*(m, n, F)$, the 
 
 \subsection{Proof of Theorem \ref{thm:complete}}
 
-  By \cref{lem:induce-reduce}, it suffices to prove the theorem for $m = 3$. Let $G_1, G_2, G_3$ be induced double $K_r$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \phi^*(3, n, K_r)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\phi^*(3, n, K_r) \geq 3\ex(n, K_r)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, K_r)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_r)$, it suffices to show that $G_1 = G_2 = T_{r - 1}(n)$. In particular, we will use \cref{lem:optimize-con} to show that $G_1, G_2$ is an extremal configuration without containing a double $K_r$. 
+By \cref{lem:induce-reduce}, it suffices to prove the theorem for $m = 3$. Let $G_1, G_2, G_3$ be induced double $K_r$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \phi^*(3, n, K_r)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\phi^*(3, n, K_r) \geq 3\ex(n, K_r)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, K_r)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_r)$, it suffices to show that $G_1 = G_2 = T_{r - 1}(n)$. In particular, we will use \cref{lem:optimize-con} to show that $G_1, G_2$ is an extremal configuration without containing a double $K_r$. 
 
-  Let $t = |V(G_1 \cap G_2)|$. By Turán's Theorem,
-  \[
-    \ex(t, K_{r}) - \ex(t - 1, K_{r}) = e(T_{r - 1}(t)) - e(T_{r - 1}(t - 1)) = t - \left\lceil \frac{t}{r - 1} \right\rceil.
-  \]
-  It immediately follows that
-  \begin{equation}
-    \con(n, t, K_r) - \con(n, t - 1, K_r) = - t + 1 + 2[\ex(t, K_r) - \ex(t - 1, K_r)] = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con1}
-  \end{equation}
-  For $r \geq 4$, $\con(n, t, K_r)$ is strictly increasing on $t$, so by \cref{lem:optimize-con}, 
-  \[
-    \phi^*(2, n, K_r) = \con(n, n, K_r) = 2\ex(n, K_r) = e(G_1) + e(G_2)
-  \]
-  and $G_1 = G_2 = T_{r - 1}(n)$, as desired. 
+Let $t = |V(G_1 \cap G_2)|$. By Turán's Theorem,
+\[
+  \ex(t, K_{r}) - \ex(t - 1, K_{r}) = e(T_{r - 1}(t)) - e(T_{r - 1}(t - 1)) = t - \left\lceil \frac{t}{r - 1} \right\rceil.
+\]
+It immediately follows that
+\begin{equation}
+  \con(n, t, K_r) - \con(n, t - 1, K_r) = - t + 1 + 2[\ex(t, K_r) - \ex(t - 1, K_r)] = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. \label{eq:con1}
+\end{equation}
+For $r \geq 4$, $\con(n, t, K_r)$ is strictly increasing on $t$, so by \cref{lem:optimize-con}, 
+\[
+  \phi^*(2, n, K_r) = \con(n, n, K_r) = 2\ex(n, K_r) = e(G_1) + e(G_2)
+\]
+and $G_1 = G_2 = T_{r - 1}(n)$, as desired. 
 
-  Now suppose $r = 3$. Equation \eqref{eq:con1} shows that $\con(n, t, K_r)$ is non-decreasing on $t$ and $\con(n, t, K_r) > \con(n, t, K_r)$ for even $t$. By \cref{lem:optimize-con}, we now have 
-  \[
-    \phi^*(2, n, K_r) = \max[\con(n, n, K_r), \con(n, n - 1, K_r)] = 2\ex(n, K_r) = e(G_1) + e(G_2),
-  \]
-  and either $G_1 = G_2 = T_{r - 1}(n)$, or $G_2 = T_{r - 1}(n - 1)$ and $G_1 = G_2 + K_1$. If the latter case is true, then $e(G_3) \geq \ex(n, F) > e(G_2)$, and this contradiction completes the proof. \qed
+Now suppose $r = 3$. Equation \eqref{eq:con1} shows that $\con(n, t, K_r)$ is non-decreasing on $t$ and $\con(n, t, K_r) > \con(n, t, K_r)$ for even $t$. By \cref{lem:optimize-con}, we now have 
+\[
+  \phi^*(2, n, K_r) = \max[\con(n, n, K_r), \con(n, n - 1, K_r)] = 2\ex(n, K_r) = e(G_1) + e(G_2),
+\]
+and either $G_1 = G_2 = T_{r - 1}(n)$, or $G_2 = T_{r - 1}(n - 1)$ and $G_1 = G_2 + K_1$. If the latter case is true, then $e(G_3) \geq \ex(n, F) > e(G_2)$, and this contradiction completes the proof. \qed
 
 \subsection{Proof of Theorem \ref{thm:inducedF}}
 
@@ -349,46 +344,6 @@ $\ex(n,F)= (1 + o(1))\ex(n,K_{r+1})$ as $n \rightarrow \infty$. In this section,
   and either $G_1 = G_2$ are $n$-vertex extremal $F$-free graphs, or $G_2$ is an $(n - 1)$-vertex extremal $F$-free graph and $G_1 = G_2 + K_1$. If the latter case is true, then $e(G_3) \geq \ex(n, F) > e(G_2)$, and this contradiction completes the proof.
 \end{proof}
 
-% Similar to \cref{cor:induce-complete}, we have the following corollary:
-
-% \textcolor{red}{This also only works for $r \geq 3$ because of the theorem above.}
-
-% \begin{corollary}
-%   Let $n , r \geq 2$, $F$ be a $(r + 1)$-colorable graph, and $G_1, \ldots, G_n$ be pairwise $F$-free induced subgraphs on $n$ vertices. Then for large enough $n$,
-%   \[
-%     \phi^*(n, n, F) = n \cdot \ex(n, F),
-%   \]
-%   and $\sum_i e(G_i) = \phi^*(n, n, F)$ if and only if $G_1 = G_2 = \cdots = G_n$ are extremal graphs for $F$.
-% \end{corollary}
-
-For small $n$, we may not be able to achieve the same result. Consider the case when $F$ is the bowtie graph, i.e. the $5$-vertex graph with two triangles sharing a vertex. For $n \leq 4$, the $n$-vertex extremal graph for $F$ is the complete graph $K_n$. For $n \geq 5$, the $n$-vertex extremal graph for $F$ is then $K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ plus an edge, and so $\ex(n, F) = \left\lfloor\frac{n^2}{4}\right\rfloor + 1$. But then in this case when $n = 5$, 
-\[
-  \con(5, 4, F) = 2e(K_4) + 4 = 16 > \con(5, 5, F) = 2\left(\left\lfloor\frac{5^2}{4}\right\rfloor + 1\right) = 14.
-\]
-This yields an instance where the construction $G_1 = K_{k - 1}$ and $G_2 = K_n$ beats our benchmark construction for $|V(F)| = k$. Thus the following lemma gives a lower bound for $n$ to avoid losing to this construction.
-
-\begin{lemma}
-  Let $n,k \geq 3$ and $r \geq 2$, and let $F$ have chromatic number $r + 1$ and $|V(F)| = k$. If $n \geq 2\binom{k-1}{2} + 1$ and $r$ divides $n$, then 
-  \[
-    \con(n, n, F) > \con(n, k - 1, F).
-  \]
-  In particular, if $n \geq 2\binom{k-1}{2} + 1$, 
-  then $\phi^*(m,n,F) = m \cdot \ex(n,F)$ for all $m \geq 3$, with equality only for identical extremal $n$-vertex $F$-free graphs.
-  \begin{proof}
-    We need to show that
-    \[
-      2\ex(n, F) - \binom{n}{2} > \binom{k - 1}{2}.
-    \]
-    Since $\ex(n, F) \geq \lfloor n^2/4 \rfloor$,
-    \[
-      2\ex(n, F) - \binom{n}{2} \geq 2\left\lfloor \frac{n^2}{4}\right\rfloor  - \binom{n}{2} \geq \frac{n}{2} - \frac{1}{4} > \binom{k - 1}{2}.
-    \]
-    This proves the lemma.
-  \end{proof}
-\end{lemma}
-
-\jv{This lemma seems like an afterthought, and should probably go first. Also, can you say something much better if $r \geq 3$?}
-
 \subsection{Proof of Theorem \ref{thm:inducedP}}
 
 According to Theorem \ref{thm:pm}, $\phi(n,n,P) = (1/2 + o(1))n^{5/2}$. So to prove Theorem \ref{thm:inducedP}, it is sufficient to show 
@@ -409,12 +364,9 @@ then
 \[ \sum_{i = 1}^n e(G_i) \leq 4\epsilon n^{5/2} + \sum_{i = 1}^m e(G_i'') \leq 4\epsilon n^{5/2} + \phi(m,n,P) \leq 5\epsilon n^{5/2}\]
 by Theorem \ref{thm:pm}. If $m > \epsilon n$, 
 then
-we apply Szemer\'{e}di's Regularity Lemma (see Ruzsa and Szemer\'{e}di~\cite{RuzsaSzemeredi1978}) to find, for some $\delta > 0$ depending only on $\epsilon$, a matching say $M_1$ in $G_1''$ 
-such that for some pair of set $X, Y \subseteq V(M)$ of size at least $\delta n$ each, there is a set $E$ of at least $\delta^3 n^2$ edges $\{x,y\}$ of $G_1'' \cup G_2'' \cup \dots \cup G_m''$ such that $x \in X$ and $y \in Y$. Since $G_1''$ is induced, $E \subseteq E(G_1)$. In particular, there are at least 
+we apply Szemer\'{e}di's Regularity Lemma (see Ruzsa and Szemer\'{e}di~\cite{RuzsaSzemeredi1978}) to find, for some $\delta > 0$ depending only on $\epsilon$, a matching say $M_1$ in $G_1''$ such that for some pair of set $X, Y \subseteq V(M)$ of size at least $\delta n$ each, there is a set $E$ of at least $\delta^3 n^2$ edges $\{x,y\}$ of $G_1'' \cup G_2'' \cup \dots \cup G_m''$ such that $x \in X$ and $y \in Y$. Since $G_1''$ is induced, $E \subseteq E(G_1)$. In particular, there are at least 
 $\delta^5 n^3/4$ copies of $P$ in $G_1$. We can repeat the argument in the remaining graphs $G_i'' : i \in [2,m]$ to get say $M_2$ in $G_2''$ as above, which gives $\delta^5 n^3/4$ copies of $P$ in $G_2$. If we do this $4\delta^{-5}$ times, then we have found $n^3$ copies of $P$ in the first $4\delta^{-5}$ graphs, and two of them have the same edge-set. 
 We conclude $\sum_{i = 1}^n e(G_i) \leq 5\epsilon n^{5/2}$ if $n$ is large enough. Since this is true for all $\epsilon > 0$, we are done. \qed
-
-
 
 
 \section{The non-induced double Tur\'{a}n problem}
@@ -473,23 +425,23 @@ $m,n \geq 1$ and graph $F$,
   \]
 Thereafter, we show that if there is an extremal $F$-free graph with maximum degree at most $n^{1/2}/m^2$, then the above bound is tight. 
 
-  \textit{Proof of the upper bound}. For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$. Then 
-  \[
-    \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq \binom{n}{2} + \sum_{S \subseteq [m], |S| \geq 2} (|S| - 1)|E_S|.
-  \]
-  Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e., the set of edges that are contained in all $G_i$ with $i \in S$. When $|S| \geq 2$, the edge set $A_S$ is $F$-free and thus 
-  \[
-    \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
-  \]
-  Hence,
-  \[
-    \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 2 + 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} |E_T| \leq \binom{m}{2}\text{ex}(n, F),
-  \]
-  as each $T \in [m]$ with $|T| \geq 2$ is counted $\binom{|T|}{2}$ times in total and $|T| - 1 \leq \binom{|T|}{2}$. This proves the upper bound.
+\textit{Proof of the upper bound}. For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$. Then 
+\[
+  \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq \binom{n}{2} + \sum_{S \subseteq [m], |S| \geq 2} (|S| - 1)|E_S|.
+\]
+Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e., the set of edges that are contained in all $G_i$ with $i \in S$. When $|S| \geq 2$, the edge set $A_S$ is $F$-free and thus 
+\[
+  \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
+\]
+Hence,
+\[
+  \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} |E_T| \leq \binom{m}{2}\text{ex}(n, F),
+\]
+as each $T \in [m]$ with $|T| \geq 2$ is counted $\binom{|T|}{2}$ times in total and $|T| - 1 \leq \binom{|T|}{2}$. This proves the upper bound.
 
-  \begin{proof}[Proof of the lower bound]
-    We need to show there exists a construction such that the graph with edge set $E_S$ is an extremal $F$-free graph, for all $S \subseteq [m]$ of size $2$. Let $M = \binom{m}{2}$ and $H_1, \ldots, H_M$ be copies of an extremal $F$-free graph on $n$ vertices such that $H_i$ with maximum degree $\triangle \leq n^{1/2}/m^2$ for all $i \in [m]$. It suffices to show that we can embed each $H_i$ onto $[n]$ such that their edge sets are pairwise disjoint. We begin by an arbitrary embedding of each $H_i$ and iteratively decrease the number of intersecting edges. Define a \textit{$(u, v, i)$-swap} by swapping the embedding of vertex $u$ and $v$ of $H_i$, i.e. replacing each edge $\{u, w\} \in E(H_i)$ with the edge $\{u, w\}$ and each edge $\{v, w\} \in E(H_i)$ with the edge $\{v, w\}$. This preserves the type of isomorphism of $H_i$. Given a vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_M}(v)$. Suppose there exists an intersecting edge $\{u, w\} \in E(H_i) \cap E(H_j)$. Since $|N(u)| \leq M \cdot \triangle \leq n^{1/2}/2$, $|N(u) \cup N(N(u))| \leq \triangle + \triangle(\triangle - 1) \leq n/4$ so there exists a vertex $v \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$, performing a $(u, v, i)$-swap reduces the number of intersecting edges. The result now follows from iterating this process.
-  \end{proof}
+\begin{proof}[Proof of the lower bound]
+  We need to show there exists a construction such that the graph with edge set $E_S$ is an extremal $F$-free graph, for all $S \subseteq [m]$ of size $2$. Let $M = \binom{m}{2}$ and $H_1, \ldots, H_M$ be copies of an extremal $F$-free graph on $n$ vertices such that $H_i$ with maximum degree $\triangle \leq n^{1/2}/m^2$ for all $i \in [m]$. It suffices to show that we can embed each $H_i$ onto $[n]$ such that their edge sets are pairwise disjoint. We begin by an arbitrary embedding of each $H_i$ and iteratively decrease the number of intersecting edges. Define a \textit{$(u, v, i)$-swap} by swapping the embedding of vertex $u$ and $v$ of $H_i$, i.e. replacing each edge $\{u, w\} \in E(H_i)$ with the edge $\{u, w\}$ and each edge $\{v, w\} \in E(H_i)$ with the edge $\{v, w\}$. This preserves the type of isomorphism of $H_i$. Given a vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_M}(v)$. Suppose there exists an intersecting edge $\{u, w\} \in E(H_i) \cap E(H_j)$. Since $|N(u)| \leq M \cdot \triangle \leq n^{1/2}/2$, $|N(u) \cup N(N(u))| \leq \triangle + \triangle(\triangle - 1) \leq n/4$ so there exists a vertex $v \notin N(u) \cup N(N(u))$. Since $N(u) \cap N(v) = \emptyset$, performing a $(u, v, i)$-swap reduces the number of intersecting edges. The result now follows from iterating this process.
+\end{proof}
 
 
 \subsection{Proof of Theorem \ref{thm:pm}}
@@ -572,57 +524,56 @@ The case for $n < m \leq n^2$ is similar. Consider the finite projective plane $
 
 \subsection{Proof of Theorem \ref{thm:blowup}}
 
-We now prove Theorem \ref{thm:blowup}.
-  Notice that we trivially have $f(m, n, r) \leq \phi(m, n, K_r)$, so it suffices to show the reverse inequality. That is, we need to show that there exists  a blowup construction meeting the desired bound.
+We now prove Theorem \ref{thm:blowup}. Notice that we trivially have $f(m, n, r) \leq \phi(m, n, K_r)$, so it suffices to show the reverse inequality. That is, we need to show that there exists  a blowup construction meeting the desired bound.
 
-  Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with no double $K_r$ and $\sum_{i = 1}^m e(G_i) = \phi(m, n, K_r)$. Observe that any pair $\{i, j\} \subseteq [n]$ must be in some $G_i$, otherwise, we may add it to $G_1$ without creating a double $K_r$. 
+Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with no double $K_r$ and $\sum_{i = 1}^m e(G_i) = \phi(m, n, K_r)$. Observe that any pair $\{i, j\} \subseteq [n]$ must be in some $G_i$, otherwise, we may add it to $G_1$ without creating a double $K_r$. 
 
-  We call vertices $v, v'$ \textit{clones} if for all $u \in [n] \backslash \{v, v'\}$ and $i \in [m]$, the edge $\{u, v\} \in E(G_i)$ if and only if $\{u, v'\} \in E(G_i)$. Furthermore, we call $\{v, v'\}$ a \textit{light edge} if $\{v, v'\}$ is in exactly one graph $G_i$.
+We call vertices $v, v'$ \textit{clones} if for all $u \in [n] \backslash \{v, v'\}$ and $i \in [m]$, the edge $\{u, v\} \in E(G_i)$ if and only if $\{u, v'\} \in E(G_i)$. Furthermore, we call $\{v, v'\}$ a \textit{light edge} if $\{v, v'\}$ is in exactly one graph $G_i$.
 
-  We now apply \cref{alg:sym} to $G_1, G_2, \ldots, G_m$. 
+We now apply \cref{alg:sym} to $G_1, G_2, \ldots, G_m$. 
 
-  \begin{algorithm}[H]
-    \caption{symmetrization algorithm}\label{alg:sym}
-    \begin{algorithmic}
-      \While{$\exists$ a light edge whose endpoints are not clones}
-      \State{among all vertices incident to such an edge, select a vertex $v$ with maximum degree}\;
-      \State{$B_v\gets$ collection of vertices sending a light edge to $v$ that are not clones of $v$}\;
-      \While{$B_v\neq \emptyset$}
-      \State{pick $u\in B_v$}\;
-      \State{$j \gets$ colour of the light edge from $u$ to $v$}\;
-      \For{$1\leq i\leq m$}\;
-      \If{$i\neq j$};
-      \State{$N_{G_i}(u) \gets N_{G_i}(v)$}\;
-      \ElsIf{$i=j$}
-          \State{$N_{G_i}(u) \gets \left(N_{G_i}(v)\setminus \{u\}\right)\cup\{v\}$}\;
-      \EndIf		
-      \EndFor
-      \EndWhile
-      \EndWhile
-    \end{algorithmic}
-  \end{algorithm}
+\begin{algorithm}[H]
+  \caption{symmetrization algorithm}\label{alg:sym}
+  \begin{algorithmic}
+    \While{$\exists$ a light edge whose endpoints are not clones}
+    \State{among all vertices incident to such an edge, select a vertex $v$ with maximum degree}\;
+    \State{$B_v\gets$ collection of vertices sending a light edge to $v$ that are not clones of $v$}\;
+    \While{$B_v\neq \emptyset$}
+    \State{pick $u\in B_v$}\;
+    \State{$j \gets$ colour of the light edge from $u$ to $v$}\;
+    \For{$1\leq i\leq m$}\;
+    \If{$i\neq j$};
+    \State{$N_{G_i}(u) \gets N_{G_i}(v)$}\;
+    \ElsIf{$i=j$}
+        \State{$N_{G_i}(u) \gets \left(N_{G_i}(v)\setminus \{u\}\right)\cup\{v\}$}\;
+    \EndIf		
+    \EndFor
+    \EndWhile
+    \EndWhile
+  \end{algorithmic}
+\end{algorithm}
 
-  \begin{claim}
-    \cref{alg:sym} terminates.
-  \end{claim}
+\begin{claim}
+  \cref{alg:sym} terminates.
+\end{claim}
 
-  \begin{proof}
-    Notice that at the end of the `while $B_v \neq \emptyset$' loop, every vertex sending a light edge to $v$ is a clone of $v$. This implies $v$ along with the set $L_v$ of vertices receiving light edges from $v$ induce a clique of size at least two in some $G_i$, and an empty graph in every other graph $G_j$ with $j \neq i$. Moreover, any vertex $w \notin L_v$ sends edges to either all or none of the vertices in $L_v$, and if $w$ is incident to $L_v$, then $w$ sends edges to $L_v$ in at least two graphs. It now follows that no light edge incident with a vertex in $L_v$ will be picked again in an iteration of the out most while loop. Thus the algorithm can run through at most $n/2$ such iterations, and so it terminates.
-  \end{proof}
+\begin{proof}
+  Notice that at the end of the `while $B_v \neq \emptyset$' loop, every vertex sending a light edge to $v$ is a clone of $v$. This implies $v$ along with the set $L_v$ of vertices receiving light edges from $v$ induce a clique of size at least two in some $G_i$, and an empty graph in every other graph $G_j$ with $j \neq i$. Moreover, any vertex $w \notin L_v$ sends edges to either all or none of the vertices in $L_v$, and if $w$ is incident to $L_v$, then $w$ sends edges to $L_v$ in at least two graphs. It now follows that no light edge incident with a vertex in $L_v$ will be picked again in an iteration of the out most while loop. Thus the algorithm can run through at most $n/2$ such iterations, and so it terminates.
+\end{proof}
 
-  \begin{claim}
-    $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$ and $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
-  \end{claim}
+\begin{claim}
+  $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$ and $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
+\end{claim}
 
-  \begin{proof}
-    Note that we replace $u$ by a clone of $v$ in the for loop of \cref{alg:sym}. Since $\{u, v\}$ remains a light edge in this step, $u$ and $v$ cannot both belong to a double $K_r$ in the modified graphs. Furthermore, any double $K_r$ containing $u$ after the for loop arises from a double $K_r$ containing $v$ prior to the for loop. But then $G_1, G_2, \ldots, G_m$ contained no double $K_r$ to begin with, so $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$.
+\begin{proof}
+  Note that we replace $u$ by a clone of $v$ in the for loop of \cref{alg:sym}. Since $\{u, v\}$ remains a light edge in this step, $u$ and $v$ cannot both belong to a double $K_r$ in the modified graphs. Furthermore, any double $K_r$ containing $u$ after the for loop arises from a double $K_r$ containing $v$ prior to the for loop. But then $G_1, G_2, \ldots, G_m$ contained no double $K_r$ to begin with, so $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$.
 
-    We now show that the algorithm does not reduce the number of edges. By our choice of $v$, we know $d(v) \geq d(u)$ for all $u \in B_v$ prior to the for loop. Hence, replacing $u$ with a clone of $v$ does not decrease the number of edge over a complete iteration of the inner while loop. Therefore, $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
-  \end{proof}
+  We now show that the algorithm does not reduce the number of edges. By our choice of $v$, we know $d(v) \geq d(u)$ for all $u \in B_v$ prior to the for loop. Hence, replacing $u$ with a clone of $v$ does not decrease the number of edge over a complete iteration of the inner while loop. Therefore, $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
+\end{proof}
 
-  Hence, the algorithm outputs graphs $G_1', G_2', \ldots, G_m'$ with $\phi(m, n, K_r)$ edges and the additional property that light edges come in `clone cliques.' We may thus partition the vertex set $[n]$ into $k$ disjoint sets $V_1, V_2, \ldots, V_k$, such that each $V_i$ induces a clique of light edges from the same graph. Moreover, for distinct $i, j \in [k]$, define $S_{ij}$ to be the set of all edges between $V_i$ and $V_j$, and note that any edge in $S_{ij}$ appears in at least two modified graphs. The sets $S_{ij}$ now yield a $k$-blowup. Notice that if the pattern of the $k$-blowup contains a double $K_r$, then the original graphs $G_1, G_2, \ldots, G_m$ must have contained a double $K_r$ as well, contradiction. Thus the $k$-blowup is double $K_r$-free. 
+Hence, the algorithm outputs graphs $G_1', G_2', \ldots, G_m'$ with $\phi(m, n, K_r)$ edges and the additional property that light edges come in `clone cliques.' We may thus partition the vertex set $[n]$ into $k$ disjoint sets $V_1, V_2, \ldots, V_k$, such that each $V_i$ induces a clique of light edges from the same graph. Moreover, for distinct $i, j \in [k]$, define $S_{ij}$ to be the set of all edges between $V_i$ and $V_j$, and note that any edge in $S_{ij}$ appears in at least two modified graphs. The sets $S_{ij}$ now yield a $k$-blowup. Notice that if the pattern of the $k$-blowup contains a double $K_r$, then the original graphs $G_1, G_2, \ldots, G_m$ must have contained a double $K_r$ as well, contradiction. Thus the $k$-blowup is double $K_r$-free. 
 
-  It remains to show that $k < R_M(K_r)$. For each edge $\{i, j\} \subseteq [k]$ in the pattern of the $k$-blowup, we assign an arbitrary distinct pair $\{a, b\} \subseteq L_{ij} \subseteq [m]$ to $\{i, j\}$. If $k \geq R_M(K_r)$, then there exists $K_r$ in the pattern of the $k$-blowup colored by some distinct pair $\{a, b\} \subseteq [m]$. But then this implies the pattern of the $k$-blowup contains a double $K_r$, contradiction. This completes the proof. \qed
+It remains to show that $k < R_M(K_r)$. For each edge $\{i, j\} \subseteq [k]$ in the pattern of the $k$-blowup, we assign an arbitrary distinct pair $\{a, b\} \subseteq L_{ij} \subseteq [m]$ to $\{i, j\}$. If $k \geq R_M(K_r)$, then there exists $K_r$ in the pattern of the $k$-blowup colored by some distinct pair $\{a, b\} \subseteq [m]$. But then this implies the pattern of the $k$-blowup contains a double $K_r$, contradiction. This completes the proof. \qed
 
 \subsection{Proof of Theorem \ref{thm:triangles}}
 
@@ -631,27 +582,34 @@ is double triangle-free, then we have
 \[
 	e(G_1) + e(G_2) \leq \binom{n}{2} + e(G_1 \cap G_2) \leq \binom{n}{2} + \ex(n, K_3)
 \]
-and so $\phi(2,n,K_3) \leq \binom{n}{2} + \lfloor n^2/4\rfloor$. Taking $G_1 = K_n$ and $G_2 = K_{\lfloor n/2 \rfloor,\lceil n/2 \rceil}$ meets this bounds. The main result of this section is to show
-for all $n \geq 1$, 
-\[    \phi(3, n, K_3) = \binom{n}{2} + \Big\lfloor \frac{n^2}{2} \Big\rfloor.\]
-Let $G_1,G_2,G_3$ be double triangle-free. 
-  Define $H_k \subseteq G$ to be the graph with edges contained in at least $k$  of the $G_i$'s and note that $e(G_1) + e(G_2) + e(G_3) = e(H_1) + e(H_2) + e(H_3)$. Thus it suffices to show that $e(H_2) + e(H_3) \leq \frac{n^2}{2}$. Notice $H_2$ must not contain any triangles with two edges in $H_3$, so
-  \[
-    e(H_2) + e(H_3) \leq \binom{n}{2} + e(H_3) - |\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}|.
-  \]
-  Let $H'_3$ be the graph with the same vertex set as $H_3$ and edge set $\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}$. It suffices to show that $\frac{n}{2} \geq e(H_3) - e(H'_3)$. 
+and so $\phi(2,n,K_3) \leq \binom{n}{2} + \lfloor n^2/4\rfloor$. Taking $G_1 = K_n$ and $G_2 = K_{\lfloor n/2 \rfloor,\lceil n/2 \rceil}$ meets this bounds. The main result of this section is to show for all $n \geq 1$, 
+\[    
+  \phi(3, n, K_3) = \binom{n}{2} + \Big\lfloor \frac{n^2}{2} \Big\rfloor.
+\]
+Let $G_1,G_2,G_3$ be double triangle-free. Define $H_k \subseteq G$ to be the graph with edges contained in at least $k$  of the $G_i$'s and note that $e(G_1) + e(G_2) + e(G_3) = e(H_1) + e(H_2) + e(H_3)$. Thus it suffices to show that $e(H_2) + e(H_3) \leq \frac{n^2}{2}$. Notice $H_2$ must not contain any triangles with two edges in $H_3$, so
+\[
+  e(H_2) + e(H_3) \leq \binom{n}{2} + e(H_3) - |\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}|.
+\]
+Let $H'_3$ be the graph with the same vertex set as $H_3$ and edge set $\{\{u, v\} : u \neq v, N_{H_3}(u) \cap N_{H_3}(v) \neq \emptyset\}$. It suffices to show that $\frac{n}{2} \geq e(H_3) - e(H'_3)$. 
 
-  Let $d_1 \geq d_2 \geq \cdots \geq d_n$ and $f_1 \geq f_2 \geq \cdots \geq f_n$ each be the degree sequence of $H_3$ and $H_3'$, respectively. We show that $f_i \geq d_i - 1$ for all $i$. Let $v_i$ denote the vertex in $H$ with degree $d_i$ and $u_i$ be the vertex in $H$ with degree $f_i$. Let $S_i = |N_{H_3}(v_1) \cup \cdots \cup N_{H_3}(v_i)|$. Since 
-  \[
-    \sum_{u \in S_i} d_{H_3}(u) \geq d_1 + \cdots + d_i,
-  \]
-  we have that $|S_i| \geq i$. But then $S_i \backslash \{u_1, \ldots, u_{i - 1}\}$ is non-empty, and every $u \in S_i$ has degree $d_{H_3'}(u) \geq d_i - 1$. Hence, $f_i \geq d_i - 1$ for all $i$, which yields
-  \[
-    e(H_3') = \frac{1}{2}\sum_{i = 1}^n f_i \geq \frac{1}{2}\sum_{i = 1}^n (d_i - 1) = e(H_3) - \frac{n}{2}.
-  \]
-  This proves Theorem \ref{thm:triangles}. \qed
+Let $d_1 \geq d_2 \geq \cdots \geq d_n$ and $f_1 \geq f_2 \geq \cdots \geq f_n$ each be the degree sequence of $H_3$ and $H_3'$, respectively. We show that $f_i \geq d_i - 1$ for all $i$. Let $v_i$ denote the vertex in $H$ with degree $d_i$ and $u_i$ be the vertex in $H$ with degree $f_i$. Let $S_i = |N_{H_3}(v_1) \cup \cdots \cup N_{H_3}(v_i)|$. Since 
+\[
+  \sum_{u \in S_i} d_{H_3}(u) \geq d_1 + \cdots + d_i,
+\]
+we have that $|S_i| \geq i$. But then $S_i \backslash \{u_1, \ldots, u_{i - 1}\}$ is non-empty, and every $u \in S_i$ has degree $d_{H_3'}(u) \geq d_i - 1$. Hence, $f_i \geq d_i - 1$ for all $i$, which yields
+\[
+  e(H_3') = \frac{1}{2}\sum_{i = 1}^n f_i \geq \frac{1}{2}\sum_{i = 1}^n (d_i - 1) = e(H_3) - \frac{n}{2}.
+\]
+This proves Theorem \ref{thm:triangles}. \qed
 
-  \section{Final Remarks}
+\section{Concluding Remarks}
+
+\begin{itemize}
+  \item For Theorem \ref{thm:inducedF}, we may not be able to achieve the same result with smaller $n$. For example, consider $F$ to be the bowtie graph, i.e. the $5$-vertex graph with two triangles sharing a vertex. The $n$-vertex extremal graph for $F$ is given by $K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ plus an edge when $n \geq 5$, otherwise it is the complete graph. For $n = 5$, the construction $G_1 = K_{4}, G_2 = K_5$ then shows that $\phi^*(2, 5, F) > 2 \cdot \ex(5, F)$. Fortunately, for non-bipartite $F$ with $|V(F)| = k$, it is not hard to show $n \geq k^2$ is sufficient to avoid this issue.
+  
+  \item We note that Szemer\'{e}di's Regularity lemma may be used to generalize Theorem \ref{thm:blowup} to any family of non-bipartite graphs up to asymptotic error. 
+  \item One could ask for the analogous results for hypergraphs. That is, if $F$ is an $r$-uniform hypergraph, let $\phi(m, n, F)$ be the maximum number of edges over $m$ double $F$-free $r$-uniform hypergraphs on $[n]$. Again, we have $\phi(m, n, F) \geq \binom{n}{r} + (m - 1) \cdot \ex(n, F)$. Another direction of generalization is to relax the constraint to no copies of $F$ contained in the intersection of $k$ of the graphs $G_1, G_2, \ldots, G_m$. Many of the theorems and proofs also hold in this case. For instance, the proof of Theorem \ref{wilsontheorem} applies for this generalization by merely changing the numbers.
+\end{itemize}
 
 \bibliographystyle{abbrvnat}
 \bibliography{bibliography}
