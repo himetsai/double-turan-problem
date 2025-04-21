@@ -7,3 +7,7 @@
 
 *.thm
 *.bbl
+
+*.snm
+
+*.nav
