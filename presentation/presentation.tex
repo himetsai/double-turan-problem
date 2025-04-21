@@ -1,0 +1,555 @@
+\documentclass{beamer}
+\usepackage{mathtools}
+
+\usetheme{Madrid}
+
+\newcommand*{\ex}{\textnormal{ex}}
+
+\title{Double Turán Problem}
+\author{Ray Tsai}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Introduction}
+What is the Turán problem? \pause
+
+\begin{block}{Question}
+  Given a graph $F$, how many edges can an $n$-vertex graph have while containing no copy of $F$ as a subgraph?
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+What is the hypergraph Turán problem? 
+
+\begin{block}{Question}
+  Given an $r$-uniform graph $F$, how many edges can an $n$-vertex $r$-uniform hypergraph have while containing no copy of $F$ as a subgraph?
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+
+Let $F$ be a graph. We call the following quantity the \textit{Turán number} or \textit{extremal number} of $F$:
+
+\begin{block}{Definition}
+  \[
+    \ex(n, F) \coloneq \max \{ e(G) : |V(G)| = n \text{ and } F \not\subseteq G \}
+  \]
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+
+  \begin{block}{Definition}
+    The \textit{Turán graph} $T_r(n)$ is the complete $r$-partite graph on $n$ vertices with parts of size $\lfloor n/r \rfloor$ and $\lceil n/r \rceil$.
+  \end{block}
+
+  \pause
+
+  examples of turan graphs
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+
+  \begin{block}{Turán's theorem}
+    The maximum number of edges in an $n$-vertex graph containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only for $T_r(n)$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+
+  \begin{block}{Erd\H{o}s-Stone Theorem, Simonovits' Theorem}
+    Let $F$ be any graph of chromatic number $r + 1 \geq 3$. Then $\ex(n, F) = (1 + o(1))T_r(n)$ as $n \rightarrow \infty$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+
+What is the double Turán problem? \pause
+
+\vspace{0.5cm}
+
+Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \cap E(G_j)$ for distinct $i, j \in [m]$. \pause (\textit{Double $F$-free})
+
+\pause
+
+\begin{block}{Question}
+  What is the value of $\phi(m, n, F) = \max \sum_{i = 1}^m G_i$?
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+
+  What is the \textit{induced} double Turán problem? \pause
+
+  \begin{block}{Definition}
+    We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
+  \end{block}
+
+  \pause
+
+  \vspace{0.5cm}
+
+  Let graphs $G_1, G_2, \ldots, G_m$ be induced and double $F$-free.
+
+  \begin{block}{Question}
+    What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m G_i$?
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+
+  What is the \textit{induced} double Turán problem? \pause
+
+  \begin{block}{Definition}
+    We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
+  \end{block}
+
+  \pause
+
+  \vspace{0.5cm}
+
+  Let graphs $G_1, G_2, \ldots, G_m$ on $[n]$ be induced and double $F$-free.
+
+  \begin{block}{Question}
+    What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m G_i$?
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivation}
+
+  Double Turán problems are closely related to hypergraph Turán problems through \textit{link graphs}.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  Let $H$ be a triple system, i.e. a 3-uniform hypergraph. 
+  
+  \begin{block}{Definition}
+    For $i \in V(H)$, the \textit{link graph} of $i$, denoted $H_i$, is the graph with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}$. 
+  \end{block}
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Motivation}
+
+  Let $H$ be a triple system, i.e. a 3-uniform hypergraph. 
+  
+  \begin{block}{Definition}
+    For $i \in V(H)$, the \textit{link graph} of $i$, denoted $H_i$, is the graph with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}$. 
+  \end{block}
+
+  \vspace{0.5cm}
+
+  examples of link graphs
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Motivation}
+
+  Let $F^+$ denote the triple system on $[n]$ with vertex set $V(F) \cup \{x, y\}$ and edge set $\{e \cup \{x\}, e \cup \{y\} : e \in E(F)\}$.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  \begin{block}{Observation}
+    If $H$ is an $F^+$-free triple system on $[n]$, then the link graphs $H_1, \ldots, H_n$ are double $F$-free.
+  \end{block}
+
+  \pause
+
+  \vspace{0.5cm}
+
+  \[
+    \ex(n, F^+) \leq \phi(n, n, F)
+  \]
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Motivation}
+
+  Let $F'$ be the graph consisting of all pairs contained in triples in $F^+$. 
+
+  \begin{block}{Generalizaed Turán problem}
+    What is the maximum number $\ex(n, F', K_3)$ of triangles in a graph $H$ on $[n]$ with no copy of $F'$ as a subgraph?
+  \end{block}
+
+  \pause
+
+  \vspace{0.3cm}
+
+  Define $H_i = \{\{j, k\} : \{i, j\}, \{j, k\}, \{i, k\} \in E(H)\}$.
+
+  \pause
+
+  \begin{block}{Observation}
+    $H_1, H_2, \ldots, H_n$ are induced and double $F$-free.
+  \end{block}
+
+  \pause
+
+  \vspace{0.3cm}
+
+  \[
+    \ex(n, F', K_3) \leq \phi^*(n, n, F)
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Induced Case}
+
+  \begin{block}{Conjecture}
+    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
+    \[ 
+      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+    \]
+  \end{block}
+
+  \pause
+
+  \vspace{0.3cm}
+
+  \[ 
+    \phi^*(m,n,F) \geq \max\Bigl\{\binom{n}{2},m\cdot \ex(n,F)\Bigr\}.
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Induced Case}
+
+  \begin{block}{Conjecture}
+    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
+    \[ 
+      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+    \]
+  \end{block}
+
+  \vspace{0.3cm}
+
+  Since
+  \[
+    \ex(n, K_{2, 2, 2}, K_3) \leq \phi^*(n, n, K_{2, 2})
+  \]
+  the conjecture implies
+  \[
+    \ex(n, K_{2, 2, 2}, K_3) \leq O(n^{5/2})
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Induced Case}
+
+  \begin{block}{Conjecture}
+    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
+    \[ 
+      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+    \]
+  \end{block}
+
+  \vspace{0.3cm}
+
+  Conjecture holds for non-bipartite $F$:
+
+  \begin{block}{Theorem A}
+    For all $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
+    \[
+      \phi^*(m, n, F) = m \cdot \ex(n, F),
+    \]
+    with equality only for identical extremal $n$-vertex $F$-free graphs.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Induced Case}
+
+  \begin{block}{Theorem B}
+    Let $m, n, r \geq 3$. Then 
+    \[
+      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
+    \]
+    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Proof of Theorem B}
+
+  Proof Roadmap
+
+  \begin{itemize}
+    \item Step 1: Reduce to the case of smaller $m$
+    \item Step 2: Further reduce to an optimization problem
+    \item Step 3: Solve the optimization problem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1: Reduce to the case of smaller $m$}
+
+  Proof Roadmap
+
+  \begin{itemize}
+    \item \textbf{Step 1:} Reduce to the case of smaller $m$
+    \item \textcolor{gray}{Step 2: Further reduce to an optimization problem}
+    \item \textcolor{gray}{Step 3: Solve the optimization problem}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1: Reduce to the case of smaller $m$}
+
+  Let $G_1, \ldots, G_m$ be induced double $F$-free graphs on $[n]$.
+
+  \begin{block}{Lemma 1}
+    For $2 \leq k \leq m$,
+    \[
+      \phi^*(m,n,F) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
+    \]
+    Moreover, suppose $\sum_{i = 1}^k e(G_i) = \phi^*(k, n, F)$ only if $G_1 = \cdots = G_k$. Then $\sum_{i = 1}^m e(G_i) = \phi^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1: Reduce to the case of smaller $m$}
+
+  Put $G_{i + m} = G_i$ for all $i \in [m]$.
+  \[
+    \sum_{i = 1}^m e(G_i) 
+    = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})]
+  \]
+
+  \pause
+
+  Since $e(G_i) + \cdots + e(G_{i + k - 1}) \leq \phi^*(k, n, F)$,
+  \[
+    \sum_{i = 1}^m e(G_i) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1: Reduce to the case of smaller $m$}
+
+  Suppose $\sum_{i = 1}^m e(G_i) = \frac{m}{k} \cdot \phi^*(k, n, F)$ and $G_1 \neq G_2$. 
+
+  \pause
+
+  \vspace{0.5cm}
+
+  By assumption $\sum_{i = 1}^k e(G_i) < \phi^*(k, n, F)$. 
+
+  \pause
+
+  \vspace{0.5cm}
+  
+  But then $e(G_i) + \cdots + e(G_{i + k - 1}) > \phi^*(k, n, F)$ for some $j \geq 1$, contradiction.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 2: Further reduce to an optimization problem}
+
+  Proof Roadmap
+
+  \begin{itemize}
+    \item Step 1: Reduce to the case of smaller $m$
+    \item \textbf{Step 2} Further reduce to an optimization problem
+    \item \textcolor{gray}{Step 3: Solve the optimization problem}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 2: Further reduce to an optimization problem}
+
+  [Show the picture for $G_1, G_2$.]
+
+  \pause
+
+  \begin{block}{Observation}
+    If $G_1, G_2$ intersects in $t$ vertices, Then
+    \[
+      e(G_1) + e(G_2) \leq \binom{n - t}{2} + (n - t)t + 2\ex(t, F)
+    \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 2: Further reduce to an optimization problem}
+
+  Define $f(n, t, F) \coloneq \binom{n - t}{2} + (n - t)t + 2\ex(t, F)$.
+
+  \begin{block}{Lemma 2}
+    Let $F$ be some graph. For $n \geq 1$,
+    \[
+      \phi^*(2, n, F) = \max_{0 \leq t \leq n} f(n, t, F).
+    \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  Proof Roadmap
+
+  \begin{itemize}
+    \item Step 1: Reduce to the case of smaller $m$
+    \item Step 2: Further reduce to an optimization problem
+    \item \textbf{Step 3:} Solve the optimization problem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  By Lemma 1, it suffices prove the case $m = 3$. 
+
+  \pause
+
+  \vspace{0.6cm}
+
+  Let $G_1, G_2, G_3$ be induced double $K_r$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \phi^*(3, n, K_r)$ and $e(G_1) \geq e(G_2) \geq e(G_3)$.
+
+  \pause
+
+  \vspace{0.6cm}
+
+  Since $\phi^*(3, n, K_r) \geq 3\ex(n, K_r)$, we must have $e(G_1) + e(G_2) \geq 2\ex(n, K_r)$.
+
+  \pause
+
+  \vspace{0.6cm}
+
+  Since $G_1, G_2, G_3$ are induce and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_r)$, we only need to show $G_1 = G_2 = T_{r - 1}(n)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  Let $t = |V(G_1 \cap G_2)|$. By Turán's Theorem,
+  \[
+    \ex(t, K_{r}) - \ex(t - 1, K_{r}) = t - \left\lceil \frac{t}{r - 1} \right\rceil.
+  \]
+
+  \pause
+
+  \vspace{0.5cm}
+
+  It follows that
+  \begin{align}
+    f(n, t, K_r) - f(n, t - 1, K_r)
+    &= - t + 1 + 2[\ex(t, K_r) - \ex(t - 1, K_r)] \notag \\
+    &= t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. 
+  \end{align}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  For $r \geq 4$,
+  \[
+    f(n, t, K_r) - f(n, t - 1, K_r) = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil > 0
+  \]
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies f(n, t, K_r)$ is strictly increasing on $t$.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies t = n$ so that $e(G_1) + e(G_2) \geq 2\ex(n, F)$.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies \phi^*(2, n, K_r) = 2\ex(n, F)$ and $G_1 = G_2 = T_{r - 1}(n)$.
+
+  \vspace{0.5cm}
+
+  This solves the case $r \geq 4$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  For $r = 3$,
+  \[
+    f(n, t, K_r) - f(n, t - 1, K_r) = t + 1 - 2\left\lceil \frac{t}{2} \right\rceil \geq 0
+  \]
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies f(n, t, K_3)$ is non-decreasing on $t$ and $f(n, t, K_3) > f(n, t, K_3)$ for even $t$.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies t = n$ or $t = n - 1$ so that $e(G_1) + e(G_2) \geq 2\ex(n, F)$.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  $\implies \phi^*(2, n, K_3) = 2\ex(n, K_3)$, and either $G_1 = G_2 = T_{2}(n)$ or $G_2 = T_{2}(n - 1)$ and $G_1 = G_2 + K_1$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 3: Solve the optimization problem}
+
+  If $G_1 = G_2 = T_{2}(n)$ then we are done.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  Suppose $G_2 = T_{2}(n - 1)$ and $G_1 = G_2 + K_1$. 
+
+  \pause
+
+  \vspace{0.5cm}
+
+  Since $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_3)$,
+  \[
+    e(G_3) = \ex(n, K_3) > T_{2}(n - 1) = e(G_2),
+  \]
+  contradiction.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  This solves Theorem B.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extra Ingredients to Prove Theorem A}
+
+  \begin{itemize}
+    \item First show that $t = |V(G_1 \cap G_2)| \geq \sqrt{n}$.
+    \item For large enough $t$, any extremal $t$-vertex $F$-free graph contains a spanning $T_{r - 1}(t)$.
+  \end{itemize}
+\end{frame}
+
+\end{document}

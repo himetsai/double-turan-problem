@@ -19,6 +19,7 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
 \usetikzlibrary{automata,positioning}
 \definecolor{crimson}{HTML}{DC143C}
 
@@ -83,14 +84,13 @@
 This thesis focuses on a variation of the \textit{Turán problem} in extremal combinatorics.  The fundamental question in extremal hypergraph theory is determining the maximum number of edges in an $n$-vertex $r$-uniform graph that does not contain a prescribed $r$-uniform graph $F$ as a subgraph. These maxima, denoted $\ex(n, F)$, are referred to as the \textit{extremal numbers} or \textit{Turán numbers} for $F$. One of the cornerstones of extremal graph theory, concerning the case $F$ is a clique, is Tur\'{a}n's Theorem~\cite{Turan1941}. To state the theorem, we need the \textit{Tur\'{a}n graphs} $T_k(n)$, which denotes a complete multipartite graph with $n$ vertices and $k$ parts of size $\lfloor n/k\rfloor$ or $\lceil n/k\rceil$. 
 
 \begin{oldtheorem}[Tur\'{a}n's Theorem]\label{thm:turan}
-The maximum number of edges in an $n$-vertex graph containing no clique of order $k + 1$ is $e(T_k(n))$, 
-with equality only for $T_k(n)$.
+The maximum number of edges in an $n$-vertex graph containing no clique of order $k + 1$ is $e(T_k(n))$, with equality only for $T_k(n)$.
 \end{oldtheorem}
 
 Simonovits~\cite{ErdosSimonovits1966} observed via the Erd\H{o}s-Stone Theorem~\cite{ErdosStone1946} that one may obtain the asymptotic value of $\ex(n,F)$ whenever $F$ is a graph of chromatic number $k + 1\geq 3$:
 
 \begin{oldtheorem}[Erd\H{o}s-Stone Theorem, Simonovits' Theorem]\label{thm:ess}
-Let $F$ be any graph of chromatic number $k + 1 \geq 3$. Then $\ex(n,F) = (1 + o_n(1))T_k(n)$ as $n \rightarrow \infty$.
+Let $F$ be any graph of chromatic number $k + 1 \geq 3$. Then $\ex(n,F) = (1 + o(1))T_k(n)$ as $n \rightarrow \infty$.
 \end{oldtheorem}
 
 The case where $F$ is bipartite is in general wide open, and the order of magnitude of $\ex(n,K_{4,4})$ or $\ex(n,C_8)$ is not known -- see F\"{u}redi and Simonovits~\cite{FurediSimonovits2013} for a history of the bipartite Tur\'{a}n problem. There is also no analog of the above theorems for $r$-uniform hypergraphs; the asymptotic value of $\ex(n,K_k^r)$ is not known for any $k > r \geq 3$, where $K_k^r$ denotes the complete $r$-uniform hypergraph on $k$ vertices. The asymptotic value of $\ex(n,K_4^3)$ was conjectured by Tur\'{a}n~\cite{Turan1941} to be $\frac{5}{9} \binom{n}{3}$, and this remains open despite decades of intensive research. 
@@ -99,9 +99,9 @@ In this thesis, we investigate closely related problems which we refer to as \te
 
 \subsection{Link graphs and hypergraphs}
 
-Apart from the intrinsic interest in studying $\phi(m,n,F)$, a motivation is that $\phi(m,n,F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. These three-element subsets form the edge-set $E(H)$ of $H$, while $V(H) = V$ is the vertex set of $H$. For $i \in V(H)$, let $H_i$ denote the \textit{link graph} of $i$, with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_v) = \{\{j,k\} : \{i,j,k\} \in E(H)\}$. A useful idea in extremal hypergraph theory is to try to reduce an extremal problem for hypergraphs to extremal problems for the link graphs. For instance, a triple system $H$ does not contain three triples on four vertices if and only if all its link graphs are triangle-free. 
+Apart from the intrinsic interest in studying $\phi(m,n,F)$, a motivation is that $\phi(m,n,F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. These three-element subsets form the edge-set $E(H)$ of $H$, while $V(H) = V$ is the vertex set of $H$. For $i \in V(H)$, let $H_i$ denote the \textit{link graph} of $i$, with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j,k\} : \{i,j,k\} \in E(H)\}$. A useful idea in extremal hypergraph theory is to try to reduce an extremal problem for hypergraphs to extremal problems for the link graphs. For instance, a triple system $H$ does not contain three triples on four vertices if and only if all its link graphs are triangle-free. 
 
-In the current context, given a graph $F$, let $F^+$ denote the triple system with vertex set $V(F^+) = V(F) \cup \{x,y\}$ and edge set $\{e \cup \{x\},e \cup \{y\} : e \in E(F)\}$. Then $\phi(n,n,F)$ and $\ex(n,F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then clearly the link graphs $H_1,H_2,\dots,H_n$ are double $F$-free, which implies $\ex(n,F^+) \leq \phi(n,n,F)$. This relates the double Tur\'{a}n problem to hypergraph extremal problems.
+In the current context, given a graph $F$, let $F^+$ denote the triple system with $V(F^+) = V(F) \cup \{x,y\}$ and $E(F^+) = \{e \cup \{x\},e \cup \{y\} : e \in E(F)\}$. Then $\phi(n,n,F)$ and $\ex(n,F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then clearly the link graphs $H_1,H_2,\dots,H_n$ are double $F$-free, which implies $\ex(n,F^+) \leq \phi(n,n,F)$. This relates the double Tur\'{a}n problem to hypergraph extremal problems.
 
 Now let $G$ be the graph consisting of all pairs contained in triples in $F^+$. The \textit{generalized Tur\'{a}n problem} asks for the maximum number $\ex(n,G,K_3)$ of triangles in a graph $H$ with vertex set $[n]$ that does not contain $G$. This problem was studied by Alon and Shikhelman~\cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete~\cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}. This problem is related to $\phi^*(n,n,F)$ as follows: define $H_i = \{\{j,k\} : \{i,j\},\{j,k\},\{i,k\} \in E(H)\}$. Then $H_1,H_2,\dots,H_n$ are induced and double $F$-free, so $\phi^*(n,n,F) \geq \ex(n,G,K_3)$. This relates the induced double Tur\'{a}n problem to extremal problems for triangles in graphs.
 
@@ -110,7 +110,7 @@ Now let $G$ be the graph consisting of all pairs contained in triples in $F^+$. 
 The determination of $\phi^*(m,n,F)$ turns out to be fairly straightforward when $F$ is a non-bipartite graph: the extremal objects are $m$ copies of the same extremal graph for $F$:
 
 \begin{theorem}\label{thm:inducedF}
-For $r \geq 3$, there exists $n_0(r)$ such that if $n \geq n_0(r)$ and $F$ is a graph of chromatic number $r$, then for all $m \geq 3$,    
+  For $r \geq 3$, there exists $n_0(r)$ such that if $n \geq n_0(r)$ and $F$ is a graph of chromatic number $r$, then for all $m \geq 3$,    
   \[
     \phi^*(m, n, F) = m \cdot \ex(n, F),
   \]
