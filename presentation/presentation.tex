@@ -103,7 +103,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   Let graphs $G_1, G_2, \ldots, G_m$ be induced and double $F$-free.
 
   \begin{block}{Question}
-    What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m G_i$?
+    What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m e(G_i)$?
   \end{block}
 \end{frame}
 
@@ -113,7 +113,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   What is the \textit{induced} double Turán problem? \pause
 
   \begin{block}{Definition}
-    We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
+    We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m e(G_i)$.
   \end{block}
 
   \pause
@@ -185,10 +185,10 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \frametitle{Motivation}
 
-  Let $F'$ be the graph consisting of all pairs contained in triples in $F^+$. 
+  Let $\bar{F}$ be the graph consisting of all pairs contained in triples in $F^+$. 
 
   \begin{block}{Generalizaed Turán problem}
-    What is the maximum number $\ex(n, F', K_3)$ of triangles in a graph $H$ on $[n]$ with no copy of $F'$ as a subgraph?
+    What is the maximum number $\ex(n, \bar{F}, K_3)$ of triangles in a graph $H$ on $[n]$ with no copy of $\bar{F}$ as a subgraph?
   \end{block}
 
   \pause
@@ -208,7 +208,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   \vspace{0.3cm}
 
   \[
-    \ex(n, F', K_3) \leq \phi^*(n, n, F)
+    \ex(n, \bar{F}, K_3) \leq \phi^*(n, n, F)
   \]
 \end{frame}
 
@@ -358,7 +358,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \vspace{0.5cm}
   
-  But then $e(G_i) + \cdots + e(G_{i + k - 1}) > \phi^*(k, n, F)$ for some $j \geq 1$, contradiction.
+  $\implies e(G_i) + \cdots + e(G_{i + k - 1}) > \phi^*(k, n, F)$ for some $i > 1$, contradiction.
 \end{frame}
 
 \begin{frame}
@@ -368,7 +368,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \begin{itemize}
     \item Step 1: Reduce to the case of smaller $m$
-    \item \textbf{Step 2} Further reduce to an optimization problem
+    \item \textbf{Step 2:} Further reduce to an optimization problem
     \item \textcolor{gray}{Step 3: Solve the optimization problem}
   \end{itemize}
 \end{frame}
@@ -434,7 +434,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \vspace{0.6cm}
 
-  Since $G_1, G_2, G_3$ are induce and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_r)$, we only need to show $G_1 = G_2 = T_{r - 1}(n)$.
+  Since $G_1, G_2, G_3$ are induced, we only need to show $G_1 = G_2 = T_{r - 1}(n)$.
 \end{frame}
 
 \begin{frame}
