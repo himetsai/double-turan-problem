@@ -34,15 +34,6 @@ What is the Turán problem? \pause
 
 \begin{frame}
 \frametitle{Introduction}
-What is the hypergraph Turán problem? 
-
-\begin{block}{Question}
-  Given an $r$-uniform graph $F$, how many edges can an $n$-vertex $r$-uniform hypergraph have while containing no copy of $F$ as a subgraph?
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Introduction}
 
 Let $F$ be a graph. We call the following quantity the \textit{Turán number} or \textit{extremal number} of $F$:
 
@@ -52,23 +43,6 @@ Let $F$ be a graph. We call the following quantity the \textit{Turán number} or
   \]
 \end{block}
 \end{frame}
-
-\begin{frame}
-  \frametitle{Introduction}
-
-  \begin{block}{Definition}
-    The \textit{Turán graph} $T_r(n)$ is the complete $r$-partite graph on $n$ vertices with parts of size $\lfloor n/r \rfloor$ and $\lceil n/r \rceil$.
-  \end{block}
-
-  \pause
-
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.3\linewidth]{T_4_13.svg}
-    \caption{$T_{4}(13)$}
-  \end{figure}
-\end{frame}
-
 \begin{frame}
   \frametitle{Introduction}
 
@@ -445,22 +419,22 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 %   \end{block}
 % \end{frame}
 
-\begin{frame}
-  \frametitle{Step 1: Reduce to the case of smaller $m$}
+% \begin{frame}
+%   \frametitle{Step 1: Reduce to the case of smaller $m$}
 
-  Put $G_{i + m} = G_i$ for all $i \in [m]$.
-  \[
-    \sum_{i = 1}^m e(G_i) 
-    = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})]
-  \]
+%   Put $G_{i + m} = G_i$ for all $i \in [m]$.
+%   \[
+%     \sum_{i = 1}^m e(G_i) 
+%     = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})]
+%   \]
 
-  \pause
+%   \pause
 
-  Since $e(G_i) + \cdots + e(G_{i + k - 1}) \leq \phi^*(k, n, F)$,
-  \[
-    \sum_{i = 1}^m e(G_i) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
-  \]
-\end{frame}
+%   Since $e(G_i) + \cdots + e(G_{i + k - 1}) \leq \phi^*(k, n, F)$,
+%   \[
+%     \sum_{i = 1}^m e(G_i) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
+%   \]
+% \end{frame}
 
 % \begin{frame}
 %   \frametitle{Step 1: Reduce to the case of smaller $m$}
@@ -675,24 +649,24 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 %   This solves Theorem B.
 % \end{frame}
 
-\begin{frame}
-  \frametitle{Extra Ingredients to Prove Theorem A}
+% \begin{frame}
+%   \frametitle{Extra Ingredients to Prove Theorem A}
 
-  \begin{block}{Theorem A}
-    For $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
-    \[
-      \phi^*(m, n, F) = m \cdot \ex(n, F),
-    \]
-    with equality only for identical extremal $n$-vertex $F$-free graphs.
-  \end{block}
+%   \begin{block}{Theorem A}
+%     For $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
+%     \[
+%       \phi^*(m, n, F) = m \cdot \ex(n, F),
+%     \]
+%     with equality only for identical extremal $n$-vertex $F$-free graphs.
+%   \end{block}
 
-  \vspace{0.3cm}
+%   \vspace{0.3cm}
 
-  \begin{itemize}
-    \item First show that $t = |V(G_1 \cap G_2)| \geq \sqrt{n}$.
-    \item For large enough $t$, any extremal $t$-vertex $F$-free graph contains a spanning $T_{r - 1}(t)$.
-  \end{itemize}
-\end{frame}
+%   \begin{itemize}
+%     \item First show that $t = |V(G_1 \cap G_2)| \geq \sqrt{n}$.
+%     \item For large enough $t$, any extremal $t$-vertex $F$-free graph contains a spanning $T_{r - 1}(t)$.
+%   \end{itemize}
+% \end{frame}
 
 \section{Proof of Theorem C}
 
@@ -771,7 +745,52 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \pause
 
-  \vspace{0.7cm} Resulting graph remains isomorphic
+  \vspace{0.7cm} 
+  
+  $\implies (u, v, i)$-swap perserves graph isomorphism.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Proof of Theorem C: Lower Bound}
+
+  For vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_{\binom{m}{2}}}(v)$
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  Suppose there exists $\{u, w\} \in E(H_i) \cap E(H_j)$
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  $|N(u)| \leq M \cdot \triangle \leq n^{1/2}/2$
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  $\implies |N(u) \cup N(N(u))| \leq \triangle + \triangle(\triangle - 1) \leq n/4$
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  $\implies \exists v \notin N(u) \cup N(N(u))$, so $N(u) \cap N(v) = \emptyset$.
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  $\implies (u, v, i)$-swap makes $\{u, w\}$ not overlapping!
+
+  \pause
+
+  \vspace{0.5cm} 
+
+  Keep swapping until no overlapping edges left
+
 \end{frame}
 
 \end{document}
