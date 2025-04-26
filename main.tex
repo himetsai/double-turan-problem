@@ -15,16 +15,18 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{tikz-cd}
-\setlength{\marginparwidth}{2cm}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+\setlength{\marginparwidth}{2cm}
 
 \usetikzlibrary{automata,positioning}
 \definecolor{crimson}{HTML}{DC143C}
 
 \newcommand{\jv}[1]{\textcolor{red}{\textbf{[JV: } #1\textbf{]}}}
 \newcommand{\rt}[1]{\textcolor{red}{\textbf{[RT: } #1\textbf{]}}}
+
 \setlength{\parskip}{6pt}
 \setlength{\parindent}{0pt}
 \renewcommand{\baselinestretch}{1.2}
@@ -65,7 +67,7 @@
 
 % Title Page
 \title{Double Turán Problem}
-\author{Ray Tsai}
+\author{Ray Tsai \\ Advisor: Prof. Jacques Verstraete}
 
 \begin{document}
 
@@ -74,6 +76,8 @@
 % \begin{abstract} Your abstract here. Provide a concise summary of your thesis, including the problem statement, methodology, main results, and conclusions. \end{abstract}
 
 % \section*{Acknowledgments} Thank your advisor, collaborators, and anyone who supported your research.
+
+\vspace*{-1cm}
 
 \tableofcontents
 
@@ -93,29 +97,31 @@ Simonovits~\cite{ErdosSimonovits1966} observed via the Erd\H{o}s-Stone Theorem~\
 Let $F$ be any graph of chromatic number $r + 1 \geq 3$. Then $\ex(n, F) = (1 + o(1))T_r(n)$ as $n \rightarrow \infty$.
 \end{oldtheorem}
 
-There are a number of proofs of the 
-Erd\H{o}s-Stone Theorem. A very general framework involves \textit{Szemer\'{e}di's Regularity Lemma}, which may be stated as follows. A pair $(U,V)$ of disjoint sets of vertices in a graph $G$ is called $\epsilon$-regular if for any $X \subseteq U$ and $Y \subseteq V$ of size at least $\epsilon |U|$ and $\epsilon|V|$ respectively, $|e(X,Y)/|X||Y| - e(U,V)/|U||V|| < \epsilon$. The following was proved by Szemer\'{e}di~\cite{Szemeredi1978}:
+There are a number of proofs of the Erd\H{o}s-Stone Theorem. A very general framework involves \textit{Szemer\'{e}di's Regularity Lemma}, which may be stated as follows. A pair $(U,V)$ of disjoint sets of vertices in a graph $G$ is called \textit{$\epsilon$-regular} if for any $X \subseteq U$ and $Y \subseteq V$ of size at least $\epsilon |U|$ and $\epsilon|V|$ respectively, 
+\[
+  \left|\frac{e(X, Y)}{|X||Y|} - \frac{e(U, V)}{|U||V|}\right| < \epsilon.
+\]
+The following was proved by Szemer\'{e}di~\cite{Szemeredi1978}:
 
 \begin{oldtheorem} [Szemer\'{e}di's Regularity Lemma]
-For all $\epsilon > 0$, there exist 
-$m$ and $M$ such that for every graph $G$, there exists a partition $(V_1,V_2,\dots,V_k)$ of $V(G)$ such that $m \leq k \leq M$ and $|V_1| \leq |V_2| \leq \dots \leq |V_k| \leq |V_1| + 1$ and all but at most $\epsilon k^2$ pairs $(V_i,V_j)$ are $\epsilon$-regular. 
+For all $\epsilon > 0$, there exist $m$ and $M$ such that for every graph $G$, there exists a partition $(V_1, V_2, \dots, V_k)$ of $V(G)$ such that $m \leq k \leq M$ and $|V_1| \leq |V_2| \leq \dots \leq |V_k| \leq |V_1| + 1$ and all but at most $\epsilon k^2$ pairs $(V_i, V_j)$ are $\epsilon$-regular. 
 \end{oldtheorem}
 
-The case where $F$ is bipartite is in general wide open, and the order of magnitude of $\ex(n,K_{4,4})$ or $\ex(n,C_8)$ is not known -- see F\"{u}redi and Simonovits~\cite{FurediSimonovits2013} for a history of the bipartite Tur\'{a}n problem. There is also no analog of the above theorems for $r$-uniform hypergraphs; the asymptotic value of $\ex(n,K_k^r)$ is not known for any $k > r \geq 3$, where $K_k^r$ denotes the complete $r$-uniform hypergraph on $k$ vertices. The asymptotic value of $\ex(n,K_4^3)$ was conjectured by Tur\'{a}n~\cite{Turan1941} to be $\frac{5}{9} \binom{n}{3}$, and this remains open despite decades of intensive research. 
+The value of $\ex(n, F)$ for bipartite $F$ is in general wide open, and the order of magnitude of $\ex(n, K_{4, 4})$ or $\ex(n, C_8)$ is not known -- see F\"{u}redi and Simonovits~\cite{FurediSimonovits2013} for a history of the bipartite Tur\'{a}n problem. There is also no analog of the above theorems for $r$-uniform hypergraphs; the asymptotic value of $\ex(n, K_k^r)$ is not known for any $k > r \geq 3$, where $K_k^r$ denotes the complete $r$-uniform hypergraph on $k$ vertices. The asymptotic value of $\ex(n, K_4^3)$ was conjectured by Tur\'{a}n~\cite{Turan1941} to be $\frac{5}{9} \binom{n}{3}$, and this remains open despite decades of intensive research. 
 
-In this thesis, we investigate closely related problems which we refer to as \textit{double Tur\'{a}n problems}. To describe these problems, let $G_1, G_2, \ldots, G_m$ be graphs with the same vertex set $V(G_i) = [n]$ for $i \in [m]$. For a graph $F$, we say that $G_1,G_2,\dots,G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. In other words, $F$ does not appear in the intersection of any two of the graphs $G_i$. We call a copy of $F$ in the intersection of two of the graphs $G_i$ a \textit{double $F$}. Let $\phi(m,n,F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1,G_2,\dots,G_m$ does not contain a double $F$. We say that graphs $G_1,G_2,\dots,G_m$ are \textit{induced} to mean that every $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$. In other words, if $\{u,v\} \in E(G_i)$ and $u,v \in V(G_j)$, then $\{u,v\} \in E(G_j)$. Let $\phi^*(m,n,F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1,G_2,\dots,G_m$ does not contain a double $F$ and $G_1,G_2,\dots,G_m$ are induced. Clearly, $\phi^*(m,n,F) \leq \phi(m,n,F)$, and the study of $\phi^*(m,n,F)$ and $\phi(m,n,F)$ is motivated by certain hypergraph extremal problems.
+In this thesis, we investigate closely related problems which we refer to as \textit{double Tur\'{a}n problems}. To describe these problems, let $G_1, G_2, \ldots, G_m$ be graphs with the same vertex set $V(G_i) = [n]$ for $i \in [m]$. For a graph $F$, we say that $G_1, G_2, \dots, G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. In other words, $F$ does not appear in the intersection of any two of the graphs $G_i$. We call a copy of $F$ in the intersection of two of the graphs $G_i$ a \textit{double $F$}. Let $\phi(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$. We say that graphs $G_1, G_2, \dots, G_m$ are \textit{induced} to mean that every $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$. In other words, if $\{u,v\} \in E(G_i)$ and $u,v \in V(G_j)$, then $\{u,v\} \in E(G_j)$. Let $\phi^*(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$ and $G_1, G_2,\dots, G_m$ are induced. Clearly, $\phi^*(m, n, F) \leq \phi(m, n, F)$, and the study of $\phi^*(m, n, F)$ and $\phi(m, n,F )$ is motivated by certain hypergraph extremal problems.
 
 \subsection{Link graphs and hypergraphs}
 
-Apart from the intrinsic interest in studying $\phi(m,n,F)$, a motivation is that $\phi(m,n,F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. These three-element subsets form the edge-set $E(H)$ of $H$, while $V(H) = V$ is the vertex set of $H$. For $i \in V(H)$, let $H_i$ denote the \textit{link graph} of $i$, with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j,k\} : \{i,j,k\} \in E(H)\}$. A useful idea in extremal hypergraph theory is to try to reduce an extremal problem for hypergraphs to extremal problems for the link graphs. For instance, a triple system $H$ does not contain three triples on four vertices if and only if all its link graphs are triangle-free. 
+Apart from the intrinsic interest in studying $\phi(m, n, F)$, a motivation is that $\phi(m, n, F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. These three-element subsets form the edge-set $E(H)$ of $H$, while $V(H) = V$ is the vertex set of $H$. For $i \in V(H)$, the \textit{link graph} of $i$,  denoted $H_i$, is the graph with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}$. A handy idea in extremal hypergraph theory is to reduce a hypergraph extremal problem to extremal problems for the link graphs. For instance, a triple system $H$ does not contain a tetrahedron, i.e. four triples on four vertices, if and only if all its link graphs are triangle-free.
 
-In the current context, given a graph $F$, let $F^+$ denote the triple system with $V(F^+) = V(F) \cup \{x,y\}$ and $E(F^+) = \{e \cup \{x\},e \cup \{y\} : e \in E(F)\}$. Then $\phi(n,n,F)$ and $\ex(n,F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then clearly the link graphs $H_1,H_2,\dots,H_n$ are double $F$-free, which implies $\ex(n,F^+) \leq \phi(n,n,F)$. This relates the double Tur\'{a}n problem to hypergraph extremal problems.
+In the current context, given a graph $F$, let $F^+$ denote the triple system with $V(F^+) = V(F) \cup \{x, y\}$ and $E(F^+) = \{e \cup \{x\}, e \cup \{y\} : e \in E(F)\}$. Then $\phi(n, n, F)$ and $\ex(n, F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then clearly the link graphs $H_1, H_2, \dots, H_n$ are double $F$-free, which implies $\ex(n, F^+) \leq \phi(n, n, F)$. This relates the double Tur\'{a}n problem to hypergraph extremal problems.
 
-Now let $G$ be the graph consisting of all pairs contained in triples in $F^+$. The \textit{generalized Tur\'{a}n problem} asks for the maximum number $\ex(n,G,K_3)$ of triangles in a graph $H$ with vertex set $[n]$ that does not contain $G$. This problem was studied by Alon and Shikhelman~\cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete~\cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}. This problem is related to $\phi^*(n,n,F)$ as follows: define $H_i = \{\{j,k\} : \{i,j\},\{j,k\},\{i,k\} \in E(H)\}$. Then $H_1,H_2,\dots,H_n$ are induced and double $F$-free, so $\phi^*(n,n,F) \geq \ex(n,G,K_3)$. This relates the induced double Tur\'{a}n problem to extremal problems for triangles in graphs.
+Now let $G$ be the graph consisting of all pairs contained in triples in $F^+$. The \textit{generalized Tur\'{a}n problem} asks for the maximum number $\ex(n, G, K_3)$ of triangles in a graph $H$ with vertex set $[n]$ that does not contain $G$. This problem was studied by Alon and Shikhelman~\cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete~\cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}. Similar to how link graphs relate to hypergraph extremal problems, the generalized Tur\'{a}n problem is related to $\phi^*(n, n, F)$ as follows: define $H_i = \{\{j, k\} : \{i, j\}, \{j, k\}, \{i, k\} \in E(H)\}$. Then $H_1, H_2, \dots, H_n$ are induced and double $F$-free, so $\phi^*(n, n, F) \geq \ex(n, G, K_3)$. This relates the induced double Tur\'{a}n problem to extremal problems for triangles in graphs.
 
 \subsection{Main results : the induced case}
 
-The determination of $\phi^*(m,n,F)$ turns out to be fairly straightforward when $F$ is a non-bipartite graph, as the extremal objects are simply $m$ copies of the same extremal graph for $F$:
+The determination of $\phi^*(m, n, F)$ turns out to be fairly straightforward when $F$ is a non-bipartite graph: the extremal objects are simply $m$ copies of the same extremal graph for $F$.
 
 \begin{theorem}\label{thm:inducedF}
   For $r \geq 3$, there exists $n_0(r)$ such that if $n \geq n_0(r)$ and $F$ is a graph of chromatic number $r$, then for all $m \geq 3$,    
@@ -134,23 +140,22 @@ Let $m, n, r \geq 3$. Then $\phi^*(m, n, K_{r}) = m \cdot e(T_{r - 1}(n))$ with 
 In the case $F$ is a bipartite graph, even determining the order of magnitude of $\phi^*(m, n, F)$ appears to be difficult. In fact, we do not even know the order of magnitude of $\phi^*(m, n, P)$ when $P$ is a path with two edges. In this thesis, we propose the following very broad conjecture:
 
 \begin{conjecture}\label{conj:main}
-Let $F$ be any non-empty graph and $m,n \geq 1$. Then 
+Let $F$ be any non-empty graph and $m, n \geq 1$. Then 
 \[ 
   \phi^*(m, n, F) = \Theta(m \cdot \ex(n, F) + n^2).
 \]
 \end{conjecture}
 
-It is clear that a single complete graph $K_n$ does not contain a double $F$, and neither do identical copies $G_1,G_2,\dots,G_m$ of an extremal $n$-vertex $F$-free graph. Thus we have the trivial lower bound 
+It is clear that a single complete graph $K_n$ does not contain a double $F$, and neither do identical copies $G_1, G_2, \dots, G_m$ of an extremal $n$-vertex $F$-free graph. Thus we have the trivial lower bound 
 \[ 
-  \phi^*(m, n, F) \geq \max\left\{\binom{n}{2},m\cdot \ex(n, F)\right\}.
+  \phi^*(m, n, F) \geq \max\left\{\binom{n}{2}, m \cdot \ex(n, F)\right\}.
 \]
 
-This conjecture is true when $F$ is non-bipartite, by Theorem \ref{thm:inducedF}. If $F$ is bipartite, then upper bounds on $\phi^*(m, n, F)$ are more difficult to come by, especially when $m$ is large. For instance, we know 
+This conjecture is true when $F$ is non-bipartite, by Theorem \ref{thm:inducedF}. If $F$ is bipartite, then the upper bounds on $\phi^*(m, n, F)$ are more difficult to come by, especially when $m$ is large. For instance, we know 
 \[ 
   \ex(n, K_{2,2,2}, K_3) \leq \phi^*(n, n, K_{2,2}),
 \]
-and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containing the octahedron graph has $O(n^{5/2})$ triangles. In fact, it is also the case that $\ex(2n, K_{2,2,2}, K_3) \geq \phi^*(n, n, K_{2,2})$: if we have double $K_{2,2}$-free induced graphs 
-$G_1, G_2, \dots, G_{n}$ with vertex set $[n]$, then let $H$ be the graph with $V(H) = [2n]$ consisting of all triangles with vertex set $\{i, j, k\}$ such that $n < k \leq 2n$ and $\{i, j\} \in E(G_k)$. The graph $H$ is $K_{2, 2, 2}$-free and $|E(H)| = \sum_{i = 1}^{n/2} e(G_i)$. Similarly, we have
+and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containing the octahedron graph has $O(n^{5/2})$ triangles. In fact, it is also the case that $\ex(2n, K_{2,2,2}, K_3) \geq \phi^*(n, n, K_{2,2})$: if we have double $K_{2,2}$-free induced graphs $G_1, G_2, \dots, G_{n}$ with vertex set $[n]$, then let $H$ be the graph with $V(H) = [2n]$ consisting of all triangles with vertex set $\{i, j, k\}$ such that $n < k \leq 2n$ and $\{i, j\} \in E(G_k)$. The graph $H$ is $K_{2, 2, 2}$-free and $|E(H)| = \sum_{i = 1}^{n/2} e(G_i)$. Similarly, we have
 \[ 
   \ex(n, K_{1, 2, 2}, K_3) \leq \phi^*(n, n, K_{1,2})
 \]
@@ -159,26 +164,28 @@ and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containin
 \begin{theorem}\label{thm:inducedP}
 Let $P$ be a path with two edges. Then $\phi(n, n, P) = \Omega(n^{5/2})$, whereas $\phi^*(n, n, P) = o(n^{5/2})$, as $n \rightarrow \infty$. In particular, 
 \[ 
-  \lim_{n \rightarrow \infty} \frac{\phi^*(n,n,P)}{\phi(n, n, P)} = 0.
+  \lim_{n \rightarrow \infty} \frac{\phi^*(n, n, P)}{\phi(n, n, P)} = 0.
 \]
 \end{theorem}
 
-If $M$ is a matching with two edges, and $M^+$ is the graph obtained from two copies of $K_4$ sharing one edge by removing that edge, then $\ex(n,M^+,K_3) \leq \phi^*(n,n,M)$. If $F$ is the triple system consisting of all four triangles in $M^+$, then F\"{u}redi~\cite{Furedi1984} showed $\ex(n,M^+) = O(n^2)$, answering a conjecture of Erd\H{o}s~\cite{Erdos1977}. It is possible to adapt F\"{u}redi's proof to give $\phi^*(n,n,M) = O(n^2)$, so in this case, $\ex(n,M^+,K_3) = \Theta(\phi^*(n,n,M))$. For improvements of the constant factor, see Mubayi and Verstraete~\cite{MubayiV2004} and Pikhurko and Verstraete~\cite{PikhurkoV2009}. We shall see that if $F$ is bipartite and $m$ is not too large relative to $n$, then Conjecture \ref{conj:main} is also true. 
+If $M$ is a matching with two edges, and $M^+$ is the graph obtained from two copies of $K_4$ sharing one edge by removing that edge, then $\ex(n, M^+, K_3) \leq \phi^*(n, n, M)$. If $F$ is the triple system consisting of all four triangles in $M^+$, then F\"{u}redi~\cite{Furedi1984} showed $\ex(n, M^+) = O(n^2)$, answering a conjecture of Erd\H{o}s~\cite{Erdos1977}. It is possible to adapt F\"{u}redi's proof to give $\phi^*(n, n, M) = O(n^2)$, so in this case, $\ex(n, M^+, K_3) = \Theta(\phi^*(n, n, M))$. For improvements of the constant factor, see Mubayi and Verstraete~\cite{MubayiV2004} and Pikhurko and Verstraete~\cite{PikhurkoV2009}. We shall see that for some bipartite $F$, if $m$ is not too large relative to $n$, then Conjecture \ref{conj:main} is also true. 
 
 \subsection{Main results : the non-induced case}
 
-Determining $\phi(m,n,F)$ even when $F$ is a complete graph is challenging. The forth theorem we give is well-suited to the case of bipartite graphs, and is due to Wilson:
+Determining $\phi(m, n, F)$ even when $F$ is a complete graph is challenging. The forth theorem we give is well-suited to the case of certain bipartite graphs, and is due to Wilson:
 
 \begin{theorem}\label{wilsontheorem}
   Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $n^{1/2}/m^2$, then 
-  \[ \phi(m,n,F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).\]
+  \[ 
+    \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
+  \]
 \end{theorem}
 
-Since $\binom{n}{2} + m - 1 \leq \phi^*(m,n,F) \leq \phi(m,n,F)$ for any graph $F$ with at least two edges, this theorem shows $\phi^*(m,n,F) = (1 + o(1))\binom{n}{2}$ whenever the conditions on $m$ in the theorem are satisfied. In particular, if $P$ is the path with two edges, and $m = o(n^{1/4})$ as $n \rightarrow \infty$, then for $n \geq 2$, 
+Since $\binom{n}{2} + m - 1 \leq \phi^*(m, n, F) \leq \phi(m, n, F)$ for any graph $F$ with at least two edges, this theorem shows $\phi^*(m, n, F) = (1 + o(1))\binom{n}{2}$ whenever the conditions on $m$ in the theorem are satisfied. In particular, if $P$ is the path with two edges, and $m = o(n^{1/4})$ as $n \rightarrow \infty$, then 
 \[ 
-  \binom{n}{2} + m - 1 \leq \phi^*(m,n,P) \leq \phi(m,n,P) = \binom{n}{2} + \binom{m}{2} \left\lfloor \frac{n}{2}\right\rfloor. 
+  \binom{n}{2} + m - 1 \leq \phi^*(m, n, P) \leq \phi(m, n, P) = \binom{n}{2} + \binom{m}{2} \left\lfloor \frac{n}{2}\right\rfloor. 
 \]
-When $F$ is bipartite, the value of $\phi(m,n,F)$ for larger $m$ appears to be difficult to determine. We investigate the case $F = P$ more closely. 
+When $F$ is bipartite, the value of $\phi(m, n, F)$ for larger $m$ appears to be difficult to determine. We investigate the case $F = P$ more closely. 
 
 \begin{theorem}\label{thm:pm}
 Let $P$ be the path with two edges. Then as $n \rightarrow \infty$,
@@ -194,9 +201,9 @@ Let $P$ be the path with two edges. Then as $n \rightarrow \infty$,
 \]
 \end{theorem}
 
-Interestingly, while Conjecture \ref{conj:main} proposes $\phi^*(m,n,P) = O(n^2 + mn)$ for all $m,n \geq 1$, the above theorem shows $\phi(m,n,P)$ is much larger, of order at least $mn^{3/2}$ when $m \geq \sqrt{n}$.  
+Interestingly, while Conjecture \ref{conj:main} proposes $\phi^*(m, n, P) = O(n^2 + mn)$ for all $m,n \geq 1$, the above theorem shows $\phi(m, n, P)$ is much larger, of order at least $mn^{3/2}$ when $m \geq \sqrt{n}$.  
 
-Our first theorem on $\phi(m,n,F)$ for non-bipartite graphs $F$ uses the notion of \textit{supersaturation} -- see Erd\H{o}s and Simonovits~\cite{ErdosSimonovits1983}. We determine the asymptotic value of $\phi(m,n,F)$ as $m \rightarrow \infty$ when $F$ is a non-bipartite graph:
+Our first theorem on $\phi(m, n, F)$ for non-bipartite graphs $F$ uses the notion of \textit{supersaturation} -- see Erd\H{o}s and Simonovits~\cite{ErdosSimonovits1983}. We determine the asymptotic value of $\phi(m, n, F)$ as $m \rightarrow \infty$ when $F$ is a non-bipartite graph:
 
 \begin{theorem}\label{thm:asymp}
   Let $n \geq 1$ and let $F$ be a non-bipartite graph. Then as $m \rightarrow \infty$, 
@@ -205,44 +212,45 @@ Our first theorem on $\phi(m,n,F)$ for non-bipartite graphs $F$ uses the notion 
   \]
 \end{theorem}
 
-The next result we present concerns non-bipartite graphs. To state the theorem, we require the notion of $k$-color Ramsey numbers. Define $R_k(r)$ to be the \textit{$k$-color Ramsey number} for the complete graph $K_r$: that is, the minimum $N$ such that there exists a monochromatic $F$ in any coloring of $E(K_N)$ with $k$ colors. Suppose we have a coloring $c : E(K_N) \rightarrow 2^{[m]}$ for some $N < R_k(r)$ where $k \leq \binom{m}{2}$ and $|c(u,w)| \geq 2$ for all $\{u,w\} \in E(K_N)$. For $i \in [m]$, let $H_i = \{\{u,w\} \in E(K_N) : i \in c(u,w)\}$. Then $H_1,H_2,\dots,H_m$ are double $K_r$-free. If we replace the vertices of $K_N$ with disjoint sets $V_w : w \in V(K_N)$ whose sizes add up to $n$, and then let $G_1 = K_n$ and 
+The next result we present concerns non-bipartite graphs. To state the theorem, we require the notion of $k$-color Ramsey numbers. Define $R_k(r)$ to be the \textit{$k$-color Ramsey number} for the complete graph $K_r$: that is, the minimum $N$ such that there exists a monochromatic $F$ in any coloring of $E(K_N)$ with $k$ colors. Suppose we have a monochromatic $K_r$-free coloring $c : E(K_N) \rightarrow 2^{[m]}$ for some $N < R_k(r)$ where $k \leq \binom{m}{2}$ and $|c(u, w)| \geq 2$ for all $\{u, w\} \in E(K_N)$. For $i \in [m]$, let $H_i = \{\{u, w\} \in E(K_N) : i \in c(u, w)\}$. Then $H_1,H_2,\dots,H_m$ are double $K_r$-free. If we replace the vertices of $K_N$ with disjoint sets $V_w : w \in V(K_N)$ whose sizes add up to $n$, and then let
 \[ 
   G_i = \{\{x,y\} : (x,y) \in V_u \times V_w, i \in c(u,w)\} 
 \] 
-then $G_1, G_2, \dots, G_m$ is also double $K_r$-free. We call $G_1, G_2, \dots, G_m$ an $(m, n, k)$-blowup. 
+and make each $V_i$ cliques in $G_1$, then $G_1, G_2, \dots, G_m$ is also double $K_r$-free. We call $G_1, G_2, \dots, G_m$ an $(m, n, k)$-blowup. 
 
 \begin{center}
   \begin{tikzpicture}
-    \draw[bend right=20] (4, 2) to node[midway, above] {$123$} (-4, 2); 
-    \draw (-4, 2) to node[midway, left] {$124$} (-1, -0.5); 
+    \draw[bend right=60] (4, 0.5) to node[midway, above] {$123$} (-4, 0.5); 
+    \draw (-4, 0.5) to node[midway, below] {$124$} (-1, -0.5); 
     \draw (-1, -0.5) to node[midway, above] {$34$} (1, -0.5); 
-    \draw (1, -0.5) to node[midway, right] {$124$} (4, 2); 
-    \draw (0, 1.5) to node[midway, below] {$234$} (4, 2); 
-    \draw (0, 1.5) to node[midway, below] {$134$} (-4, 2); 
+    \draw (1, -0.5) to node[midway, below] {$124$} (4, 0.5); 
+    \draw (0, 1.5) to node[midway, above] {$234$} (4, 0.5); 
+    \draw (0, 1.5) to node[midway, above] {$134$} (-4, 0.5); 
     \draw (0, 1.5) to node[midway, left] {$123$} (-1, -0.5); 
     \draw (0, 1.5) to node[midway, right] {$123$} (1, -0.5); 
-    \draw[bend left=80] (4, 2) to node[midway, right] {$134$} (-1, -0.5); 
-    \draw[bend right=80] (-4, 2) to node[midway, left] {$234$} (1, -0.5);
+    \draw[bend left=60] (4, 0.5) to node[midway, below] {$134$} (-1, -0.5); 
+    \draw[bend right=60] (-4, 0.5) to node[midway, below] {$234$} (1, -0.5);
 
-    \foreach [count=\i] \x/\y in {0/1.5, 4/2, 1/-0.5, -1/-0.5, -4/2} { 
-      \fill[white] (\x, \y) circle (10pt);
-      \draw (\x, \y) circle (10pt);
+    \foreach [count=\i] \x/\y in {0/1.5, 4/0.5, 1/-0.5, -1/-0.5, -4/0.5} { 
+      \fill[white] (\x, \y) circle (12pt);
+      \draw (\x, \y) circle (12pt);
       \node at (\x, \y) [] {$V_{\i}$}; 
     }
   \end{tikzpicture}
   \\
-  \small{Example of an $(4, n, 5)$-blowup.}
+  \small{Example of an $(4, n, 5)$-blowup not containing a double $K_3$.}
 \end{center}
 
 Let $f(m, n, r)$ denote the maximum of $e(H_1) + e(H_2) + \dots + e(H_m)$ such that $H_1, H_2, \dots, H_m$ is an $(m, n, k)$-blowup for some $k \leq \binom{m}{2}$. This turns out to be exactly the construction which determines $\phi(m, n, F)$ when $F$ is a complete graph: 
 
 \begin{theorem}\label{thm:blowup}
 Let $r \geq 2$ and $m,n \geq 1$. Then 
-\[ \phi(m,n,K_r) = f(m,n,r).\]
+\[ 
+  \phi(m, n, K_r) = f(m, n, r).
+\]
 \end{theorem}
 
-While computing $f(m,n,r)$ is a finite calculation, the Ramsey number $R_k(r)$ unfortunately appears to be intractable in general; it is known that $R_2(3) = 6$ and 
-$R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are known~\cite{ConlonFerber2021,Lefmann1987}. In the special case $r = m = 3$, the following holds: 
+While computing $f(m,n,r)$ is a finite calculation, the Ramsey number $R_k(r)$ unfortunately appears to be intractable in general; it is known that $R_2(3) = 6$ and $R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are known~\cite{ConlonFerber2021,Lefmann1987}. In the special case $r = m = 3$, the following holds: 
 
 \begin{theorem}\label{thm:triangles}
   For all $n \geq 1$,
@@ -253,15 +261,7 @@ $R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are kn
 
 \subsection{Definitions and Notations}
 
-Denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$.
-
-Let $G = (V, E)$ be a graph. Let $V(G)$ denote the vertex set and $E(G)$ denote the edge set of $G$. Let $e(G) = |E(G)|$ be the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$.
-
-Given two graphs $G_1, G_2$, we denote $G_1 \cup G_2$ as the graph on $V(G_1) \cup V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cup E(G_2)$. Let $s$
-
-In this thesis, we reserve $n$ to denote the number of vertices in a graph. We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the sizes of its parts. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$.
-
-Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Let $v$ be a vertex from $G_1, G_2, \ldots, G_m$. Unless otherwise specified, we denote $d(v)$ as the sum of the degree of $v$ over all $G_i$.
+Denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$. Let $G = (V, E)$ be a graph. Let $V(G)$ denote the vertex set and $E(G)$ denote the edge set of $G$. Let $e(G) = |E(G)|$ be the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$. Given two graphs $G_1, G_2$, we denote $G_1 \cup G_2$ as the graph on $V(G_1) \cup V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cup E(G_2)$. Similarly, we define $G_1 \cap G_2$ as the graph on $V(G_1) \cap V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cap E(G_2)$. In this thesis, we reserve $n$ to denote the number of vertices in a graph. We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the sizes of its parts. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$. Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Let $v$ be a vertex from $G_1, G_2, \ldots, G_m$. Unless otherwise specified, we denote $d(v)$ as the sum of the degree of $v$ over all $G_i$.
 
 \section{The induced double Tur\'{a}n problem}
 
@@ -272,7 +272,7 @@ The first observation is that the determination of $\phi^*(m, n, F)$ can be redu
 \begin{lemma}\label{lem:induce-reduce}
   Let $n, m, k \geq 2$ with $m \geq k$, $F$ be some graph. Then
   \[
-    \phi^*(m,n,F) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
+    \phi^*(m, n, F) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
   \]
   Moreover, let $G_1, \ldots, G_m$ be induced double $F$-free graphs on $[n]$ and suppose $\sum_{i = 1}^k e(G_i) = \phi^*(k, n, F)$ only if $G_1 = \cdots = G_k$. Then $\sum_{i = 1}^m e(G_i) = \phi^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
 \end{lemma}
@@ -344,7 +344,7 @@ and either $G_1 = G_2 = T_{r - 1}(n)$, or $G_2 = T_{r - 1}(n - 1)$ and $G_1 = G_
 \subsection{Proof of Theorem \ref{thm:inducedF}}
 
 If $F$ is a graph of chromatic number $r + 1 \geq 3$, then Theorem \ref{thm:ess} shows 
-$\ex(n,F)= (1 + o(1))\ex(n,K_{r+1})$ as $n \rightarrow \infty$. In this section, we prove Theorem \ref{thm:inducedF}.
+$\ex(n,F)= (1 + o(1))\ex(n,K_{r+1})$ as $n \rightarrow \infty$. In this section, we prove Theorem \ref{thm:inducedF} following the same line of reasoning as in the proof of Theorem \ref{thm:complete}.
 
 \begin{proof}[Proof of Theorem \ref{thm:inducedF}]
   By \cref{lem:induce-reduce}, it suffices to prove the theorem for $m = 3$. Let $G_1, G_2, G_3$ be induced double $F$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \phi^*(3, n, F)$. We may assume $e(G_1) \geq e(G_2) \geq e(G_3)$, and we already know $\phi^*(3, n, F) \geq 3\ex(n, F)$. Consequently, we must have $e(G_1) + e(G_2) \geq 2\ex(n, F)$. Since $G_1, G_2, G_3$ are induced and $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, F)$, it suffices to show that $G_1 = G_2$ are $n$-vertex $F$-free extremal graphs. In particular, we will use \cref{lem:optimize-con} to show that $G_1, G_2$ is an extremal configuration without containing a double $F$.
@@ -376,8 +376,7 @@ $\ex(n,F)= (1 + o(1))\ex(n,K_{r+1})$ as $n \rightarrow \infty$. In this section,
 
 \subsection{Proof of Theorem \ref{thm:inducedP}}
 
-According to Theorem \ref{thm:pm}, $\phi(n,n,P) = (1/2 + o(1))n^{5/2}$. So to prove Theorem \ref{thm:inducedP}, it is sufficient to show 
-$\phi^*(n,n,P) = o(n^{5/2})$. 
+According to Theorem \ref{thm:pm}, $\phi(n,n,P) = (1/2 + o(1))n^{5/2}$. So to prove Theorem \ref{thm:inducedP}, it suffices to show $\phi^*(n,n,P) = o(n^{5/2})$. 
 
 Let $G_1, G_2, \dots, G_n$ be induced and double $P$-free and let $\epsilon > 0$. Let $d_i(v)$ be the degree of vertex $v$ in the graph $G_i$. Let $I$ be the set of pairs $(i,v)$ such that $d_i(v) \geq \sqrt{n}/\epsilon + 1$. Since $G_1, G_2 ,\dots, G_n$ do not contain a double $P$, 
 \[ 
@@ -387,7 +386,7 @@ The maximum possible value of $\sum_{(i,v) \in I} d_i(v)$ subject to this constr
 \[ 
   \sum_{(i,v) \in I} d_i(v) \leq (2\epsilon^2 n^2) \cdot \left(\frac{\sqrt{n}}{\epsilon} + 1\right) = 3\epsilon n^{5/2}
 \]
-for large enough $n$. Remove all edges of $G_i$ on vertex $v$ such that $(i,v) \in I$. The total number of edges removed is at most $3\epsilon n^{5/2}$. Let $G_1', G_2', \dots, G_n'$ be the remaining subgraphs of $G_1, G_2, \dots, G_n$. If $e(G_i') \leq \epsilon n^{3/2}$, then remove all edges of $G_i'$. The number of edges removed in this process is at most $\epsilon n^{5/2}$. The remaining graphs $G_1'', G_2'', \dots, G_m''$ have each at least $\epsilon n^{3/2}$ edges and maximum degree at most $\sqrt{n}/\epsilon$. In particular, each $G_i''$ contains a matching $M_i$ of size at least $\epsilon^2 n/2$. If $m \leq \epsilon n$, then 
+for large enough $n$. Remove all edges of $G_i$ on vertex $v$ such that $(i,v) \in I$. The total number of edges removed is at most $3\epsilon n^{5/2}$. Let $G_1', G_2', \dots, G_n'$ be the remaining subgraphs of $G_1, G_2, \dots, G_n$. If $e(G_i') \leq \epsilon n^{3/2}$, then remove all edges of $G_i'$. The number of edges removed in this process is at most $\epsilon n^{5/2}$. The remaining graphs $G_1'', G_2'', \dots, G_m''$ have each at least $\epsilon n^{3/2}$ edges and maximum degree at most $\sqrt{n}/\epsilon$. In particular, each $G_i''$ contains a matching $M_i$ of size at least $e(G_i'')/2\Delta(G_i'') = \epsilon^2 n/2$. If $m \leq \epsilon n$, then 
 \[ 
   \sum_{i = 1}^n e(G_i) \leq 4\epsilon n^{5/2} + \sum_{i = 1}^m e(G_i'') \leq 4\epsilon n^{5/2} + \phi(m, n, P) \leq 5\epsilon n^{5/2}
 \]
@@ -395,7 +394,7 @@ by Theorem \ref{thm:pm}. If $m > \epsilon n$, then we apply Szemer\'{e}di's Regu
 
 \section{The non-induced double Tur\'{a}n problem}
 
-In this section, we prove our main theorems on $\phi(m,n,F)$. 
+In this section, we prove our main theorems on $\phi(m, n, F)$. 
 
 \subsection{Proof of Theorem \ref{thm:asymp}}
 
@@ -419,12 +418,12 @@ $G$ contains $\delta n^k$ copies of $F$.
     &\leq \frac{1}{\delta}\binom{n}{2} + (m - \ell)\ex(n,F) + (m - \ell) \epsilon n^2 \\
     &\leq m \cdot \ex(n,F) + \epsilon m n^2 + \frac{1}{\delta}\binom{n}{2}.
   \end{align*}
-Since $F$ is not bipartite, $\ex(n,F) = \Theta(n^2)$ and so $\phi(m,n,F) \leq m \cdot \ex(n,F) + (\epsilon + 1/\delta m)mn^2$. Since $\epsilon$ was arbitrary and $\delta$ is a constant depending only on $\epsilon$, 
-we conclude $\phi(m,n,F) \leq (1 + o(1))m \cdot \ex(n,F)$ as $m \rightarrow \infty$. \qed
+Since $F$ is not bipartite, $\ex(n,F) = \Theta(n^2)$ and so $\phi(m, n, F) \leq m \cdot \ex(n,F) + (\epsilon + 1/\delta m)mn^2$. Since $\epsilon$ was arbitrary and $\delta$ is a constant depending only on $\epsilon$, 
+we conclude $\phi(m, n, F) \leq (1 + o(1))m \cdot \ex(n,F)$ as $m \rightarrow \infty$. \qed
 
-Let $F$ be a bipartite graph with $k \geq 2$ vertices and $j \geq 1$ edges. A strong version of a conjecture of Simonovits~\cite{Sidorenko1993,Simonovits1984} would suggest that for all $\epsilon > 0$, there exists $\delta > 0$ such that every $n$-vertex graph $G$ with at least $p\binom{n}{2}(1 + \epsilon)\ex(n,F)$ edges contains at least $\delta p^j n^{k}$ copies of $F$. For instance, this is known to be true whenever the asymptotic behavior of $\ex(n,F)$ is known, which includes the case $F = K_{2,t}$. If $F$ is bipartite and $m \cdot \ex(n,F)/n^2 \rightarrow \infty$ as $m,n \rightarrow \infty$, then this conjecture with the same proof as above shows $\phi(m,n,F) = (1 + o(1))m \cdot \ex(n,F)$. When $F$ contains a cycle, then there exists $\alpha > 0$ such that $\ex(n,F) \geq n^{1 + \alpha}$ for large enough $n$. Thus, we conclude that if $F$ contains a cycle and the Simonovits conjecture is true for $F$, then $\phi(m,n,F) = (1 + o(1))m \cdot \ex(n,F)$ for $m \geq n$ and $n \rightarrow \infty$. In particular, this shows $\phi(m,n,K_{2,t}) = (1 + o(1))m \cdot \ex(n,F)$ for $m \geq n$ as $n \rightarrow \infty$.
+Let $F$ be a bipartite graph with $k \geq 2$ vertices and $j \geq 1$ edges. A strong version of a conjecture of Simonovits~\cite{Sidorenko1993,Simonovits1984} would suggest that for all $\epsilon > 0$, there exists $\delta > 0$ such that every $n$-vertex graph $G$ with at least $p\binom{n}{2}(1 + \epsilon)\ex(n,F)$ edges contains at least $\delta p^j n^{k}$ copies of $F$. For instance, this is known to be true whenever the asymptotic behavior of $\ex(n,F)$ is known, which includes the case $F = K_{2,t}$. If $F$ is bipartite and $m \cdot \ex(n,F)/n^2 \rightarrow \infty$ as $m,n \rightarrow \infty$, then this conjecture with the same proof as above shows $\phi(m, n, F) = (1 + o(1))m \cdot \ex(n,F)$. When $F$ contains a cycle, then there exists $\alpha > 0$ such that $\ex(n,F) \geq n^{1 + \alpha}$ for large enough $n$. Thus, we conclude that if $F$ contains a cycle and the Simonovits conjecture is true for $F$, then $\phi(m, n, F) = (1 + o(1))m \cdot \ex(n,F)$ for $m \geq n$ and $n \rightarrow \infty$. In particular, this shows $\phi(m,n,K_{2,t}) = (1 + o(1))m \cdot \ex(n,F)$ for $m \geq n$ as $n \rightarrow \infty$.
 
-We also present a weaker version of the above theorem that holds for all graphs $F$, which adopts a similar proof.
+We also present a weaker version of the above theorem that holds for all graphs $F$, which adopts a similar but simpler proof:
 
 \begin{proposition}\label{thm:asymp-weak}
   Let $n, k \geq 1$ and let $F$ be a graph with $k$ vertices. If $m \cdot \ex(n, F)/n^k \to \infty$, then
@@ -445,8 +444,9 @@ We also present a weaker version of the above theorem that holds for all graphs 
 
 We first show that for all 
 $m,n \geq 1$ and graph $F$, 
-\[  \phi(m, n ,F) \leq \binom{n}{2} + \ex(n, F)\binom{m}{2}.
-  \]
+\[  
+  \phi(m, n ,F) \leq \binom{n}{2} + \ex(n, F)\binom{m}{2}.  
+\]
 Thereafter, we show that if there is an extremal $F$-free graph with maximum degree at most $n^{1/2}/m^2$, then the above bound is tight. 
 
 \textit{Proof of the upper bound}. For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$. Then 
@@ -455,11 +455,11 @@ Thereafter, we show that if there is an extremal $F$-free graph with maximum deg
 \]
 Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e., the set of edges that are contained in all $G_i$ with $i \in S$. When $|S| \geq 2$, the edge set $A_S$ is $F$-free and thus 
 \[
-  \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
+  |A_S| = \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
 \]
 Hence,
 \[
-  \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \subseteq S} |E_T| \leq \binom{m}{2}\text{ex}(n, F),
+  \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} |E_T| \leq \binom{m}{2}\text{ex}(n, F),
 \]
 as each $T \in [m]$ with $|T| \geq 2$ is counted $\binom{|T|}{2}$ times in total and $|T| - 1 \leq \binom{|T|}{2}$. This proves the upper bound.
 
@@ -586,7 +586,7 @@ We now apply \cref{alg:sym} to $G_1, G_2, \ldots, G_m$.
 \end{proof}
 
 \begin{claim}
-  $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$ and $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
+  The resulting graphs $G_1', G_2', \ldots, G_m'$ do not contain a double $K_r$ and $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
 \end{claim}
 
 \begin{proof}
@@ -595,7 +595,7 @@ We now apply \cref{alg:sym} to $G_1, G_2, \ldots, G_m$.
   We now show that the algorithm does not reduce the number of edges. By our choice of $v$, we know $d(v) \geq d(u)$ for all $u \in B_v$ prior to the for loop. Hence, replacing $u$ with a clone of $v$ does not decrease the number of edge over a complete iteration of the inner while loop. Therefore, $\sum_{i = 1}^m e(G_i') = \phi(m, n, K_r)$. 
 \end{proof}
 
-Hence, the algorithm outputs graphs $G_1', G_2', \ldots, G_m'$ with $\phi(m, n, K_r)$ edges and the additional property that light edges come in `clone cliques.' We may thus partition the vertex set $[n]$ into $k$ disjoint sets $V_1, V_2, \ldots, V_k$, such that each $V_i$ induces a clique of light edges from the same graph. Moreover, for distinct $i, j \in [k]$, define $S_{ij}$ to be the set of all edges between $V_i$ and $V_j$, and note that any edge in $S_{ij}$ appears in at least two modified graphs. The sets $S_{ij}$ now yield a $k$-blowup. Notice that if the pattern of the $k$-blowup contains a double $K_r$, then the original graphs $G_1, G_2, \ldots, G_m$ must have contained a double $K_r$ as well, contradiction. Thus the $k$-blowup is double $K_r$-free. 
+Hence, the algorithm results in graphs $G_1', G_2', \ldots, G_m'$ with $\phi(m, n, K_r)$ edges and the additional property that light edges come in `clone cliques.' We may thus partition the vertex set $[n]$ into $k$ disjoint sets $V_1, V_2, \ldots, V_k$, such that each $V_i$ induces a clique of light edges from the same graph. Moreover, for distinct $i, j \in [k]$, define $S_{ij}$ to be the set of all edges between $V_i$ and $V_j$, and note that any edge in $S_{ij}$ appears in at least two modified graphs. The sets $S_{ij}$ now yield a $k$-blowup. Notice that if the pattern of the $k$-blowup contains a double $K_r$, then the original graphs $G_1, G_2, \ldots, G_m$ must have contained a double $K_r$ as well, contradiction. Thus the $k$-blowup is double $K_r$-free. 
 
 It remains to show that $k < R_M(K_r)$. For each edge $\{i, j\} \subseteq [k]$ in the pattern of the $k$-blowup, we assign an arbitrary distinct pair $\{a, b\} \subseteq L_{ij} \subseteq [m]$ to $\{i, j\}$. If $k \geq R_M(K_r)$, then there exists $K_r$ in the pattern of the $k$-blowup colored by some distinct pair $\{a, b\} \subseteq [m]$. But then this implies the pattern of the $k$-blowup contains a double $K_r$, contradiction. This completes the proof. \qed
 
@@ -632,6 +632,7 @@ This proves Theorem \ref{thm:triangles}. \qed
   \item For Theorem \ref{thm:inducedF}, we may not be able to achieve the same result with smaller $n$. For example, consider $F$ to be the bowtie graph, i.e. the $5$-vertex graph with two triangles sharing a vertex. The $n$-vertex extremal graph for $F$ is given by $K_{\left\lfloor\frac{n}{2}\right\rfloor, \left\lceil\frac{n}{2}\right\rceil}$ plus an edge when $n \geq 5$, otherwise it is the complete graph. For $n = 5$, the construction $G_1 = K_{4}, G_2 = K_5$ then shows that $\phi^*(2, 5, F) > 2 \cdot \ex(5, F)$. Fortunately, for non-bipartite $F$ with $|V(F)| = k$, it is not hard to show $n \geq k^2$ is sufficient to avoid this issue.
   
   \item We note that Theorem \ref{thm:blowup} may be generalized to any family of non-bipartite graphs up to asymptotic error via Szemer\'{e}di's Regularity lemma
+  
   \item One could ask for the analogous results for hypergraphs. That is, if $F$ is an $r$-uniform hypergraph, let $\phi(m, n, F)$ be the maximum number of edges over $m$ double $F$-free $r$-uniform hypergraphs on $[n]$. Again, we have $\phi(m, n, F) \geq \binom{n}{r} + (m - 1) \cdot \ex(n, F)$. Another direction of generalization is to relax the constraint to no copies of $F$ contained in the intersection of $k$ of the graphs $G_1, G_2, \ldots, G_m$. Many of the theorems and proofs also hold in this case. For instance, the proof of Theorem \ref{wilsontheorem} applies for this generalization by merely changing the numbers.
 \end{itemize}
 
