@@ -212,11 +212,11 @@ Our first theorem on $\phi(m, n, F)$ for non-bipartite graphs $F$ uses the notio
   \]
 \end{theorem}
 
-The next result we present concerns non-bipartite graphs. To state the theorem, we require the notion of $k$-color Ramsey numbers. Define $R_k(r)$ to be the \textit{$k$-color Ramsey number} for the complete graph $K_r$: that is, the minimum $N$ such that there exists a monochromatic $F$ in any coloring of $E(K_N)$ with $k$ colors. Suppose we have a monochromatic $K_r$-free coloring $c : E(K_N) \rightarrow 2^{[m]}$ for some $N < R_k(r)$ where $k \leq \binom{m}{2}$ and $|c(u, w)| \geq 2$ for all $\{u, w\} \in E(K_N)$. For $i \in [m]$, let $H_i = \{\{u, w\} \in E(K_N) : i \in c(u, w)\}$. Then $H_1,H_2,\dots,H_m$ are double $K_r$-free. If we replace the vertices of $K_N$ with disjoint sets $V_w : w \in V(K_N)$ whose sizes add up to $n$, and then let
+The next result we present concerns non-bipartite graphs. To state the theorem, we require the notion of $M$-color Ramsey numbers. Define $R_M(r)$ to be the \textit{$M$-color Ramsey number} for the complete graph $K_r$, that is, the minimum $N$ such that there exists a monochromatic $F$ in any coloring of $E(K_N)$ with $M$ colors. Suppose we have a monochromatic $K_r$-free coloring $c : E(K_N) \rightarrow 2^{[m]}$. For $i \in [m]$, let $H_i = \{\{u, w\} \in E(K_N) : i \in c(u, w)\}$. Then $H_1,H_2,\dots,H_m$ are double $K_r$-free. If we replace the vertices of $K_N$ with disjoint sets $V_1, V_2, \ldots, V_N$ whose sizes add up to $n$, and then let
 \[ 
-  G_i = \{\{x,y\} : (x,y) \in V_u \times V_w, i \in c(u,w)\} 
+  G_i = \{\{x,y\} : (x,y) \in V_u \times V_w, \, i \in c(u, w), \, 1 \leq u < w \leq N\}
 \] 
-and make each $V_i$ cliques in $G_1$, then $G_1, G_2, \dots, G_m$ is also double $K_r$-free. We call $G_1, G_2, \dots, G_m$ an $(m, n, k)$-blowup. 
+and make each $V_i$ cliques in $G_1$, then $G_1, G_2, \dots, G_m$ is also double $K_r$-free. We call $G_1, G_2, \dots, G_m$ an $(m, n, N)$-blowup. 
 
 \begin{center}
   \begin{tikzpicture}
@@ -241,7 +241,7 @@ and make each $V_i$ cliques in $G_1$, then $G_1, G_2, \dots, G_m$ is also double
   \small{Example of an $(4, n, 5)$-blowup not containing a double $K_3$.}
 \end{center}
 
-Let $f(m, n, r)$ denote the maximum of $e(H_1) + e(H_2) + \dots + e(H_m)$ such that $H_1, H_2, \dots, H_m$ is an $(m, n, k)$-blowup for some $k \leq \binom{m}{2}$. This turns out to be exactly the construction which determines $\phi(m, n, F)$ when $F$ is a complete graph: 
+Let $f(m, n, r)$ denote the maximum of $e(G_1) + e(G_2) + \dots + e(G_m)$ such that $G_1, G_2, \dots, G_m$ is a double $K_r$-free $(m, n, N)$-blowup for some $N < R_{\binom{m}{2}}(r)$. This turns out to be exactly the construction which determines $\phi(m, n, F)$ when $F$ is a complete graph: 
 
 \begin{theorem}\label{thm:blowup}
 Let $r \geq 2$ and $m,n \geq 1$. Then 
@@ -250,7 +250,7 @@ Let $r \geq 2$ and $m,n \geq 1$. Then
 \]
 \end{theorem}
 
-While computing $f(m,n,r)$ is a finite calculation, the Ramsey number $R_k(r)$ unfortunately appears to be intractable in general; it is known that $R_2(3) = 6$ and $R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are known~\cite{ConlonFerber2021,Lefmann1987}. In the special case $r = m = 3$, the following holds: 
+While computing $f(m, n, r)$ is a finite calculation, the Ramsey number $R_{\binom{m}{2}}(r)$ unfortunately appears to be intractable in general; it is known that $R_2(3) = 6$ and $R_3(3) = 17$ and $R_2(4) = 18$, but no further multicolor Ramsey numbers are known~\cite{ConlonFerber2021,Lefmann1987}. In the special case $r = m = 3$, the following holds: 
 
 \begin{theorem}\label{thm:triangles}
   For all $n \geq 1$,

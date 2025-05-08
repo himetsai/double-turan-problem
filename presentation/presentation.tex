@@ -21,10 +21,10 @@
   \tableofcontents
 \end{frame}
 
-\section{Introduction}
+\section{Preliminaries}
 
 \begin{frame}
-\frametitle{Introduction}
+\frametitle{Preliminaries}
 What is the Turán problem? \pause
 
 \begin{block}{Question}
@@ -33,7 +33,7 @@ What is the Turán problem? \pause
 \end{frame}
 
 \begin{frame}
-\frametitle{Introduction}
+\frametitle{Preliminaries}
 
 Let $F$ be a graph. We call the following quantity the \textit{Turán number} or \textit{extremal number} of $F$:
 
@@ -44,7 +44,7 @@ Let $F$ be a graph. We call the following quantity the \textit{Turán number} or
 \end{block}
 \end{frame}
 \begin{frame}
-  \frametitle{Introduction}
+  \frametitle{Preliminaries}
 
   \begin{block}{Turán's theorem}
     The maximum number of edges in an $n$-vertex graph containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only for $T_r(n)$.
@@ -52,7 +52,7 @@ Let $F$ be a graph. We call the following quantity the \textit{Turán number} or
 \end{frame}
 
 \begin{frame}
-  \frametitle{Introduction}
+  \frametitle{Preliminaries}
 
   \begin{block}{Erd\H{o}s-Stone Theorem, Simonovits' Theorem}
     Let $F$ be any graph of chromatic number $r + 1 \geq 3$. Then $\ex(n, F) = (1 + o(1))T_r(n)$ as $n \rightarrow \infty$.
@@ -99,25 +99,59 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   Example: Octahedron-free 3-uniform hypergraph $H$
 
-  \pause
+  \only<1>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct}
 
-  \begin{figure}
-    \includegraphics[width=0.15\linewidth]{oct}
-    \caption{Octahedron $O$}
-    \centering
-  \end{figure}
+      \caption{Octahedron $O$}
+    \end{figure}
+  }
 
-  \pause
+  \only<2>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked1}
 
-  \begin{center}
-    $H$ is octahedron-free $\implies$ $H_1, H_2, \ldots, H_n$ are double $C_4$-free.
-  \end{center}
+      \caption{Octahedron $O$}
+    \end{figure}
+  }
 
-  \pause
+  \only<3>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked2}
 
-  \[
-    \boxed{\ex(n, O) \leq \phi(n, n, C_4)}
-  \]
+      \caption{Octahedron $O$}
+    \end{figure}
+  }
+
+  \only<4>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked3}
+
+      \caption{Octahedron $O$}
+    \end{figure}
+  }
+
+  \only<5>{
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked3}
+      
+      \caption{Octahedron $O$}
+    \end{figure}
+
+    \begin{center}
+      $H$ is octahedron-free $\implies$ $H_1, H_2, \ldots, H_n$ are double $C_4$-free.
+    \end{center}
+  
+    \[
+      \boxed{\ex(n, O) \leq \phi(n, n, C_4)}
+    \]
+  }
 \end{frame}
 
 \section{Induced Double Turán Problem}
@@ -130,6 +164,10 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   \begin{block}{Definition}
     We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
   \end{block}
+
+  \pause
+
+  In other words, $e \in E(G_i)$ iff $e \in E(G_j)$ for all $j = 1, \ldots, m$.
 
   \pause
 
@@ -164,33 +202,79 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   Ex. Octahedron-free graph $G$.
 
-  \begin{figure}
-    \begin{minipage}{0.48\textwidth}
-      \centering
-      \includegraphics[width=0.45\linewidth]{oct}
-      \caption{Octahedron}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-      \centering
-      \includegraphics[width=0.45\linewidth]{Octahedron_graph}
-      \caption{Octahedron Graph $K_{2,2,2}$}
-    \end{minipage}
-  \end{figure}
+  \only<1>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  }
 
-  \pause
+  \only<2>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222_linked1}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  }
 
-  \vspace{0.1cm}
+  \only<3>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222_linked2}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  }
 
-  \begin{center}
-    $G$ is $K_{2,2,2}$-free $\implies$ $G_1, G_2, \ldots, G_n$ are double $K_{2, 2}$-free.
-  \end{center}
-
-  \pause
-
-  \[
-    \boxed{\ex(n, K_{2,2,2}, K_3) \leq \phi(n, n, K_{2,2})}
-  \]
+  \only<4>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222_linked2}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  
+    \vspace{0.1cm}
+  
+    \begin{center}
+      $G$ is $K_{2,2,2}$-free $\implies$ $G_1, G_2, \ldots, G_n$ are induced and double $K_{2, 2}$-free.
+    \end{center}
+  
+    \[
+      \boxed{\ex(n, K_{2,2,2}, K_3) \leq \phi^*(n, n, K_{2,2})}
+    \]
+  }
 \end{frame}
 
 \section{Main Results}
@@ -253,7 +337,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \frametitle{Main Results}
 
-  Let $f(m, n, r)$ denote the maximum possible sum of edges in an double $K_r$-free $(m, n, k)$-blowup with $k \leq \binom{m}{2}$.
+  Let $f(m, n, r)$ denote the maximum possible sum of edges in an double $K_r$-free $(m, n, k)$-blowup with $k \leq R_{\binom{m}{2}}(r)$ ($\binom{m}{2}$-color Ramsey number for $K_r$).
 
   \pause
 
@@ -271,7 +355,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
     \end{enumerate}
     In particular,
     \[
-      \lim_{n \to \infty} \frac{f(4, n, 3)}{\binom{n}{2} + \left\lfloor \frac{n^2}{2} \right\rfloor} > 1
+      \lim_{n \to \infty} \frac{\phi(4, n, K_3)}{\binom{n}{2} + 3\left\lfloor \frac{n^2}{4} \right\rfloor} > 1
     \]
   \end{block}
 \end{frame}
@@ -330,6 +414,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   \[
     \ex(n, K_{2, 2, 2}, K_3) \leq O(n^{2})
   \]
+  which solves a conjecture of Mubayi and Verstraete.
 \end{frame}
 
 \begin{frame}
@@ -493,6 +578,10 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \pause
 
+  The intersection of $G_1, G_2$ (gray area) is double $K_r$-free.
+
+  \pause
+
   \begin{block}{Observation}
     If $G_1, G_2$ intersects in $t$ vertices, Then
     \[
@@ -504,7 +593,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \vspace{0.3cm}
 
-  $\implies$ we are done if the unique maximum is at $t = n$.
+  $\implies$ we are done if the unique maximum on $t$ is at $t = n$.
 \end{frame}
 
 \begin{frame}
