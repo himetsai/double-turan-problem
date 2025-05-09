@@ -2,6 +2,7 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{cancel}
 
 \graphicspath{{images/}}
 
@@ -30,12 +31,12 @@ What is the Turán problem? \pause
 \begin{block}{Question}
   Given a graph $F$, how many edges can an $n$-vertex graph have while containing no copy of $F$ as a subgraph?
 \end{block}
-\end{frame}
 
-\begin{frame}
-\frametitle{Preliminaries}
+\pause
 
-Let $F$ be a graph. We call the following quantity the \textit{Turán number} or \textit{extremal number} of $F$:
+\vspace{0.5cm}
+
+We call the following quantity the \alert{Turán number} or \alert{extremal number} of $F$:
 
 \begin{block}{Definition}
   \[
@@ -43,12 +44,21 @@ Let $F$ be a graph. We call the following quantity the \textit{Turán number} or
   \]
 \end{block}
 \end{frame}
+
 \begin{frame}
   \frametitle{Preliminaries}
 
   \begin{block}{Turán's theorem}
     The maximum number of edges in an $n$-vertex graph containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only for $T_r(n)$.
   \end{block}
+
+  \pause
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.3\linewidth]{T_4_13.svg}
+    \caption{$T_4(13)$}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -66,7 +76,7 @@ What is the double Turán problem? \pause
 
 \vspace{0.5cm}
 
-Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \cap E(G_j)$ for distinct $i, j \in [m]$. \pause (\textit{Double $F$-free})
+Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \cap E(G_j)$ for distinct $i, j \in [m]$. \pause (\alert{Double $F$-free})
 
 \pause
 
@@ -80,7 +90,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \begin{frame}
   \frametitle{Double Turán Problem}
 
-  Double Turán problems are closely related to Turán problems for $3$-uniform hypergraphs $H$ through \textit{link graphs}.
+  Double Turán problems are closely related to Turán problems for $3$-uniform hypergraphs $H$ through \alert{link graphs}.
 
   \pause
 
@@ -159,10 +169,10 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \begin{frame}
   \frametitle{Induced Double Turán Problem}
 
-  What is the \textit{induced} double Turán problem? \pause
+  What is the \alert{induced} double Turán problem? \pause
 
   \begin{block}{Definition}
-    We call graphs $G_1, G_2, \ldots, G_m$ \textit{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
+    We call graphs $G_1, G_2, \ldots, G_m$ \alert{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
   \end{block}
 
   \pause
@@ -305,7 +315,29 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \begin{frame}
   \frametitle{Main Results}
 
-  We need the idea of \textit{$(m, n, k)$-blowup} to state the result for $\phi(m, n, K_r)$.
+  The non-bipartite case for $\phi(m, n, K_r)$ is not as simple.
+
+  \vspace{1cm}
+
+  \only<1>{
+    Intuitively, we might guess
+    \[
+      \phi(m, n, K_r) = \binom{n}{2} + (m - 1)\ex(n, K_r)
+    \]
+  }
+
+  \only<2>{
+    Intuitively, we might guess
+    \[
+      \cancel{\phi(m, n, K_r) = \binom{n}{2} + (m - 1)\ex(n, K_r)}
+    \]
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Main Results}
+
+  We need the idea of \alert{$(m, n, k)$-blowup} to state the result for $\phi(m, n, K_r)$.
 
   \pause
 
@@ -337,20 +369,20 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \frametitle{Main Results}
 
-  Let $f(m, n, r)$ denote the maximum possible sum of edges in an double $K_r$-free $(m, n, k)$-blowup with $k \leq R_{\binom{m}{2}}(r)$ ($\binom{m}{2}$-color Ramsey number for $K_r$).
+  Let $f(m, n, r)$ denote the maximum possible sum of edges in an double $K_r$-free $(m, n, k)$-blowup with $k < R_{\binom{m}{2}}(r) $ ($\binom{m}{2}$-color Ramsey number for $K_r$).
 
   \pause
 
   \begin{block}{Theorem C}
     For $n \geq 1$,
     \begin{enumerate}
-      \item 
-      \[
-        \phi(3, n, K_3) = \binom{n}{2} + \left\lfloor \frac{n^2}{2} \right\rfloor.
-      \]
       \item if $r \geq 2$ and $m \geq 1$,
       \[
         \phi(m, n, K_r) = f(m, n, r).
+      \]
+      \item 
+      \[
+        \phi(3, n, K_3) = \binom{n}{2} + \left\lfloor \frac{n^2}{2} \right\rfloor.
       \]
     \end{enumerate}
     In particular,
@@ -757,10 +789,19 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 %   \end{itemize}
 % \end{frame}
 
-\section{Proof of Theorem C}
+\section{Proof of Theorem D}
 
 \begin{frame}
-  \frametitle{Proof of Theorem C: Upper Bound}
+  \frametitle{Proof of Theorem D: Upper Bound}
+
+  \begin{block}{Theorem D}
+    Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
+    \[ 
+      \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
+    \]
+  \end{block}
+
+  \pause
 
   We need to show
   \[  
@@ -780,7 +821,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
 \begin{frame}
 
-  \frametitle{Proof of Theorem C: Upper Bound}
+  \frametitle{Proof of Theorem D: Upper Bound}
 
   \[
     \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} |E_T|,
@@ -789,7 +830,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem C: Upper Bound}
+  \frametitle{Proof of Theorem D: Upper Bound}
 
   Observation: If $|S| \geq 2$, the edge set $\bigcup_{T \supseteq S} E_T$ is $F$-free.
 
@@ -807,30 +848,39 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   \[
     \implies \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} |E_T| \leq \binom{m}{2}\ex(n, F)
   \]
+  This proves the upper bound.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem C: Lower Bound}
+  \frametitle{Proof of Theorem D: Lower Bound}
+
+  We need to show
+  \[  
+    \phi(m, n ,F) \geq \binom{n}{2} + \ex(n, F)\binom{m}{2}.  
+  \]
+
+  \pause
+  \vspace{0.3cm}
 
   Let $H_1, \ldots, H_{\binom{m}{2}}$ be extremal $F$-free graphs on $[n]$ with $\Delta(H_i) \leq \sqrt{n}/m^2$
 
   \pause
 
-  \vspace{0.7cm}
+  \vspace{0.5cm}
 
-  n.t.s. we can embed each $H_i$ onto $[n]$ s.t. edges are pairwise disjoint.
+  We are done if $H_1, \ldots, H_{\binom{m}{2}}$ can be embedded onto $[n]$ s.t. edges are pairwise disjoint.
 
   \pause
 
-  \vspace{0.7cm}
+  \vspace{0.5cm}
 
   IDEA: start with any embedding and iteratively decrease overlapping edges
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem C: Lower Bound}
+  \frametitle{Proof of Theorem D: Lower Bound}
 
-  Define a \textit{$(u, v, i)$-swap} by swapping the embedding of vertex $u$ and $v$ of $H_i$
+  Define a \alert{$(u, v, i)$-swap} by swapping the embedding of vertex $u$ and $v$ of $H_i$
 
   \pause
 
@@ -840,7 +890,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem C: Lower Bound}
+  \frametitle{Proof of Theorem D: Lower Bound}
 
   For vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_{\binom{m}{2}}}(v)$
 
