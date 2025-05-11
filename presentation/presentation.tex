@@ -2,7 +2,8 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usepackage{cancel}
+\usepackage[style=alphabetic,maxnames=2,backend=bibtex]{biblatex}
+\addbibresource{bibliography.bib}
 
 \graphicspath{{images/}}
 
@@ -22,13 +23,12 @@
   \tableofcontents
 \end{frame}
 
-\section{Preliminaries}
+\section{Turán Problem}
 
 \begin{frame}
-\frametitle{Preliminaries}
-What is the Turán problem? \pause
+\frametitle{Turán Problem}
 
-\begin{block}{Question}
+\begin{block}{Turán Problem}
   Given a graph $F$, how many edges can an $n$-vertex graph have while containing no copy of $F$ as a subgraph?
 \end{block}
 
@@ -36,9 +36,7 @@ What is the Turán problem? \pause
 
 \vspace{0.5cm}
 
-We call the following quantity the \alert{Turán number} or \alert{extremal number} of $F$:
-
-\begin{block}{Definition}
+\begin{block}{Turán Number}
   \[
     \ex(n, F) \coloneq \max \{ e(G) : |V(G)| = n \text{ and } F \not\subseteq G \}
   \]
@@ -46,13 +44,15 @@ We call the following quantity the \alert{Turán number} or \alert{extremal numb
 \end{frame}
 
 \begin{frame}
-  \frametitle{Preliminaries}
+  \frametitle{Turán Problem}
 
-  \begin{block}{Turán's theorem}
-    The maximum number of edges in an $n$-vertex graph containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only for $T_r(n)$.
+  \begin{block}{Turán's Theorem \cite{Turan1941}}
+    For $r + 1 \geq 3$,
+    \[
+      \ex(n, K_{r + 1}) = e(T_{r}(n)),
+    \]
+    with equality for graph $G$ only if $G = T_{r}(n)$.
   \end{block}
-
-  \pause
 
   \begin{figure}
     \centering
@@ -62,15 +62,22 @@ We call the following quantity the \alert{Turán number} or \alert{extremal numb
 \end{frame}
 
 \begin{frame}
-  \frametitle{Preliminaries}
+  \frametitle{Erd\H{o}s-Stone Theorem}
 
-  \begin{block}{Erd\H{o}s-Stone Theorem, Simonovits' Theorem}
+  \begin{block}{Erd\H{o}s-Stone Theorem~\cite{ErdosStone1946}, Simonovits' Theorem~\cite{ErdosSimonovits1966}}
     Let $F$ be any graph of chromatic number $r + 1 \geq 3$. Then $\ex(n, F) = (1 + o(1))T_r(n)$ as $n \rightarrow \infty$.
   \end{block}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.3\linewidth]{turan_mod.svg}
+  \end{figure}
 \end{frame}
 
+\section{Double Turán Problem}
+
 \begin{frame}
-\frametitle{Double Turán Problem}
+\frametitle{Double Turán Problem: Definition}
 
 What is the double Turán problem? \pause
 
@@ -80,15 +87,91 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
 \pause
 
-\begin{block}{Question}
+\begin{block}{Double Turán Problem}
   What is the value of $\phi(m, n, F) = \max \sum_{i = 1}^m G_i$?
 \end{block}
+
+\pause
+
+\[
+  \phi(m, n, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)
+\]
+
+\pause
+
+Is this tight?
 \end{frame}
 
-\section{Double Turán Problem}
+\begin{frame}
+  \frametitle{Double Turán Problem: Main Result}
+
+  \begin{block}{Theorem A}
+    Let $n \geq 1$ and $F$ be a non-bipartite graph. Then as $m \to \infty$
+    \[ 
+      \phi(m, n, F) = (1 + o(1))m \cdot \ex(n, F).
+    \]
+  \end{block}
+\end{frame}
 
 \begin{frame}
-  \frametitle{Double Turán Problem}
+  \frametitle{Double Turán Problem: Main Results}
+
+  The case for $F = K_r$ can be reduced to a finite computation.
+
+  \pause
+
+  \[
+    \phi(3, n, K_3) = \binom{n}{2} + \lfloor n/2\rfloor
+  \]
+
+  \pause
+  
+  But 
+  \[
+    \lim_{n \to \infty} \frac{\phi(4, n, K_3)}{\binom{n}{2} + 3\lfloor n/4\rfloor} > 1
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Main Results}
+
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+    \draw[bend right=60] (4, 0.5) to node[midway, above] {$123$} (-4, 0.5); 
+    \draw (-4, 0.5) to node[midway, below] {$124$} (-1, -0.5); 
+    \draw (-1, -0.5) to node[midway, above] {$34$} (1, -0.5); 
+    \draw (1, -0.5) to node[midway, below] {$124$} (4, 0.5); 
+    \draw (0, 1.5) to node[midway, above] {$234$} (4, 0.5); 
+    \draw (0, 1.5) to node[midway, above] {$134$} (-4, 0.5); 
+    \draw (0, 1.5) to node[midway, left] {$123$} (-1, -0.5); 
+    \draw (0, 1.5) to node[midway, right] {$123$} (1, -0.5); 
+    \draw[bend left=60] (4, 0.5) to node[midway, below] {$134$} (-1, -0.5); 
+    \draw[bend right=60] (-4, 0.5) to node[midway, below] {$234$} (1, -0.5);
+
+    \foreach [count=\i] \x/\y in {0/1.5, 4/0.5, 1/-0.5, -1/-0.5, -4/0.5} { 
+      \fill[white] (\x, \y) circle (12pt);
+      \draw (\x, \y) circle (12pt);
+      \node at (\x, \y) [] {$V_{\i}$}; 
+    }
+    \end{tikzpicture}
+    \caption{Construction for four graphs not containing a double-$K_3$}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Double Turán Problem: Main Result}
+
+  \begin{block}{Theorem B}
+    Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
+    \[ 
+      \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
+    \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Double Turán Problem: Motivation}
 
   Double Turán problems are closely related to Turán problems for $3$-uniform hypergraphs $H$ through \alert{link graphs}.
 
@@ -96,7 +179,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \vspace{0.3cm}
 
-  \begin{block}{Definition}
+  \begin{block}{Link Graph}
     For $i \in V(H)$, define graph $H_i$ with
     \[
       V(H_i) = V(H) \backslash \{i\} \quad \text{and} \quad E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}.
@@ -105,7 +188,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Double Turán Problem}
+  \frametitle{Double Turán Problem: Motivation}
 
   Example: Octahedron-free 3-uniform hypergraph $H$
 
@@ -114,52 +197,94 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
       \centering
       \includegraphics[width=0.15\linewidth]{oct}
 
-      \caption{Octahedron $O$}
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
   }
 
   \only<2>{
     \begin{figure}
       \centering
-      \includegraphics[width=0.15\linewidth]{oct_linked1}
+      \includegraphics[width=0.15\linewidth]{oct}
 
-      \caption{Octahedron $O$}
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
+
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
   }
 
   \only<3>{
     \begin{figure}
       \centering
-      \includegraphics[width=0.15\linewidth]{oct_linked2}
+      \includegraphics[width=0.15\linewidth]{oct_linked1}
 
-      \caption{Octahedron $O$}
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
+
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
   }
 
   \only<4>{
     \begin{figure}
       \centering
-      \includegraphics[width=0.15\linewidth]{oct_linked3}
+      \includegraphics[width=0.15\linewidth]{oct_linked2}
 
-      \caption{Octahedron $O$}
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
+
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
   }
 
   \only<5>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked3}
+
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
+    \end{figure}
+
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+  }
+
+  \only<6>{
 
     \begin{figure}
       \centering
       \includegraphics[width=0.15\linewidth]{oct_linked3}
       
-      \caption{Octahedron $O$}
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+
+    \vspace{0.1cm}
+
     \begin{center}
-      $H$ is octahedron-free $\implies$ $H_1, H_2, \ldots, H_n$ are double $C_4$-free.
+      $H$ is octahedron-free $\implies$ $H_1, H_2, \ldots, H_n$ are double $K_{2,2}$-free.
     \end{center}
   
     \[
-      \boxed{\ex(n, O) \leq \phi(n, n, C_4)}
+      \boxed{\ex(n, K_{2,2,2}^{(3)}) \leq \phi(n, n, K_{2,2})}
+    \]
+  }
+
+  \only<7>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.15\linewidth]{oct_linked3}
+      
+      \caption{Octahedron $K_{2,2,2}^{(3)}$}
+    \end{figure}
+
+    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+
+    \vspace{0.1cm}
+
+    \begin{center}
+      $H$ is octahedron-free $\implies$ $H_1, H_2, \ldots, H_n$ are double $K_{2,2}$-free.
+    \end{center}
+  
+    \[
+      \boxed{\ex(n, K_{2,2,2}^{(3)}) = \Theta(\phi(n, n, K_{2,2}))}
     \]
   }
 \end{frame}
@@ -167,17 +292,17 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \section{Induced Double Turán Problem}
 
 \begin{frame}
-  \frametitle{Induced Double Turán Problem}
+  \frametitle{Induced Double Turán Problem: Definition}
 
   What is the \alert{induced} double Turán problem? \pause
 
-  \begin{block}{Definition}
+  \begin{block}{Induced Graphs}
     We call graphs $G_1, G_2, \ldots, G_m$ \alert{induced} if each $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
   \end{block}
 
   \pause
 
-  In other words, $e \in E(G_i)$ iff $e \in E(G_j)$ for all $j = 1, \ldots, m$.
+  In other words, if $\{u, v\} \in E(G_i)$ and $u, v \in V(G_j)$, then $\{u, v\} \in E(G_j)$.
 
   \pause
 
@@ -185,21 +310,84 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   Let graphs $G_1, G_2, \ldots, G_m$ be induced and double $F$-free.
 
-  \begin{block}{Question}
+  \begin{block}{Induced Double Turán Problem}
     What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m e(G_i)$?
+  \end{block}
+
+  \pause
+
+  \[
+    \phi(m, n, F) \geq \phi^*(m, n, F)
+  \]
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Induced Double Turán Problem: Conjecture}
+
+  \begin{block}{Induced Double Turán Problem}
+    What is the value of $\phi^*(m, n, F) = \max \sum_{i = 1}^m e(G_i)$?
+  \end{block}
+
+  \[
+    \phi^*(m, n, F) \geq \max\Bigl\{\binom{n}{2},m \cdot \ex(n,F)\Bigr\}.
+  \]
+
+  \pause
+
+  Is it tight?
+
+  \pause
+
+  \begin{block}{Conjecture}
+    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
+    \[ 
+      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+    \]
   \end{block}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Induced Double Turán Problem}
+  \frametitle{Main Results}
 
-  \begin{block}{Generalizaed Turán problem}
+
+  \begin{block}{Theorem C}
+    For $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
+    \[
+      \phi^*(m, n, F) = m \cdot \ex(n, F),
+    \]
+    with equality only for identical extremal $n$-vertex $F$-free graphs.
+  \end{block}
+
+  \pause
+
+  $\implies$ Conjecture is true for non-bipartite $F$.
+
+  \vspace{0.1cm}
+
+  \pause
+
+  \begin{block}{Theorem D}
+    For $m, n, r \geq 3$,
+    \[
+      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
+    \]
+    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Induced Double Turán Problem: Motivation}
+
+  \begin{block}{Generalized Turán problem}
     What is the maximum number $\ex(n, F, K_3)$ of triangles in a graph $H$ on $[n]$ with no copy of $F$ as a subgraph?
   \end{block}
 
+  Studied by Alon and Shikhelman \cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete \cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}.
+
   \pause 
 
-  \vspace{0.5cm}
+  \vspace{0.7cm}
 
   For $i \in V(G)$, define $G_i$ with
   \[
@@ -208,7 +396,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Induced Double Turán Problem}
+  \frametitle{Induced Double Turán Problem: Motivation}
 
   Ex. Octahedron-free graph $G$.
 
@@ -287,186 +475,23 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   }
 \end{frame}
 
-\section{Main Results}
-
 \begin{frame}
-  \frametitle{Main Results}
-
-
-  \begin{block}{Theorem A}
-    For $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
-    \[
-      \phi^*(m, n, F) = m \cdot \ex(n, F),
-    \]
-    with equality only for identical extremal $n$-vertex $F$-free graphs.
-  \end{block}
-
-  \pause
-
-  \begin{block}{Theorem B}
-    For $m, n, r \geq 3$,
-    \[
-      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
-    \]
-    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
-  \end{block}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
-
-  The non-bipartite case for $\phi(m, n, K_r)$ is not as simple.
-
-  \vspace{1cm}
-
-  \only<1>{
-    Intuitively, we might guess
-    \[
-      \phi(m, n, K_r) = \binom{n}{2} + (m - 1)\ex(n, K_r)
-    \]
-  }
-
-  \only<2>{
-    Intuitively, we might guess
-    \[
-      \cancel{\phi(m, n, K_r) = \binom{n}{2} + (m - 1)\ex(n, K_r)}
-    \]
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
-
-  We need the idea of \alert{$(m, n, k)$-blowup} to state the result for $\phi(m, n, K_r)$.
-
-  \pause
-
-  \begin{figure}
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-    \draw[bend right=60] (4, 0.5) to node[midway, above] {$123$} (-4, 0.5); 
-    \draw (-4, 0.5) to node[midway, below] {$124$} (-1, -0.5); 
-    \draw (-1, -0.5) to node[midway, above] {$34$} (1, -0.5); 
-    \draw (1, -0.5) to node[midway, below] {$124$} (4, 0.5); 
-    \draw (0, 1.5) to node[midway, above] {$234$} (4, 0.5); 
-    \draw (0, 1.5) to node[midway, above] {$134$} (-4, 0.5); 
-    \draw (0, 1.5) to node[midway, left] {$123$} (-1, -0.5); 
-    \draw (0, 1.5) to node[midway, right] {$123$} (1, -0.5); 
-    \draw[bend left=60] (4, 0.5) to node[midway, below] {$134$} (-1, -0.5); 
-    \draw[bend right=60] (-4, 0.5) to node[midway, below] {$234$} (1, -0.5);
-
-    \foreach [count=\i] \x/\y in {0/1.5, 4/0.5, 1/-0.5, -1/-0.5, -4/0.5} { 
-      \fill[white] (\x, \y) circle (12pt);
-      \draw (\x, \y) circle (12pt);
-      \node at (\x, \y) [] {$V_{\i}$}; 
-    }
-    \end{tikzpicture}
-    \caption{Example of an $(4, n, 5)$-blowup not containing a double $K_3$.}
-  \end{figure}
-\end{frame}
-
-\begin{frame}
-
-  \frametitle{Main Results}
-
-  Let $f(m, n, r)$ denote the maximum possible sum of edges in an double $K_r$-free $(m, n, k)$-blowup with $k < R_{\binom{m}{2}}(r) $ ($\binom{m}{2}$-color Ramsey number for $K_r$).
-
-  \pause
-
-  \begin{block}{Theorem C}
-    For $n \geq 1$,
-    \begin{enumerate}
-      \item if $r \geq 2$ and $m \geq 1$,
-      \[
-        \phi(m, n, K_r) = f(m, n, r).
-      \]
-      \item 
-      \[
-        \phi(3, n, K_3) = \binom{n}{2} + \left\lfloor \frac{n^2}{2} \right\rfloor.
-      \]
-    \end{enumerate}
-    In particular,
-    \[
-      \lim_{n \to \infty} \frac{\phi(4, n, K_3)}{\binom{n}{2} + 3\left\lfloor \frac{n^2}{4} \right\rfloor} > 1
-    \]
-  \end{block}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
+  \frametitle{Induced Double Turán Problem: Motivation}
 
   \begin{block}{Conjecture}
     Let $F$ be any non-empty graph and $m, n \geq 1$. Then
     \[ 
-      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
-    \]
-  \end{block}
-
-  \pause
-
-  \vspace{0.3cm}
-
-  \[ 
-    \phi^*(m,n,F) \geq \max\Bigl\{\binom{n}{2},m\cdot \ex(n,F)\Bigr\}.
-  \]
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
-
-  \begin{block}{Conjecture}
-    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
-    \[ 
-      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
-    \]
-  \end{block}
-
-  \vspace{0.5cm}
-
-  By Theorem 1, the conjecture is true when $F$ is non-bipartite.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
-
-  \begin{block}{Conjecture}
-    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
-    \[ 
-      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+      \phi^*(m, n, F) = \Theta(m \cdot \ex(n, F) + n^2).
     \]
   \end{block}
 
   \vspace{0.3cm}
 
-  Since
+  Conjecture implies
   \[
-    \ex(n, K_{2, 2, 2}, K_3) \leq \phi^*(n, n, K_{2, 2})
+    \ex(n, K_{2, 2, 2}, K_3) \leq \phi^*(n, n, K_{2, 2}) \leq O(n^{5/2}),
   \]
-  the conjecture implies
-  \[
-    \ex(n, K_{2, 2, 2}, K_3) \leq O(n^{2})
-  \]
-  which solves a conjecture of Mubayi and Verstraete.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Main Results}
-
-  \begin{block}{Theorem D}
-    Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
-    \[ 
-      \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
-    \]
-  \end{block}
-
-  \pause
-
-  \vspace{0.3cm}
-
-  If $P$ is a path of length $2$ and $m = o(n^{1/4})$, 
-  \[
-    \binom{n}{2} + m - 1 \leq \phi^*(m, n, P) \leq \phi(m, n, P) = \binom{n}{2} + \binom{m}{2} \left\lfloor \frac{n}{2}\right\rfloor. 
-  \]
+  which solves a conjecture of 
 \end{frame}
 
 \begin{frame}
@@ -483,318 +508,15 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
   \vspace{0.3cm}
 
-  This shows that $\phi(n, n, P)$ and $\phi^*(n, n, P)$ are very different problems.
+  This shows that $\phi(m, n, F)$ and $\phi^*(m, n, F)$ can be very different problems.
 \end{frame}
 
 \section{Proof of Theorem B}
 
 \begin{frame}
-  \frametitle{Proof of Theorem B}
+  \frametitle{Proof of Theorem B: Upper Bound}
 
   \begin{block}{Theorem B}
-    Let $m, n, r \geq 3$. Then 
-    \[
-      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
-    \]
-    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
-  \end{block}
-
-  \vspace{0.3cm}
-
-  Proof Roadmap
-
-  \begin{itemize}
-    \item Step 1: Reduce to the case of smaller $m$
-    \item Step 2: Further reduce to an optimization problem
-    \item Step 3: Solve the optimization problem
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Step 1: Reduce to the case of smaller $m$}
-
-  Proof Roadmap
-
-  \begin{itemize}
-    \item \textbf{Step 1:} Reduce to the case of smaller $m$
-    \item \textcolor{gray}{Step 2: Further reduce to an optimization problem}
-    \item \textcolor{gray}{Step 3: Solve the optimization problem}
-  \end{itemize}
-\end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 1: Reduce to the case of smaller $m$}
-
-%   Let $G_1, \ldots, G_m$ be induced double $F$-free graphs on $[n]$.
-
-%   \begin{block}{Lemma 1}
-%     For $2 \leq k \leq m$,
-%     \[
-%       \phi^*(m,n,F) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
-%     \]
-%     Moreover, suppose $\sum_{i = 1}^k e(G_i) = \phi^*(k, n, F)$ only if $G_1 = \cdots = G_k$. Then $\sum_{i = 1}^m e(G_i) = \phi^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
-%   \end{block}
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 1: Reduce to the case of smaller $m$}
-
-%   Put $G_{i + m} = G_i$ for all $i \in [m]$.
-%   \[
-%     \sum_{i = 1}^m e(G_i) 
-%     = \frac{1}{k}\sum_{i = 1}^m [e(G_i) + \cdots + e(G_{i + k - 1})]
-%   \]
-
-%   \pause
-
-%   Since $e(G_i) + \cdots + e(G_{i + k - 1}) \leq \phi^*(k, n, F)$,
-%   \[
-%     \sum_{i = 1}^m e(G_i) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
-%   \]
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 1: Reduce to the case of smaller $m$}
-
-%   Suppose $\sum_{i = 1}^m e(G_i) = \frac{m}{k} \cdot \phi^*(k, n, F)$ and $G_1 \neq G_2$. 
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   By assumption $\sum_{i = 1}^k e(G_i) < \phi^*(k, n, F)$. 
-
-%   \pause
-
-%   \vspace{0.5cm}
-  
-%   $\implies e(G_i) + \cdots + e(G_{i + k - 1}) > \phi^*(k, n, F)$ for some $i > 1$.
-
-%   \vspace{0.5cm}
-
-%   $\sum_{i = 1}^k e(G_i) = \phi^*(k, n, F)$ only if $G_1 = \cdots = G_k \implies \sum_{i = 1}^m e(G_i) = \phi^*(m, n, F)$ only if $G_1 = \cdots = G_m$.
-% \end{frame}
-
-\begin{frame}
-  \frametitle{Step 2: Further reduce to an optimization problem}
-
-  Proof Roadmap
-
-  \begin{itemize}
-    \item Step 1: Reduce to the case of smaller $m$
-    \item \textbf{Step 2:} Further reduce to an optimization problem
-    \item \textcolor{gray}{Step 3: Solve the optimization problem}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Step 2: Further reduce to an optimization problem}
-
-  \begin{center}
-    \begin{tikzpicture}
-      % ---- fill only the intersection -----------------
-      \begin{scope}
-        \clip (0,0) circle (1);          % keep area inside left circle
-        \fill[gray] (1,0) circle (1);    % paint overlap with right circle
-      \end{scope}
-    
-      % ---- circle outlines ----------------------------
-      \draw (0,0) circle (1);
-      \draw (1,0) circle (1);
-    
-      % ---- labels outside the circles -----------------
-      \node[left=1pt]  at (-1,0.75) {$G_1$};
-      \node[right=1pt] at (2,0.75) {$G_2$};
-    \end{tikzpicture}
-  \end{center}
-
-  \pause
-
-  The intersection of $G_1, G_2$ (gray area) is double $K_r$-free.
-
-  \pause
-
-  \begin{block}{Observation}
-    If $G_1, G_2$ intersects in $t$ vertices, Then
-    \[
-      e(G_1) + e(G_2) \leq \binom{n - t}{2} + (n - t)t + 2\ex(t, F)
-    \]
-  \end{block}
-
-  \pause
-
-  \vspace{0.3cm}
-
-  $\implies$ we are done if the unique maximum on $t$ is at $t = n$.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Step 3: Solve the optimization problem}
-
-  Proof Roadmap
-
-  \begin{itemize}
-    \item Step 1: Reduce to the case of smaller $m$
-    \item Step 2: Further reduce to an optimization problem
-    \item \textbf{Step 3:} Solve the optimization problem
-  \end{itemize}
-\end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 3: Solve the optimization problem}
-
-%   By Lemma 1, it suffices prove the case $m = 3$. 
-
-%   \pause
-
-%   \vspace{0.6cm}
-
-%   Let $G_1, G_2, G_3$ be induced double $K_r$-free graphs, such that $e(G_1) + e(G_2) + e(G_3) = \phi^*(3, n, K_r)$ and $e(G_1) \geq e(G_2) \geq e(G_3)$.
-
-%   \pause
-
-%   \vspace{0.6cm}
-
-%   Since $\phi^*(3, n, K_r) \geq 3\ex(n, K_r)$, we must have $e(G_1) + e(G_2) \geq 2\ex(n, K_r)$.
-
-%   \pause
-
-%   \vspace{0.6cm}
-
-%   Since $G_1, G_2, G_3$ are induced, we only need to show $G_1 = G_2 = T_{r - 1}(n)$.
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 3: Solve the optimization problem}
-
-%   Let $t = |V(G_1 \cap G_2)|$. By Turán's Theorem,
-%   \[
-%     \ex(t, K_{r}) - \ex(t - 1, K_{r}) = t - \left\lceil \frac{t}{r - 1} \right\rceil.
-%   \]
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   It follows that
-%   \begin{align}
-%     f(n, t, K_r) - f(n, t - 1, K_r)
-%     &= - t + 1 + 2[\ex(t, K_r) - \ex(t - 1, K_r)] \notag \\
-%     &= t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil. 
-%   \end{align}
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 3: Solve the optimization problem}
-
-%   For $r \geq 4$,
-%   \[
-%     f(n, t, K_r) - f(n, t - 1, K_r) = t + 1 - 2\left\lceil \frac{t}{r - 1} \right\rceil > 0
-%   \]
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies f(n, t, K_r)$ is strictly increasing on $t$.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies t = n$ so that $e(G_1) + e(G_2) \geq 2\ex(n, F)$.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies \phi^*(2, n, K_r) = 2\ex(n, F)$ and $G_1 = G_2 = T_{r - 1}(n)$.
-
-%   \vspace{0.5cm}
-
-%   This solves the case $r \geq 4$.
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 3: Solve the optimization problem}
-
-%   For $r = 3$,
-%   \[
-%     f(n, t, K_r) - f(n, t - 1, K_r) = t + 1 - 2\left\lceil \frac{t}{2} \right\rceil \geq 0
-%   \]
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies f(n, t, K_3)$ is non-decreasing on $t$ and $f(n, t, K_3) > f(n, t, K_3)$ for even $t$.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies t = n$ or $t = n - 1$ so that $e(G_1) + e(G_2) \geq 2\ex(n, F)$.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   $\implies \phi^*(2, n, K_3) = 2\ex(n, K_3)$, and either $G_1 = G_2 = T_{2}(n)$ or $G_2 = T_{2}(n - 1)$ and $G_1 = G_2 + K_1$.
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Step 3: Solve the optimization problem}
-
-%   If $G_1 = G_2 = T_{2}(n)$ then we are done.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   Suppose $G_2 = T_{2}(n - 1)$ and $G_1 = G_2 + K_1$. 
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   Since $e(G_1) + e(G_2) + e(G_3) \geq 3\ex(n, K_3)$,
-%   \[
-%     e(G_3) = \ex(n, K_3) > T_{2}(n - 1) = e(G_2),
-%   \]
-%   contradiction.
-
-%   \pause
-
-%   \vspace{0.5cm}
-
-%   This solves Theorem B.
-% \end{frame}
-
-% \begin{frame}
-%   \frametitle{Extra Ingredients to Prove Theorem A}
-
-%   \begin{block}{Theorem A}
-%     For $m \geq 3$ and non-bipartite $F$, if $n$ is large enough, then
-%     \[
-%       \phi^*(m, n, F) = m \cdot \ex(n, F),
-%     \]
-%     with equality only for identical extremal $n$-vertex $F$-free graphs.
-%   \end{block}
-
-%   \vspace{0.3cm}
-
-%   \begin{itemize}
-%     \item First show that $t = |V(G_1 \cap G_2)| \geq \sqrt{n}$.
-%     \item For large enough $t$, any extremal $t$-vertex $F$-free graph contains a spanning $T_{r - 1}(t)$.
-%   \end{itemize}
-% \end{frame}
-
-\section{Proof of Theorem D}
-
-\begin{frame}
-  \frametitle{Proof of Theorem D: Upper Bound}
-
-  \begin{block}{Theorem D}
     Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
     \[ 
       \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
@@ -821,7 +543,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 
 \begin{frame}
 
-  \frametitle{Proof of Theorem D: Upper Bound}
+  \frametitle{Proof of Theorem B: Upper Bound}
 
   \[
     \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} |E_T|,
@@ -830,7 +552,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D: Upper Bound}
+  \frametitle{Proof of Theorem B: Upper Bound}
 
   Observation: If $|S| \geq 2$, the edge set $\bigcup_{T \supseteq S} E_T$ is $F$-free.
 
@@ -852,7 +574,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D: Lower Bound}
+  \frametitle{Proof of Theorem B: Lower Bound}
 
   We need to show
   \[  
@@ -862,74 +584,195 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
   \pause
   \vspace{0.3cm}
 
-  Let $H_1, \ldots, H_{\binom{m}{2}}$ be extremal $F$-free graphs on $[n]$ with $\Delta(H_i) \leq \sqrt{n}/m^2$
+  For $1 \leq i < j \leq m$, let $H_{ij}$ be an extremal $F$-free graph on $[n]$ with maximum degree $\Delta(H_{ij}) \leq \sqrt{n}/m^2$
 
   \pause
 
   \vspace{0.5cm}
 
-  We are done if $H_1, \ldots, H_{\binom{m}{2}}$ can be embedded onto $[n]$ s.t. edges are pairwise disjoint.
+  $\implies$ We can pack these $\binom{m}{2}$ $H_{ij}$'s into $[n]$ s.t. $E(H_{i_1j_1}) \cap E(H_{i_2j_2}) = \emptyset$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Proof of Theorem B: Lower Bound}
+
+  For $i \in [m]$, put 
+  \[
+    G_i = H_{1i} \cup H_{2i} \cup \cdots \cup H_{im}
+  \]
+  \pause
+
+  Then $G_i \cap G_j = H_{ij} \implies F\text{-free}$
+
+  \pause
+
+  \vspace{0.7cm}
+
+  Add edges not in any of $H_{ij}$ to $G_1$.
+  \[
+    \sum_{i = 1}^m e(G_i) = 2\sum e(H_{ij}) + \left|E(K_n)\backslash \bigsqcup E(H_{ij})\right| = \binom{n}{2} + \binom{m}{2}\ex(n, F)
+  \]
+\end{frame}
+
+\section{Proof of Theorem D}
+
+\begin{frame}
+  \frametitle{Proof of Theorem D}
+
+  \begin{block}{Theorem D}
+    Let $m, n, r \geq 3$. Then 
+    \[
+      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
+    \]
+    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
+  \end{block}
+
+  \pause
+
+  \vspace{0.7cm}
+
+  IDEA: Reduce to $m = 2$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Proof of Theorem D}
+
+  \begin{center}
+    \begin{tikzpicture}
+      % ---- fill only the intersection -----------------
+      \begin{scope}
+        \clip (0,0) circle (1);          % keep area inside left circle
+        \fill[gray] (1,0) circle (1);    % paint overlap with right circle
+      \end{scope}
+    
+      % ---- circle outlines ----------------------------
+      \draw (0,0) circle (1);
+      \draw (1,0) circle (1);
+    
+      % ---- labels outside the circles -----------------
+      \node[left=1pt]  at (-1,0.75) {$G_1$};
+      \node[right=1pt] at (2,0.75) {$G_2$};
+    \end{tikzpicture}
+  \end{center}
+
+  \pause
+
+  $G_1 \cap G_2$ (gray area) is double $K_r$-free.
 
   \pause
 
   \vspace{0.5cm}
 
-  IDEA: start with any embedding and iteratively decrease overlapping edges
+  If $G_1, G_2$ intersects in $t$ vertices, then
+  \[
+    e(G_1) + e(G_2) \leq \binom{n - t}{2} + (n - t)t + 2T_{r - 1}(t)
+  \]
+
+  \pause
+
+  $\implies$ we are done if the unique maximum occurs at $t = n$.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D: Lower Bound}
-
-  Define a \alert{$(u, v, i)$-swap} by swapping the embedding of vertex $u$ and $v$ of $H_i$
+  \frametitle{Proof of Theorem D}
+  \begin{figure}
+    \begin{minipage}{0.4\textwidth}
+      \centering
+        \begin{tikzpicture}
+        % ---- fill only the intersection -----------------
+        \begin{scope}
+          \clip (0,0) circle (1);          % keep area inside left circle
+          \fill[gray] (1,0) circle (1);    % paint overlap with right circle
+        \end{scope}
+          
+        % ---- circle outlines ----------------------------
+        \draw (0,0) circle (1);
+        \draw (1,0) circle (1);
+          
+        % ---- labels outside the circles -----------------
+        \node[left=1pt]  at (-1,0.75) {$G_1$};
+        \node[right=1pt] at (2,0.75) {$G_2$};
+        \fill[red] (1.5,0) circle (2pt) node[below=2pt] {$v$};
+    \end{tikzpicture}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+      \centering
+      $>$
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+      \centering
+        \begin{tikzpicture}
+        % ---- fill only the intersection -----------------
+        \begin{scope}
+          \clip (0,0) circle (1);          % keep area inside left circle
+          \fill[gray] (1,0) circle (1);    % paint overlap with right circle
+        \end{scope}
+          
+        % ---- circle outlines ----------------------------
+        \draw (0,0) circle (1);
+        \draw (1,0) circle (1);
+          
+        % ---- labels outside the circles -----------------
+        \node[left=1pt]  at (-1,0.75) {$G_1$};
+        \node[right=1pt] at (2,0.75) {$G_2$};
+        \fill[red] (0.5,0) circle (2pt) node[below=2pt] {$v$};
+    \end{tikzpicture}
+    \end{minipage}
+  \end{figure}
 
   \pause
 
-  \vspace{0.7cm} 
-  
-  $\implies (u, v, i)$-swap perserves graph isomorphism.
+  Put $f(t, r) \coloneq \binom{n - t}{2} + (n - t)t + 2T_{r - 1}(t)$
+
+  \vspace{0.5cm}
+
+  For example, if $r = 4$,
+  \[
+    f(t + 1, 4) - f(t, 4) = -t + 1 + 2[\underbrace{T_3(t + 1) - T_3(t)}_{t - \left\lceil\frac{t}{2}\right\rceil}] = t + 1 - 2\left\lceil\frac{t}{2}\right\rceil > 0
+  \]
+
+  \pause
+
+  $\implies$ The larger the intersection, the larger the sum of edges.
+
+  \pause
+
+  \vspace{0.3cm}
+
+  $\implies$ The best we can do is $G_1 = G_2 = T_3(n)$.
 \end{frame}
+
+\section{Concluding Remarks}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D: Lower Bound}
+  \frametitle{Concluding Remarks}
 
-  For vertex $v$, let $N(v) = N_{H_1}(v) \cup \cdots \cup N_{H_{\binom{m}{2}}}(v)$
+  \begin{itemize}
+    \item The conjecture we stated is broadly open for bipartite graphs: we cannot even determine the case for $P_2$. 
+    
+    \pause
+    
+    \vspace{0.3cm}
 
-  \pause
+    $\phi^*(n, n, K_{2,2,2})$ is equivalent (up to constant factors) to the notoriously difficult $\ex(n, K_{2,2,2}, K_3)$ problem. If the conjecture is true, then $\ex(n, K_{2,2,2}, K_3) = \Theta(n^{5/2})$.
 
-  \vspace{0.5cm} 
+    \pause
 
-  Suppose there exists $\{u, w\} \in E(H_i) \cap E(H_j)$
+    \vspace{0.3cm}
 
-  \pause
+    \item Although determining $\phi(m, n, K_r)$ is a finite computation, it appears to be intractable in general.
+    
+    \pause
 
-  \vspace{0.5cm} 
+    \vspace{0.3cm}
 
-  $|N(u)| \leq M \cdot \triangle \leq n^{1/2}/2$
-
-  \pause
-
-  \vspace{0.5cm} 
-
-  $\implies |N(u) \cup N(N(u))| \leq \triangle + \triangle(\triangle - 1) \leq n/4$
-
-  \pause
-
-  \vspace{0.5cm} 
-
-  $\implies \exists v \notin N(u) \cup N(N(u))$, so $N(u) \cap N(v) = \emptyset$.
-
-  \pause
-
-  \vspace{0.5cm} 
-
-  $\implies (u, v, i)$-swap makes $\{u, w\}$ not overlapping!
-
-  \pause
-
-  \vspace{0.5cm} 
-
-  Keep swapping until no overlapping edges left
-
+    We only know $\phi(3, n, K_3) = \binom{n}{2} + \lfloor n/2\rfloor$. The rest is open.
+  \end{itemize}
 \end{frame}
 
+\begin{frame}[allowframebreaks] 
+  \frametitle{References}
+  \tiny
+  \printbibliography
+\end{frame}
 \end{document}
