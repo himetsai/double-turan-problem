@@ -380,7 +380,7 @@ Is this tight?
   \frametitle{Induced Double Turán Problem: Motivation}
 
   \begin{block}{Generalized Turán problem}
-    What is the maximum number $\ex(n, F, K_3)$ of triangles in a graph $H$ on $[n]$ with no copy of $F$ as a subgraph?
+    What is the maximum number $\ex(n, F, K_3)$ of triangles in an $n$-vertex $F$-free graph $G$?
   \end{block}
 
   Studied by Alon and Shikhelman \cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete \cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}.
@@ -426,7 +426,7 @@ Is this tight?
       \hfill
       \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=0.45\linewidth]{K222_linked1}
+        \includegraphics[width=0.45\linewidth]{K222_linked0}
         \caption{Octahedron Graph $K_{2,2,2}$}
       \end{minipage}
     \end{figure}
@@ -442,13 +442,29 @@ Is this tight?
       \hfill
       \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=0.45\linewidth]{K222_linked2}
+        \includegraphics[width=0.45\linewidth]{K222_linked1}
         \caption{Octahedron Graph $K_{2,2,2}$}
       \end{minipage}
     \end{figure}
   }
 
   \only<4>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222_linked2}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  }
+
+  \only<5>{
     \begin{figure}
       \begin{minipage}{0.48\textwidth}
         \centering
@@ -473,6 +489,32 @@ Is this tight?
       \boxed{\ex(n, K_{2,2,2}, K_3) \leq \phi^*(n, n, K_{2,2})}
     \]
   }
+
+  \only<6>{
+    \begin{figure}
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{oct}
+        \caption{Octahedron}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.45\linewidth]{K222_linked2}
+        \caption{Octahedron Graph $K_{2,2,2}$}
+      \end{minipage}
+    \end{figure}
+  
+    \vspace{0.1cm}
+  
+    \begin{center}
+      $G$ is $K_{2,2,2}$-free $\implies$ $G_1, G_2, \ldots, G_n$ are induced and double $K_{2, 2}$-free.
+    \end{center}
+  
+    \[
+      \boxed{\ex(n, K_{2,2,2}, K_3) = \Theta(\phi^*(n, n, K_{2,2}))}
+    \]
+  }
 \end{frame}
 
 \begin{frame}
@@ -489,9 +531,8 @@ Is this tight?
 
   Conjecture implies
   \[
-    \ex(n, K_{2, 2, 2}, K_3) \leq \phi^*(n, n, K_{2, 2}) \leq O(n^{5/2}),
+    \ex(n, K_{2, 2, 2}, K_3) = \Theta(\phi^*(n, n, K_{2, 2})) = \Theta(n^{5/2}).
   \]
-  which solves a conjecture of 
 \end{frame}
 
 \begin{frame}
