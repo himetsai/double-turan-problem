@@ -100,7 +100,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \pause
 
 \[
-  \binom{m}{2} \geq \phi(m, n, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)
+  m\binom{n}{2} \geq \phi(m, n, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)
 \]
 
 \pause
@@ -711,12 +711,12 @@ Is this tight?
   \]
 \end{frame}
 
-\section{Proof of Theorem D}
+\section{Proof of Theorem C}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D}
+  \frametitle{Proof of Theorem C: Complete Graph Case}
 
-  \begin{block}{Theorem D}
+  \begin{block}{Theorem C: Complete Graph Case}
     Let $m, n, r \geq 3$. Then 
     \[
       \phi^*(m, n, K_{r}) = m \cdot e(T_{r - 1}(n)),
@@ -732,7 +732,7 @@ Is this tight?
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D}
+  \frametitle{Proof of Theorem C: Complete Graph Case}
 
   \begin{center}
     \begin{tikzpicture}
@@ -771,7 +771,7 @@ Is this tight?
 \end{frame}
 
 \begin{frame}
-  \frametitle{Proof of Theorem D}
+  \frametitle{Proof of Theorem C: Complete Graph Case}
   \begin{figure}
     \begin{minipage}{0.4\textwidth}
       \centering
@@ -894,7 +894,7 @@ Is this tight?
 \begin{frame}
   \frametitle{Concluding Remarks: Double Turán Problem}
 
-  The non-bipartite case is likely intractable.
+  For non-bipartite $F$, $\phi(m, n, F)$ case is likely intractable.
 
   \pause
 

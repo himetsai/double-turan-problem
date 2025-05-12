@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Turán Problem}{3}{0}{1}
+\beamer@sectionintoc {2}{Double Turán Problem}{8}{0}{2}
+\beamer@sectionintoc {3}{Induced Double Turán Problem}{33}{0}{3}
+\beamer@sectionintoc {4}{Proof of Theorem B}{55}{0}{4}
+\beamer@sectionintoc {5}{Proof of Theorem C}{69}{0}{5}
+\beamer@sectionintoc {6}{Concluding Remarks}{79}{0}{6}
