@@ -11,3 +11,7 @@
 *.snm
 
 *.nav
+
+/presentation/*.xml
+
+/presentation/presentation-blx.bbl
