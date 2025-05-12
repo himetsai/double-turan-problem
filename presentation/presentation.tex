@@ -65,13 +65,19 @@
   \frametitle{Erd\H{o}s-Stone Theorem}
 
   \begin{block}{Erd\H{o}s-Stone Theorem~\cite{ErdosStone1946}, Simonovits' Theorem~\cite{ErdosSimonovits1966}}
-    Let $F$ be any graph of chromatic number $r + 1 \geq 3$. Then $\ex(n, F) = (1 + o(1))T_r(n)$ as $n \rightarrow \infty$.
+    Let $F$ be any graph of chromatic number $r + 1 \geq 2$. Then $\ex(n, F) = e(T_r(n)) + o(n^2)$ as $n \rightarrow \infty$.
   \end{block}
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.3\linewidth]{turan_mod.svg}
+    \includegraphics[width=0.25\linewidth]{turan_mod.svg}
   \end{figure}
+
+  \pause
+
+  \begin{block}{Supersaturation Theorem \cite{ErdosSimonovits1983}}
+    For all $\epsilon > 0$, there exists $\delta > 0$ such that if $G$ is a $n$-vertex graph with $\ex(n,F) + \epsilon n^2$ edges, then  $G$ contains $\delta n^{v(F)}$ copies of $F$.
+  \end{block}
 \end{frame}
 
 \section{Double Turán Problem}
@@ -94,7 +100,7 @@ Let $G_1, G_2, \ldots, G_m$ be graphs on $[n]$ with $E(F) \not\subseteq E(G_i) \
 \pause
 
 \[
-  \phi(m, n, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)
+  \binom{m}{2} \geq \phi(m, n, F) \geq \binom{n}{2} + (m - 1)\ex(n, F)
 \]
 
 \pause
@@ -110,6 +116,18 @@ Is this tight?
     \[ 
       \phi(m, n, F) = (1 + o(1))m \cdot \ex(n, F).
     \]
+  \end{block}
+
+  \pause
+
+  \vspace{0.3cm}
+
+  There are $\leq n^{v(F)}$ copies of $F$ over all $G_i$.
+
+  \pause
+
+  \begin{block}{Supersaturation Theorem \cite{ErdosSimonovits1983}}
+    For all $\epsilon > 0$, there exists $\delta > 0$ such that if $G$ is a $n$-vertex graph with $\ex(n,F) + \epsilon n^2$ edges, then  $G$ contains $\delta n^{v(F)}$ copies of $F$.
   \end{block}
 \end{frame}
 
@@ -162,12 +180,44 @@ Is this tight?
 \begin{frame}
   \frametitle{Double Turán Problem: Main Result}
 
-  \begin{block}{Theorem B}
+  \begin{block}{Theorem B (Wilson)}
     Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
     \[ 
       \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
     \]
   \end{block}
+
+  \pause
+
+  By the Erd\H{o}s-Stone theorem, this only applies to certain bipartite graphs.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  e.g. The extremal graph for $P_2$ is a matching, which has maximum degree $1$ and $\ex(n, P_2) = \lfloor n/2 \rfloor$.
+
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[
+      vertex/.style = {circle, draw, fill=black, inner sep=1pt},
+      edge/.style = {thick}, 
+      >=latex  
+    ]
+    \def\n{5}
+
+  
+    \foreach \i in {0,...,\numexpr\n-1\relax}{
+      \coordinate (top\i)    at (\i*1, 0); 
+      \coordinate (bottom\i) at (\i*1,-1.2);
+
+      \node[vertex] at (top\i)    {};
+      \node[vertex] at (bottom\i) {};
+
+      \draw[edge] (top\i) -- (bottom\i);
+    }
+  \end{tikzpicture}
+  \end{figure}  
 \end{frame}
 
 \begin{frame}
@@ -209,7 +259,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
   }
 
   \only<3>{
@@ -220,7 +272,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
   }
 
   \only<4>{
@@ -231,7 +285,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
   }
 
   \only<5>{
@@ -242,7 +298,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
   }
 
   \only<6>{
@@ -254,7 +312,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
 
     \vspace{0.1cm}
 
@@ -275,7 +335,9 @@ Is this tight?
       \caption{Octahedron $K_{2,2,2}^{(3)}$}
     \end{figure}
 
-    Erd\H{o}s conjectured that $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$ \cite{Erdos1964}.
+    \begin{block}{Conjecture \cite{Erdos1964}}
+      $\ex(n, K_{2,2,2}^{(3)}) = \Theta(n^{11/4})$
+    \end{block}
 
     \vspace{0.1cm}
 
@@ -330,7 +392,7 @@ Is this tight?
   \end{block}
 
   \[
-    \phi^*(m, n, F) \geq \max\Bigl\{\binom{n}{2},m \cdot \ex(n,F)\Bigr\}.
+    \phi^*(m, n, F) \geq \max\Bigl\{\binom{n}{2} + \binom{v(F) - 1}{2}(m - 1), \, m \cdot \ex(n,F)\Bigr\}.
   \]
 
   \pause
@@ -363,17 +425,11 @@ Is this tight?
 
   $\implies$ Conjecture is true for non-bipartite $F$.
 
-  \vspace{0.1cm}
-
   \pause
 
-  \begin{block}{Theorem D}
-    For $m, n, r \geq 3$,
-    \[
-      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
-    \]
-    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
-  \end{block}
+  \vspace{0.5cm}
+
+  For $F = K_r$, this theorem applies for all $n$.
 \end{frame}
 
 \begin{frame}
@@ -538,7 +594,7 @@ Is this tight?
 \begin{frame}
   \frametitle{Main Results}
 
-  \begin{block}{Theorem E}
+  \begin{block}{Theorem D}
     Let $P$ be a path with two edges. Then $\phi(n, n, P) = \Omega(n^{5/2})$, whereas $\phi^*(n, n, P) = o(n^{5/2})$, as $n \rightarrow \infty$. In particular, 
     \[ 
       \lim_{n \rightarrow \infty} \frac{\phi^*(n, n, P)}{\phi(n, n, P)} = 0.
@@ -557,7 +613,7 @@ Is this tight?
 \begin{frame}
   \frametitle{Proof of Theorem B: Upper Bound}
 
-  \begin{block}{Theorem B}
+  \begin{block}{Theorem B (Wilson)}
     Let $F$ be a graph. If there exists an extremal $F$-free $n$-vertex graph with maximum degree at most $\sqrt{n}/m^2$, then 
     \[ 
       \phi(m, n, F) = \binom{n}{2} + \binom{m}{2}\ex(n,F).
@@ -651,7 +707,7 @@ Is this tight?
 
   Add edges not in any of $H_{ij}$ to $G_1$.
   \[
-    \sum_{i = 1}^m e(G_i) = 2\sum e(H_{ij}) + \left|E(K_n)\backslash \bigsqcup E(H_{ij})\right| = \binom{n}{2} + \binom{m}{2}\ex(n, F)
+    \sum_{i = 1}^m e(G_i) = 2\underbrace{\sum e(H_{ij})}_{\binom{m}{2}\ex(n, F)} + \underbrace{\left|E(K_n)\backslash \bigsqcup E(H_{ij})\right|}_{\binom{n}{2} - \binom{m}{2}\ex(n, F)} = \binom{n}{2} + \binom{m}{2}\ex(n, F)
   \]
 \end{frame}
 
@@ -663,9 +719,9 @@ Is this tight?
   \begin{block}{Theorem D}
     Let $m, n, r \geq 3$. Then 
     \[
-      \phi^*(m,n,K_{r}) = m \cdot e(T_{r - 1}(n)),
+      \phi^*(m, n, K_{r}) = m \cdot e(T_{r - 1}(n)),
     \]
-    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
+    with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$. 
   \end{block}
 
   \pause
@@ -786,34 +842,77 @@ Is this tight?
 \section{Concluding Remarks}
 
 \begin{frame}
-  \frametitle{Concluding Remarks}
+  \frametitle{Concluding Remarks: Induced Double Turán Problem}
 
-  \begin{itemize}
-    \item The conjecture we stated is broadly open for bipartite graphs: we cannot even determine the case for $P_2$. 
-    
-    \pause
-    
-    \vspace{0.3cm}
+  \begin{block}{Conjecture}
+    Let $F$ be any non-empty graph and $m, n \geq 1$. Then
+    \[ 
+      \phi^*(m,n,F) = \Theta(m \cdot \ex(n,F) + n^2).
+    \]
+  \end{block}
 
-    $\phi^*(n, n, K_{2,2,2})$ is equivalent (up to constant factors) to the notoriously difficult $\ex(n, K_{2,2,2}, K_3)$ problem. If the conjecture is true, then $\ex(n, K_{2,2,2}, K_3) = \Theta(n^{5/2})$.
+  \pause
 
-    \pause
+  \vspace{0.3cm}
 
-    \vspace{0.3cm}
+  This conjecture is broadly open for bipartite graphs.
 
-    \item Although determining $\phi(m, n, K_r)$ is a finite computation, it appears to be intractable in general.
-    
-    \pause
+  \vspace{0.2cm}
 
-    \vspace{0.3cm}
+  \begin{center}
 
-    We only know $\phi(3, n, K_3) = \binom{n}{2} + \lfloor n/2\rfloor$. The rest is open.
-  \end{itemize}
+  \begin{tikzpicture}[
+    vertex/.style = {circle, draw, fill=black, inner sep=1pt},
+    edge/.style   = {thick}
+  ]
+
+    %% ---- Path P3 (length 2) ----
+    \node[vertex] (p1) at (0,0)   {};
+    \node[vertex] (p2) at (1.2,0) {};
+    \node[vertex] (p3) at (2.4,0) {};
+
+    \draw[edge] (p1) -- (p2) -- (p3);
+
+    %% ---- 4‑cycle C4, shifted to the right ----
+    \begin{scope}[shift={(4,0)}] % change (4,0) to move closer/farther
+      \node[vertex] (c1) at (0, 0.8) {};
+      \node[vertex] (c2) at (1, 0.8) {};
+      \node[vertex] (c3) at (1,-0.2) {};
+      \node[vertex] (c4) at (0,-0.2) {};
+
+      \draw[edge] (c1) -- (c2) -- (c3) -- (c4) -- (c1);
+    \end{scope}
+  \end{tikzpicture}
+
+  \end{center}
+
+  \pause
+
+  Solving the conjecture would give a solution to $\ex(n, K_{2,2,2}, K_3)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Concluding Remarks: Double Turán Problem}
+
+  The non-bipartite case is likely intractable.
+
+  \pause
+
+  \vspace{0.5cm}
+
+  We only know $\phi(3, n, K_3) = \binom{n}{2} + \lfloor n/2\rfloor$. The rest is open.
+
+  \pause
+
+  \vspace{0.2cm}
+
+  \[
+    \lim_{n \to \infty} \frac{\phi(4, n, K_3)}{m\binom{n}{2}} = ??
+  \]
 \end{frame}
 
 \begin{frame}[allowframebreaks] 
   \frametitle{References}
-  \tiny
   \printbibliography
 \end{frame}
 \end{document}
