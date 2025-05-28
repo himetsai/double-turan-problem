@@ -88,7 +88,7 @@
 This thesis focuses on a variation of the \textit{Turán problem} in extremal combinatorics.  The fundamental question in extremal hypergraph theory is determining the maximum number of edges in an $n$-vertex $r$-uniform graph that does not contain a prescribed $r$-uniform graph $F$ as a subgraph. These maxima, denoted $\ex(n, F)$, are referred to as the \textit{extremal numbers} or \textit{Turán numbers} for $F$. One of the cornerstones of extremal graph theory, concerning the case $F$ is a clique, is Tur\'{a}n's Theorem~\cite{Turan1941}. To state the theorem, we need the \textit{Tur\'{a}n graphs} $T_k(n)$, which denotes a complete multipartite graph with $n$ vertices and $k$ parts of size $\lfloor n/k\rfloor$ or $\lceil n/k\rceil$. 
 
 \begin{oldtheorem}[Tur\'{a}n's Theorem]\label{thm:turan}
-The maximum number of edges in an $n$-vertex graph containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only for $T_r(n)$.
+The maximum number of edges in an $n$-vertex graph $G$ containing no clique of order $r + 1$ is $e(T_r(n))$, with equality only if $G = T_r(n)$.
 \end{oldtheorem}
 
 Simonovits~\cite{ErdosSimonovits1966} observed via the Erd\H{o}s-Stone Theorem~\cite{ErdosStone1946} that the asymptotic value of $\ex(n, F)$ may be obtained whenever $F$ is non-bipartite:
@@ -109,32 +109,36 @@ For all $\epsilon > 0$, there exist $m$ and $M$ such that for every graph $G$, t
 
 The value of $\ex(n, F)$ for bipartite $F$ is in general wide open, and the order of magnitude of $\ex(n, K_{4, 4})$ or $\ex(n, C_8)$ is not known -- see F\"{u}redi and Simonovits~\cite{FurediSimonovits2013} for a history of the bipartite Tur\'{a}n problem. There is also no analog of the above theorems for $r$-uniform hypergraphs; the asymptotic value of $\ex(n, K_k^r)$ is not known for any $k > r \geq 3$, where $K_k^r$ denotes the complete $r$-uniform hypergraph on $k$ vertices. The asymptotic value of $\ex(n, K_4^3)$ was conjectured by Tur\'{a}n~\cite{Turan1941} to be $\frac{5}{9} \binom{n}{3}$, and this remains open despite decades of intensive research. 
 
-In this thesis, we investigate closely related problems which we refer to as \textit{double Tur\'{a}n problems}. To describe these problems, let $G_1, G_2, \ldots, G_m$ be graphs with the same vertex set $V(G_i) = [n]$ for $i \in [m]$. For a graph $F$, we say that $G_1, G_2, \dots, G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. In other words, $F$ does not appear in the intersection of any two of the graphs $G_i$. We call a copy of $F$ in the intersection of two of the graphs $G_i$ a \textit{double $F$}. Let $\phi(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$. We say that graphs $G_1, G_2, \dots, G_m$ are \textit{induced} to mean that every $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$. In other words, if $\{u,v\} \in E(G_i)$ and $u,v \in V(G_j)$, then $\{u,v\} \in E(G_j)$. Let $\phi^*(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$ and $G_1, G_2,\dots, G_m$ are induced. Clearly, $\phi^*(m, n, F) \leq \phi(m, n, F)$, and the study of $\phi^*(m, n, F)$ and $\phi(m, n,F )$ is motivated by certain hypergraph extremal problems.
+In this thesis, we investigate closely related problems which we refer to as \textit{double Tur\'{a}n problems}. To describe these problems, let $G_1, G_2, \ldots, G_m$ be graphs with the same vertex set $V(G_i) = [n]$ for $i \in [m]$. For a graph $F$, we say that $G_1, G_2, \dots, G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. In other words, $F$ is not contained in the intersection of any two of the graphs $G_i$. We call a copy of $F$ in the intersection of two of the graphs $G_i$ a \textit{double $F$}. Let $\phi(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$. We say that graphs $G_1, G_2, \dots, G_m$ are \textit{induced} to mean that every $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$. In other words, if $\{u,v\} \in E(G_i)$ and $u,v \in V(G_j)$, then $\{u,v\} \in E(G_j)$. Let $\phi^*(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ does not contain a double $F$ and $G_1, G_2,\dots, G_m$ are induced. Clearly, $\phi^*(m, n, F) \leq \phi(m, n, F)$. We will see that the study of $\phi^*(m, n, F)$ and $\phi(m, n,F )$ is motivated by certain hypergraph extremal problems.
 
 \subsection{Link graphs and hypergraphs}
 
-Apart from the intrinsic interest in studying $\phi(m, n, F)$, a motivation is that $\phi(m, n, F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. These three-element subsets form the edge-set $E(H)$ of $H$, while $V(H) = V$ is the vertex set of $H$. For $i \in V(H)$, the \textit{link graph} of $i$,  denoted $H_i$, is the graph with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}$. A handy idea in extremal hypergraph theory is to reduce a hypergraph extremal problem to extremal problems for the link graphs. For instance, a triple system $H$ does not contain a tetrahedron, i.e. four triples on four vertices, if and only if all its link graphs are triangle-free.
+Apart from the intrinsic interest in investigating $\phi(m, n, F)$, one motivation to study is that $\phi(m, n, F)$ is closely connected to pure hypergraph extremal problems via the notion of \textit{link graphs}. Let $H$ be a triple system, that is, a set of three-element subsets of a finite set $[n]$. We may view $H$ as a 3-uniform hypergraph, where the edges are the three-element subsets of $[n]$. For $i \in V(H)$, the \textit{link graph} of $i$,  denoted $H_i$, is the graph with $V(H_i) = V(H) \backslash \{i\}$ and $E(H_i) = \{\{j, k\} : \{i, j, k\} \in E(H)\}$. A handy idea in extremal hypergraph theory is to reduce a hypergraph extremal problem to extremal problems for the link graphs. For instance, a triple system $H$ does not contain a tetrahedron, i.e. four triples on four vertices, if and only if all its link graphs are triangle-free.
 
-In the current context, given a graph $F$, let $F^+$ denote the triple system with $V(F^+) = V(F) \cup \{x, y\}$ and $E(F^+) = \{e \cup \{x\}, e \cup \{y\} : e \in E(F)\}$. Then $\phi(n, n, F)$ and $\ex(n, F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then clearly the link graphs $H_1, H_2, \dots, H_n$ are double $F$-free, which implies $\ex(n, F^+) \leq \phi(n, n, F)$. This relates the double Tur\'{a}n problem to hypergraph extremal problems.
+In the current context, given a graph $F$, let $F^+$ denote the triple system with $V(F^+) = V(F) \cup \{x, y\}$ and $E(F^+) = \{e \cup \{x\}, e \cup \{y\} : e \in E(F)\}$. Then $\phi(n, n, F)$ and $\ex(n, F^+)$ are intimately related: if $H$ is an $F^+$-free triple system with vertex set $[n]$, then the link graphs $H_1, H_2, \dots, H_n$ are double $F$-free, otherwise there exists a double $F$ in some $H_i \cap H_j$ and the vertices $i, j$ along with that copy of $F$ form a $F^+$ in $H$, contradiction. Thus, $\ex(n, F^+) \leq \phi(n, n, F)$, and this relates the double Tur\'{a}n problem to hypergraph extremal problems.
 
-Now let $G$ be the graph consisting of all pairs contained in triples in $F^+$. The \textit{generalized Tur\'{a}n problem} asks for the maximum number $\ex(n, G, K_3)$ of triangles in a graph $H$ with vertex set $[n]$ that does not contain $G$. This problem was studied by Alon and Shikhelman~\cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete~\cite{KostochkaMubayiV2015,MubayiMukherjee2023,MubayiV2016}. Similar to how link graphs relate to hypergraph extremal problems, the generalized Tur\'{a}n problem is related to $\phi^*(n, n, F)$ as follows: define $H_i = \{\{j, k\} : \{i, j\}, \{j, k\}, \{i, k\} \in E(H)\}$. Then $H_1, H_2, \dots, H_n$ are induced and double $F$-free, so $\phi^*(n, n, F) \geq \ex(n, G, K_3)$. This relates the induced double Tur\'{a}n problem to extremal problems for triangles in graphs.
+On the other hand, the study of the induced double Tur\'{a}n problem is motivated by a special case of the \textit{generalized Tur\'{a}n problem}, which asks for the maximum number $\ex(n, \bar{F}, K_3)$ of triangles in a graph $G$ with vertex set $[n]$ that does not contain some graph $\bar{F}$. This problem was studied by Alon and Shikhelman~\cite{AlonShikhelman2016} and Kostochka, Mubayi and Verstraete~\cite{KostochkaMubayiV2015, MubayiMukherjee2023, MubayiV2016}. Similar to how link graphs relate to hypergraph extremal problems, the generalized Tur\'{a}n problem is related to $\phi^*(n, n, F)$ as follows: Let $\bar{F}$ be the graph consisting of all pairs contained in triples in $F^+$. For $i \in [n]$. Define $E(G_i) = \{\{j, k\} : \{i, j\}, \{j, k\}, \{i, k\} \in E(G)\}$, i.e. the set of pairs in $G$ contained in some triangle that is incident to $i$. Then $G_1, G_2, \dots, G_n$ are induced and double $F$-free, so $\phi^*(n, n, F) \geq \ex(n, \bar{F}, K_3)$. This relates the induced double Tur\'{a}n problem to extremal problems for triangles in graphs.
 
 \subsection{Main results : the induced case}
 
 The determination of $\phi^*(m, n, F)$ turns out to be fairly straightforward when $F$ is a non-bipartite graph: the extremal objects are simply $m$ copies of the same extremal graph for $F$.
 
 \begin{theorem}\label{thm:inducedF}
-  For $r \geq 3$, there exists $n_0(r)$ such that if $n \geq n_0(r)$ and $F$ is a graph of chromatic number $r$, then for all $m \geq 3$,    
+  Let $r, m \geq 3$. There exists $n_0(r)$ such that if $n \geq n_0(r)$ and $F$ is a graph of chromatic number $r$, then
   \[
-    \phi^*(m, n, F) = m \cdot \ex(n, F),
+    \phi^*(m, n, F) = m \cdot \ex(n, F).
   \]
-  with equality only for identical extremal $n$-vertex $F$-free graphs.
+  Moreover, if $G_1, \ldots, G_m$ are induced double $F$-free graphs on $[n]$ that sum up to $m \cdot \ex(n, F)$ edges, then $G_1 = \cdots = G_m$ are identical extremal $n$-vertex $F$-free graphs.
 \end{theorem}
 
 In the case $F = K_r$, we shall see the theorem is true for all $n \geq 3$:
 
 \begin{theorem}\label{thm:complete}
-Let $m, n, r \geq 3$. Then $\phi^*(m, n, K_{r}) = m \cdot e(T_{r - 1}(n))$ with equality for induced $K_{r}$-free graphs $G_1, G_2, \dots, G_m$ only if $G_1 = G_2 = \dots = G_m = T_{r - 1}(n)$.  
+  Let $m, n, r \geq 3$. Then 
+  \[
+    \phi^*(m, n, K_{r}) = m \cdot e(T_{r - 1}(n)).
+  \]
+  Moreover, if $G_1, \ldots, G_m$ are induced double $K_r$-free graphs on $[n]$ that sum up to $m \cdot e(T_{r - 1}(n))$ edges, then $G_1 = \cdots = G_m = T_{r - 1}(n)$.
 \end{theorem}
 
 In the case $F$ is a bipartite graph, even determining the order of magnitude of $\phi^*(m, n, F)$ appears to be difficult. In fact, we do not even know the order of magnitude of $\phi^*(m, n, P)$ when $P$ is a path with two edges. In this thesis, we propose the following very broad conjecture:
@@ -151,13 +155,13 @@ It is clear that a single complete graph $K_n$ does not contain a double $F$, an
   \phi^*(m, n, F) \geq \max\left\{\binom{n}{2}, m \cdot \ex(n, F)\right\}.
 \]
 
-This conjecture is true when $F$ is non-bipartite, by Theorem \ref{thm:inducedF}. If $F$ is bipartite, then the upper bounds on $\phi^*(m, n, F)$ are more difficult to come by, especially when $m$ is large. For instance, we know 
+This conjecture is true when $F$ is non-bipartite, by Theorem \ref{thm:inducedF}. If $F$ is bipartite, then the upper bounds on $\phi^*(m, n, F)$ are more difficult to come by, especially when $m$ is large. For instance, from our discussion in the previous section, we know 
 \[ 
   \ex(n, K_{2,2,2}, K_3) \leq \phi^*(n, n, K_{2,2}),
 \]
-and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containing the octahedron graph has $O(n^{5/2})$ triangles. In fact, it is also the case that $\ex(2n, K_{2,2,2}, K_3) \geq \phi^*(n, n, K_{2,2})$: if we have double $K_{2,2}$-free induced graphs $G_1, G_2, \dots, G_{n}$ with vertex set $[n]$, then let $H$ be the graph with $V(H) = [2n]$ consisting of all triangles with vertex set $\{i, j, k\}$ such that $n < k \leq 2n$ and $\{i, j\} \in E(G_k)$. The graph $H$ is $K_{2, 2, 2}$-free and $|E(H)| = \sum_{i = 1}^{n/2} e(G_i)$. Similarly, we have
+and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containing the octahedron graph has $O(n^{5/2})$ triangles. In fact, it is also the case that $\ex(2n, K_{2,2,2}, K_3) \geq \phi^*(n, n, K_{2,2})$: if we have double $K_{2,2}$-free induced graphs $G_1, G_2, \dots, G_{n}$ with vertex set $[n]$, then let $H$ be the graph with $V(H) = [2n]$ consisting of all triangles with vertex set $\{i, j, k\}$ such that $n < k \leq 2n$ and $\{i, j\} \in E(G_k)$. The graph $H$ is $K_{2, 2, 2}$-free and $|E(H)| = \sum_{i = 1}^{n/2} e(G_i)$. This shows that $\ex(n, K_{2,2,2}, K_3)$ and $\phi^*(n, n, K_{2,2})$ are equivalent up to a constant factor. Similarly, we have
 \[ 
-  \ex(n, K_{1, 2, 2}, K_3) \leq \phi^*(n, n, K_{1,2})
+  \ex(n, K_{1, 2, 2}, K_3) \leq \phi^*(n, n, K_{1,2}),
 \]
 and so Conjecture \ref{conj:main} implies that an $n$-vertex graph not containing the wheel graph has $O(n^{2})$ triangles, which is conjectured by Mubayi and Verstraete~\cite{MubayiV2016}. The conjecture proposes more generally that if $F$ is a tree, then $\phi^*(n, n, F) = O(n^2)$. In fact, it is possible to prove the following theorem using the \textit{removal lemma} as in~\cite{MubayiMukherjee2023} as well as a construction for $\phi(n, n, P)$ in this work:
 
@@ -261,16 +265,18 @@ While computing $f(m, n, r)$ is a finite calculation, the Ramsey number $R_{\bin
 
 \subsection{Definitions and Notations}
 
-Denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$. Let $G = (V, E)$ be a graph. Let $V(G)$ denote the vertex set and $E(G)$ denote the edge set of $G$. Let $e(G) = |E(G)|$ be the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$. Given two graphs $G_1, G_2$, we denote $G_1 \cup G_2$ as the graph on $V(G_1) \cup V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cup E(G_2)$. Similarly, we define $G_1 \cap G_2$ as the graph on $V(G_1) \cap V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cap E(G_2)$. In this thesis, we reserve $n$ to denote the number of vertices in a graph. We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the sizes of its parts. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$. Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Let $v$ be a vertex from $G_1, G_2, \ldots, G_m$. Unless otherwise specified, we denote $d(v)$ as the sum of the degree of $v$ over all $G_i$.
+Denote the set of first $n$ positive integers as $[n] = \{1, 2, \ldots, n\}$. Given a set $X$, we denote $2^X$ as the power set of $X$. Let $G = (V, E)$ be a graph. 
+
+Let $V(G)$ denote the vertex set and $E(G)$ denote the edge set of $G$. Let $e(G) = |E(G)|$ be the number of edges in $G$. For vertex $v \in V(G)$, we denote by $N_G(v) = \{u \in V(G) : \{u, v\} \in E(G)\}$ the neighborhood of $v$. Given two graphs $G_1, G_2$, we denote $G_1 \cup G_2$ as the graph on $V(G_1) \cup V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cup E(G_2)$. Similarly, we define $G_1 \cap G_2$ as the graph on $V(G_1) \cap V(G_2)$ with edge set $E(G_1 \cap G_2) = E(G_1) \cap E(G_2)$. In this thesis, we reserve $n$ to denote the number of vertices in a graph. We call a $n$-vertex complete graph $K_n$, and a complete bipartite graph $K_{a, b}$, where $a, b$ are the sizes of its parts. Given graph $G, H$, define $G + H$ as the graph fully connecting $G, H$, i.e. $V(G + H) = V(G) \cup V(H)$ and $E(G + H) = E(G) \cup E(H) \cup \{\{u, v\} : u \in V(G), v \in V(H)\}$. Given graphs $G$ and $F$, we say that $G$ is $F$-free if $G$ does not contain $F$ as a subgraph. We denote $\ex(n, F)$ to be the maximum possible number of edges an $F$-free graph on $n$ vertices, and we call a $F$-free graph achieving this maximum an extremal graph for $F$. Let $v$ be a vertex from $G_1, G_2, \ldots, G_m$. Unless otherwise specified, we denote $d(v)$ as the sum of the degree of $v$ over all $G_i$.
 
 \section{The induced double Tur\'{a}n problem}
 
-We prove the theorems for $\phi^*(m, n ,F)$ in this chapter. In particular, the main theorem we prove is Theorem \ref{thm:inducedF} for general non-bipartite graphs $F$ and in the special case of cliques. We will first introduce two observations that significantly simplify the problem.
+We prove the theorems for $\phi^*(m, n ,F)$ in this chapter. In particular, the main theorem we prove is Theorem \ref{thm:inducedF} for general non-bipartite graphs $F$ and in the special case of cliques. We will first introduce two observations that simplify the problem.
 
-The first observation is that the determination of $\phi^*(m, n, F)$ can be reduced down to the case of two graphs, which is stated in the following lemma:
+The first observation is that the determination of $\phi^*(m, n, F)$ can be reduced to smaller values of $m$:
 
 \begin{lemma}\label{lem:induce-reduce}
-  Let $n, m, k \geq 2$ with $m \geq k$, $F$ be some graph. Then
+  Let $n, m, k \geq 2$ with $m \geq k$, and let $F$ be some graph. Then
   \[
     \phi^*(m, n, F) \leq \frac{m}{k} \cdot \phi^*(k, n, F).
   \]
@@ -287,22 +293,14 @@ The first observation is that the determination of $\phi^*(m, n, F)$ can be redu
   Now suppose $\sum_{i = 1}^m e(G_i) = (m/k)\phi^*(k, n, F)$ and $G_1 \neq G_2$. By assumption $\sum_{i = 1}^k e(G_i) < \phi^*(k, n, F)$. But then $\sum_{i = 1}^k e(G_{i + j}) > \phi^*(k, n, F)$ for some $j \geq 1$, contradiction. 
 \end{proof}
 
-Now that we may determine $\phi^*(m, n, F)$ by examining $\phi^*(m, n, F)$, the second observation is that $\phi^*(m, n, F)$ can be further reduced to a finite optimization problem on a single variable. To state the lemma, we introduce the following construction function: 
-
-\begin{definition}
-  For $n \geq t \geq 1$ and $F$ some graph, define 
-  \[
-    \con(n, t, F) \coloneq \binom{n - t}{2} + (n - t)t + 2\ex(t, F).
-  \]
-  The construction described by $\con(n, t, F)$ are graphs $G_1, G_2$ on $[n]$, such that $G_2$ is a $t$-vertex extremal graph for $F$ and $G_1 = G_2 + K_{n - t}$. 
-\end{definition}
+The second observation shows that the determination of $\phi^*(2, n, F)$ can be reduced to an optimization problem over the number of vertices in the intersection of the two graphs:
 
 \begin{lemma}\label{lem:optimize-con}
-  Let $F$ be some graph. For $n \geq 1$,
+  Let $n \geq 1$. For graph $F$, define $\con(n, t, F) \coloneq \binom{n - t}{2} + (n - t)t + 2\ex(t, F)$. Let $G_1, G_2$ be induced double $F$-free graphs on $[n]$. Then
   \[
-    \phi^*(2, n, F) = \max_{0 \leq t \leq n} \con(n, t, F).
+    e(G_1) + e(G_2) \leq \max_{0 \leq t \leq n} \con(n, t, F),
   \]
-  Moreover, the equality holds for graphs $G_1, G_2$ on $[n]$ only if $G_1, G_2$ are the construction described by $\con(n, t_{max}, F)$, where $t_{max} \in [n]$ is a maximizer for $\con(n, t, F)$.
+  with equality only if $G_2$ is an extremal graph for $F$ with $t_{max}$ vertices and $G_1 = G_2 + K_{n - t}$, where $t_{max}$ is a maximizer of $\con(n, t, F)$ over $0 \leq t \leq n$.
 \end{lemma}
 
 \begin{proof}
@@ -314,7 +312,7 @@ Now that we may determine $\phi^*(m, n, F)$ by examining $\phi^*(m, n, F)$, the 
   \[
     e(G_1) + e(G_2) \leq \binom{n - t}{2} + (n - t)t + 2\ex(t, F) = \con(n, t, F).
   \]
-  This establishes the upper bound. From this we also know that $e(G_1) + e(G_2) = \con(n, t, F)$ only if $G_1, G_2$ are the construction described by $\con(n, t, F)$. The result now follows.
+  This establishes the upper bound. From this we also know that $e(G_1) + e(G_2) = \con(n, t, F)$ only if $G_2$ is the $t$-vertex extremal graph for $F$ and $G_1 = G_2 + K_{n - t}$. The result now follows.
 \end{proof}
 
 \subsection{Proof of Theorem \ref{thm:complete}}
@@ -447,13 +445,13 @@ $m,n \geq 1$ and graph $F$,
 \]
 Thereafter, we show that if there is an extremal $F$-free graph with maximum degree at most $n^{1/2}/m^2$, then the above bound is tight. 
 
-\textit{Proof of the upper bound}. For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$. Then 
+\textit{Proof of the upper bound}. For $S \subseteq [m]$, let $E_S$ denote the set of edges that are contained in exactly $\{G_i\}_{i \in S}$, and note that $E_S \cap E_{S'} = \emptyset$ if $S \neq S'$. Then 
 \[
   \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq \binom{n}{2} + \sum_{S \subseteq [m], |S| \geq 2} (|S| - 1)|E_S|.
 \]
-Let $A_S = \bigcup_{T \supseteq S} E_T$, i.e., the set of edges that are contained in all $G_i$ with $i \in S$. When $|S| \geq 2$, the edge set $A_S$ is $F$-free and thus 
+Note that $\bigsqcup_{T \supseteq S} E_T$ is the edge set of the intersection of the graphs $G_i$ with $i \in S$, and so for $|S| \geq 2$, 
 \[
-  |A_S| = \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
+  \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
 \]
 Hence,
 \[
