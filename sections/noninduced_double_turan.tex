@@ -15,11 +15,11 @@ Thereafter, we show that if there is an extremal $F$-free graph with maximum deg
 \[
   \sum_{i = 1}^m e(G_i) = \sum_{S \subseteq [m]} |S||E_S| \leq \binom{n}{2} + \sum_{S \subseteq [m], |S| \geq 2} (|S| - 1)|E_S|.
 \]
-Note that $\bigsqcup_{T \supseteq S} E_T$ is the edge set of the intersection of the graphs $G_i$ with $i \in S$, and so for $|S| \geq 2$, 
+Note that $\bigsqcup_{T \supseteq S} E_T = \bigcap_{i \in S} E(G_i)$, which is $F$-free for $|S| \geq 2$ and so 
 \[
   \sum_{T \supseteq S} |E_T| \leq \text{ex}(n, F).
 \]
-Hence,
+It now follows that
 \[
   \sum_{\substack{S \subseteq [m] \\ |S| \geq 2}} (|S| - 1)|E_S| = \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} \frac{(|T| - 1)|E_T|}{\binom{|T|}{2}} \leq \sum_{\substack{S \subseteq [m], \\ |S| = 2}} \sum_{T \supseteq S} |E_T| \leq \binom{m}{2}\text{ex}(n, F),
 \]
