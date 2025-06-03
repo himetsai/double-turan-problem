@@ -29,23 +29,25 @@ The value of $\ex(n, F)$ for bipartite $F$ is in general wide open, and the orde
 In this thesis, we investigate closely related problems which we refer to as \textit{double Tur\'{a}n problems}. To describe these problems, let $G_1, G_2, \ldots, G_m$ be graphs with the same vertex set $V(G_i) = [n]$ for $i \in [m]$. 
 
 \begin{definition}
-  For a graph $F$, we say that $G_1, G_2, \dots, G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. We call a copy of $F$ in $G_i \cap G_j$ a \textit{double $F$} in $G_i, G_j$.
+  For a graph $F$, we say that $G_1, G_2, \dots, G_m$ is \textit{double $F$-free} if $E(F) \not \subseteq E(G_i) \cap E(G_j)$ for $1 \leq i < j \leq m$. Moreover, we call a copy of $F$ in $G_i \cap G_j$ a \textit{double $F$} in $G_i, G_j$.
 \end{definition}
+
+The double Tur\'{a}n problem asks for the maximum sum of edges over $G_1, G_2, \ldots, G_m$ such that $G_1, G_2, \ldots, G_m$ are double $F$-free.
 
 \begin{definition}
-  For a graph $F$, let $\phi(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ are double $F$-free.
+  For a graph $F$, the double Turán number for $F$, denoted $\phi(m, n, F)$, is the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ are double $F$-free.
 \end{definition}
 
-The (non-induced) double Tur\'{a}n problem is to determine $\phi(m, n, F)$ for various graphs $F$. We would also like to study a special case of the double Tur\'{a}n problem, which we refer to as \textit{induced double Tur\'{a}n problem}. 
+We would also like to study a special case of the double Tur\'{a}n problem, which we refer to as \textit{induced double Tur\'{a}n problem}. 
 
 \begin{definition}
   We call $G_1, G_2, \ldots, G_m$ induced if for each $i \in [m]$, $G_i$ is an induced subgraph of $\bigcup_{i = 1}^m G_i$.
 \end{definition}
 
-In other words, if $\{u,v\} \in E(G_i)$ and $u,v \in V(G_j)$, then $\{u,v\} \in E(G_j)$. 
+In other words, if $\{u, v\} \in E(G_i)$ and $u, v \in V(G_j)$, then $\{u,v\} \in E(G_j)$.
 
 \begin{definition}
-  For a graph $F$, let $\phi^*(m, n, F)$ denote the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ are induced and double $F$-free.
+  For a graph $F$, the induced double Turán number, denoted $\phi^*(m, n, F)$, is the maximum value of $\sum_{i = 1}^m e(G_i)$ such that $G_1, G_2, \dots, G_m$ are induced and double $F$-free.
 \end{definition}
 
 The induced double Tur\'{a}n problem is then to determine $\phi^*(m, n, F)$. Clearly, $\phi(m, n, F) \geq \phi^*(m, n, F)$. Similar to the Turán problem, the induced and non-induced double Turán problems behave differently depending on whether $F$ is bipartite or non-bipartite. Thus we will study these two cases separately in this thesis. We shall see that the study of $\phi(m, n, F)$ and $\phi^*(m, n, F)$ is motivated by certain hypergraph extremal problems.
